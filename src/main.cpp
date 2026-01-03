@@ -1,3 +1,4 @@
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
  
 int main()
@@ -12,7 +13,13 @@ int main()
     // Create a graphical text to display
     const sf::Font font("../resrc/UbuntuSansMono[wght].ttf");
     sf::Text text(font, "Hello SFML", 50);
+
+     // Load a music to play
+    sf::Music music("../resrc/nice_music.ogg");
  
+    // Play the music
+    music.play();
+    
     // Start the game loop
     while (window.isOpen())
     {

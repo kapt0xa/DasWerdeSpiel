@@ -31,4 +31,4 @@ else()  # For other compilers like GCC or Clang
     target_compile_options(DWS PRIVATE -Wall -Werror)  # Treat all warnings as errors
 endif()
 
-target_link_libraries(DWS PRIVATE SFML::Graphics)
+target_link_libraries(DWS PRIVATE SFML::Graphics SFML::Audio)
