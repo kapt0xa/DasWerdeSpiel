@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.28)
 project(DasWerdeSpiel LANGUAGES CXX)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include(FetchContent)
 FetchContent_Declare(SFML
