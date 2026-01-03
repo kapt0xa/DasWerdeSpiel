@@ -20,6 +20,8 @@ this is offline version. once U downloaded all requirements, U dont need interne
 
 # vscode setup:
 
+ for comrortable code editing:
+
 ``` c_cpp_properties.json
 {
     "configurations": [
