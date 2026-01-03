@@ -17,3 +17,24 @@ this is offline version. once U downloaded all requirements, U dont need interne
 - build the project via cmake and make: "$ cmake ..", "$ make"
 - run the executable. it is named "DWS"
 - resources used for the executable should be located in path relative to executable "../resrc"
+
+# vscode setup:
+
+``` c_cpp_properties.json
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/build/_deps/sfml-src/include"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "linux-gcc-x64" 
+        }
+    ],
+    "version": 4
+}
+```
