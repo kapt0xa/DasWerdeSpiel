@@ -12,10 +12,11 @@ namespace spiel
     {
     public:
         inline Puzzle15() : Puzzle15(Comp2i{4, 4}) {};
-        Puzzle15(Puzzle15 const&) = default;
-        Puzzle15& operator=(Puzzle15 const&) = default;
-        Puzzle15(Puzzle15&&) = default;
-        Puzzle15& operator=(Puzzle15&&) = default;
+        Puzzle15(Puzzle15 const&);
+        Puzzle15& operator=(Puzzle15 const&);
+        Puzzle15(Puzzle15&&);
+        Puzzle15& operator=(Puzzle15&&);
+        ~Puzzle15() = default;
 
         Puzzle15(Comp2i size_val);
 
@@ -46,7 +47,6 @@ namespace spiel
 
         bool isSolvable() const;
 
-        mutable std::ostream* debugOs = nullptr;
     private:
 
         const Comp2i& getSize() const;
@@ -58,9 +58,12 @@ namespace spiel
 
         bool isValidPos(Comp2i pos) const;
 
+    private:
         Comp2i size;
         std::vector<int> board;
         Comp2i emptyTilePos;
         const int emptyTileVal;
+    public:
+        mutable std::ostream* debugOs = nullptr;
     };
 } // namespace spiel

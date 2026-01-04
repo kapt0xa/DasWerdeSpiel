@@ -11,52 +11,6 @@ void PrintPuzzle(const Puzzle15& puzzle, std::ostream& os = std::cout);
 
 int main()
 {
-    Puzzle15 puzzle;
-    std::cout << 
-        "initial state:\n"
-        "size: " << puzzle.getSizeCp() << "\n"
-        "is solved: " << std::boolalpha << puzzle.isSolved() << "\n"
-        "is solvable: " << std::boolalpha << puzzle.isSolvable() << "\n"
-        "board:\n\n";
-    PrintPuzzle(puzzle);
-    std::cout << "\nPress enter to continue...\n";
-    std::cin.get();
-
-    bool isMappingCorrect = true;
-    for (int i = 0; i < 16; ++i)
-    {
-        auto pos = puzzle.mapIndexToPos(i);
-        if(i != puzzle.mapPosToIndex(pos))
-        {
-            isMappingCorrect = false;
-            std::cout << "Mapping functions are incorrect, irrevessable!\n";
-            break;
-        }
-        if(i != puzzle.AtCp(pos))
-        {
-            isMappingCorrect = false;
-            std::cout << "Indexing operator is incorrect!\n";
-            break;
-        }
-    }
-    if(isMappingCorrect)
-    {
-        std::cout << "Mapping functions and indexing operator are correct.\n";
-    }
-    std::cout << "\nPress enter to continue...\n";
-    std::cin.get();
-
-    puzzle.shuffle();
-    std::cout << 
-        "after shuffling:\n"
-        "size: " << puzzle.getSizeCp() << "\n"
-        "is solved: " << std::boolalpha << puzzle.isSolved() << "\n"
-        "is solvable: " << std::boolalpha << puzzle.isSolvable() << "\n"
-        "empty tile pos: " << puzzle.getEmptyTilePosCp() << "\n"
-        "board:\n\n";
-    PrintPuzzle(puzzle);
-    std::cout << "\nPress enter to continue...";
-    std::cin.get();
 
     sf::RenderWindow window(sf::VideoMode({800, 800}), "Puzzle 15");
 
@@ -65,7 +19,39 @@ int main()
     sf::Text renderedText(font, "initial\ntext", 50);
     renderedText.setFillColor(sf::Color::Green);
 
-        // Start the game loop
+    window.clear();
+    renderedText.setString("press digit 2-9\nto choose puzzle sise");
+    window.draw(renderedText);
+    window.display();
+
+    Puzzle15 puzzle;
+    while (window.isOpen())
+    {
+        auto event = window.pollEvent();
+        if(event)
+        {
+            if(event->is<sf::Event::Closed>())
+            {
+                window.close();
+            }
+            auto key_event = event->getIf<sf::Event::TextEntered>();
+            if (key_event)
+            {
+                char32_t code = key_event->unicode;
+                if(code >= U'2' && code <= U'9')
+                {
+                    int size = static_cast<int>(code - U'0');
+                    puzzle = Puzzle15({size, size});
+                    puzzle.shuffle();
+                    break;
+                }
+            }
+        }
+    }
+    
+    std::ostringstream oss;
+
+    // Start the game loop
     while (window.isOpen())
     {
         // Process events

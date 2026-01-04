@@ -7,11 +7,45 @@
 
 namespace spiel
 {
+    Puzzle15::Puzzle15(Puzzle15 const& other)
+        : size(other.size)
+        , board(other.board)
+        , emptyTilePos(other.emptyTilePos)
+        , emptyTileVal(other.emptyTileVal)
+        , debugOs(nullptr)
+        {}
+    Puzzle15& Puzzle15::operator=(Puzzle15 const& other)
+    {
+        if(this != &other)
+        {
+            this->~Puzzle15();
+            new (this) Puzzle15(other);
+        }
+        return *this;
+    }
+    Puzzle15::Puzzle15(Puzzle15&& other)
+        : size(std::move(other.size))
+        , board(std::move(other.board))
+        , emptyTilePos(std::move(other.emptyTilePos))
+        , emptyTileVal(other.emptyTileVal)
+        , debugOs(other.debugOs)
+        {};
+    Puzzle15& Puzzle15::operator=(Puzzle15&& other)
+    {
+        if(this != &other)
+        {
+            this->~Puzzle15();
+            new (this) Puzzle15(std::move(other));
+        }
+        return *this;
+    }
+
     Puzzle15::Puzzle15(Comp2i size_val)
         : size(size_val)
         , board(size.real() * size.imag())
         , emptyTilePos({size.real() - 1, size.imag() - 1})
         , emptyTileVal(mapPosToIndex(emptyTilePos))
+        , debugOs(nullptr)
     {
         assert(size.real() >= 2 && size.imag() >= 2 && "Puzzle size must be at least 2x2");
         for (int i = 0; i < static_cast<int>(board.size()); ++i)
