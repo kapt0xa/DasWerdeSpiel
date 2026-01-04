@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.28)
 project(DasWerdeSpiel LANGUAGES CXX)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
+# Get all .cpp and .h files in the src directory
+file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/*.h")
+
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include(FetchContent)
@@ -17,7 +20,7 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(DWS ${SRC_DIR}/main.cpp)
+add_executable(DWS ${SOURCES})
 
 # Set the C++ standard to C++20
 set(CMAKE_CXX_STANDARD 20)
