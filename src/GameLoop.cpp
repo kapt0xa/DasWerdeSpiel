@@ -100,10 +100,10 @@ namespace spiel
 
             lastTime = newTime;
         }
-        stopTickingFlag = false;
 
         {
             std::lock_guard<std::mutex> lock(loopLaunchMutex);
+            stopTickingFlag = false;
             assert(isTicking);
             isTicking = false;
         }
