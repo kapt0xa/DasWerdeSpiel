@@ -3,13 +3,20 @@
 #include <sstream>
 
 #include <SFML/Graphics.hpp>
-#include "puzzle15.h"
+#include "Puzzle15.h"
 
 using namespace spiel;
 
 void PrintPuzzle(const Puzzle15& puzzle, std::ostream& os = std::cout);
 
+int oldGameCode();
+
 int main()
+{
+    return oldGameCode();
+}
+
+int oldGameCode()
 {
 
     sf::RenderWindow window(sf::VideoMode({800, 800}), "Puzzle 15");

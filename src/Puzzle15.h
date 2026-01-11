@@ -11,7 +11,7 @@ namespace spiel
     class Puzzle15
     {
     public:
-        inline Puzzle15() : Puzzle15(Comp2i{4, 4}) {};
+        explicit inline Puzzle15() : Puzzle15(Comp2i{4, 4}) {}
         Puzzle15(Puzzle15 const&);
         Puzzle15& operator=(Puzzle15 const&);
         Puzzle15(Puzzle15&&);

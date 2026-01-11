@@ -1,4 +1,4 @@
-#include "puzzle15.h"
+#include "Puzzle15.h"
 #include <cassert>
 #include <random>
 #include <ctime>
