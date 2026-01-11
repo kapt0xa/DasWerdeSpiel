@@ -12,7 +12,8 @@
 
 namespace spiel
 {
-    using TickFunction = std::function<void(float deltaTime)>;
+    using TickEvent = std::function<void(float deltaTime)>;
+    using SimpleEvent = std::function<void()>;
 
     class GameLoop
     {
@@ -24,28 +25,47 @@ namespace spiel
         GameLoop& operator=(GameLoop&&);
         ~GameLoop();
 
-        size_t submitTickFunctionRaw(TickFunction func);
-        bool removeTickFunctionRaw(int id);
+        // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)
+        size_t subscribeTickFunction(TickEvent func);
+        // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)
+        bool removeTickFunction(int id);
 
+        // u can use this method in addToQueue, it will not lead to dead lock
+        void addToQueue(SimpleEvent func);
+
+        // returns false if failed to run
+        // does not return untill stopTicks is called
+        // for example, call stopTicks in submited function to stop the loop.
         bool runTicks();
+
+        // result is not immediate
         bool stopTicks();
 
         void tick(float deltaTime);
+        void executeQueue();
 
     public:
         std::ostream* debugOs = nullptr;
 
         static std::vector<GameLoop> globalLoops;
     private:
-        std::unordered_map<size_t,TickFunction> tickFunctions;
+
+        // dont change map into array, U tried once, and got problems with subscribtion ID's
+        std::mutex substribtionMutex;
+        std::unordered_map<size_t,TickEvent> subscribedFunctions;
         std::vector<size_t> deadIds;
         size_t nextId = 0;
 
+        std::mutex queueMutex;
+        std::vector<SimpleEvent> queuedEvents;
+
+        std::atomic<float> timeScale = 1.0f;
         float targetFrameTime = 1.0f / 60.0f;
         bool isFixedTimeStep = true;
-        float timeScale = 1.0f;
-        std::mutex editMutex;
+        bool isParallelExecutionPolicy = true;
 
-        std::atomic<bool> isTicking = false;
+        std::mutex loopLaunchMutex;
+        bool isTicking = false;
+        std::atomic<bool> stopTickingFlag = false;
     };
 }
