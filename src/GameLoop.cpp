@@ -180,4 +180,14 @@ namespace spiel
                             [](const auto& entry) { entry(); });
         }
     }
+
+    float GameLoop::getTimeScale() const
+    {
+        return timeScale;
+    }
+
+    void GameLoop::setTimeScale(float value)
+    {
+        timeScale = value;
+    }
 }

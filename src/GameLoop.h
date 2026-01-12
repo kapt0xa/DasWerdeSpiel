@@ -33,6 +33,9 @@ namespace spiel
         // u can use this method in addToQueue, it will not lead to dead lock
         void addToQueue(SimpleEvent func);
 
+        float getTimeScale() const;
+        void setTimeScale(float value);
+
         // returns false if failed to run
         // does not return untill stopTicks is called
         // for example, call stopTicks in submited function to stop the loop.
