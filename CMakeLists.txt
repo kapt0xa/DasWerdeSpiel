@@ -1,6 +1,14 @@
 # 3.28 recomended by SFML tutorial
 cmake_minimum_required(VERSION 3.28)
 
+# uncomment one of blocks to use prefered c/c++ compiler
+
+# set(CMAKE_C_COMPILER "gcc")
+# set(CMAKE_CXX_COMPILER "g++")
+
+# set(CMAKE_C_COMPILER "clang")
+# set(CMAKE_CXX_COMPILER "clang++")
+
 project(DasWerdeSpiel LANGUAGES CXX)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
