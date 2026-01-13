@@ -21,8 +21,8 @@ namespace spiel
         GameLoop();
         GameLoop(const GameLoop&) = delete;
         GameLoop& operator=(const GameLoop&) = delete;
-        GameLoop(GameLoop&&);
-        GameLoop& operator=(GameLoop&&);
+        GameLoop(GameLoop&&) = delete;
+        GameLoop& operator=(GameLoop&&) = delete;
         ~GameLoop();
 
         // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)

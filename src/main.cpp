@@ -36,10 +36,11 @@ GameLoop globalLoop = {};
 class A
 {
     float t = 0;
+    int i = 0;
 public:
     void print(float dt)
     {
-        std::cout << (t+=dt) << '\n';
+        std::cout << (t+=dt) << ' ' << i++ << std::endl;
         if(t > 10)
         {
             auto& loop = globalLoop;
@@ -58,6 +59,8 @@ int loopTest()
     auto& loop = globalLoop;
 
     loop.subscribeTickFunction([&spammer](float dt){spammer.print(dt);});
+
+    loop.runTicks();
 
     return 0;
 }

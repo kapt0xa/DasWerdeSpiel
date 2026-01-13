@@ -9,30 +9,30 @@ namespace spiel
 {
     GameLoop::GameLoop() = default;
 
-    GameLoop::GameLoop(GameLoop&& other)
-        : debugOs(other.debugOs),
-          subscribedFunctions(std::move(other.subscribedFunctions)),
-          deadIds(std::move(other.deadIds)),
-          nextId(other.nextId),
-          queuedEvents(std::move(other.queuedEvents)),
-          timeScale(static_cast<float>(other.timeScale)),
-          targetFrameTime(other.targetFrameTime),
-          isFixedTimeStep(other.isFixedTimeStep),
-          isParallelExecutionPolicy(other.isParallelExecutionPolicy)
-    {
-        assert(other.isTicking == false && "moved loop should not be working");
-        assert(other.stopTickingFlag == false && "moved loop is in correct state or is active");
-    }
+    // GameLoop::GameLoop(GameLoop&& other)
+    //     : debugOs(other.debugOs),
+    //       subscribedFunctions(std::move(other.subscribedFunctions)),
+    //       deadIds(std::move(other.deadIds)),
+    //       nextId(other.nextId),
+    //       queuedEvents(std::move(other.queuedEvents)),
+    //       timeScale(static_cast<float>(other.timeScale)),
+    //       targetFrameTime(other.targetFrameTime),
+    //       isFixedTimeStep(other.isFixedTimeStep),
+    //       isParallelExecutionPolicy(other.isParallelExecutionPolicy)
+    // {
+    //     assert(other.isTicking == false && "moved loop should not be working");
+    //     assert(other.stopTickingFlag == false && "moved loop is in correct state or is active");
+    // }
 
-    GameLoop& GameLoop::operator=(GameLoop&& other)
-    {
-        if(this != &other)
-        {
-            this->~GameLoop();
-            new (this) GameLoop(std::move(other));
-        }
-        return *this;
-    }
+    // GameLoop& GameLoop::operator=(GameLoop&& other)
+    // {
+    //     if(this != &other)
+    //     {
+    //         this->~GameLoop();
+    //         new (this) GameLoop(std::move(other));
+    //     }
+    //     return *this;
+    // }
 
     GameLoop::~GameLoop()
     {
