@@ -48,9 +48,8 @@ namespace spiel
         void executeQueue();
 
     public:
-        std::ostream* debugOs = nullptr;
 
-        static std::vector<GameLoop> globalLoops;
+        std::ostream* debugOs = nullptr;
     private:
 
         // dont change map into array, U tried once, and got problems with subscribtion ID's

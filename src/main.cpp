@@ -1,22 +1,68 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <exception>
 
 #include <SFML/Graphics.hpp>
 #include "Puzzle15.h"
+#include "GameLoop.h"
 
 using namespace spiel;
 
 void PrintPuzzle(const Puzzle15& puzzle, std::ostream& os = std::cout);
 
-int oldGameCode();
+int gameCode();
+int loopTest();
 
 int main()
 {
-    return oldGameCode();
+    std::cout << "programm started" << std::endl;
+    int x;
+    try
+    {
+        x = loopTest();
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+        x = -1;
+    }
+    std::cout << "programm finished with " << x << std::endl;
+    return x;
 }
 
-int oldGameCode()
+GameLoop globalLoop = {};
+
+class A
+{
+    float t = 0;
+public:
+    void print(float dt)
+    {
+        std::cout << (t+=dt) << '\n';
+        if(t > 10)
+        {
+            auto& loop = globalLoop;
+
+            auto stopper = [&loop](){loop.stopTicks();};
+
+            loop.addToQueue(std::move(stopper));
+        }
+    }
+};
+
+int loopTest()
+{
+    A spammer;
+
+    auto& loop = globalLoop;
+
+    loop.subscribeTickFunction([&spammer](float dt){spammer.print(dt);});
+
+    return 0;
+}
+
+int gameCode()
 {
 
     sf::RenderWindow window(sf::VideoMode({800, 800}), "Puzzle 15");
