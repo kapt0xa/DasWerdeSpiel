@@ -8,6 +8,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <variant>
 #include <functional> // using std::function<returnType(inputTypes)>
 
 namespace spiel
@@ -70,4 +71,9 @@ namespace spiel
         bool isTicking = false;
         std::atomic<bool> stopTickingFlag = false;
     };
+
+    class Timer
+    {
+        TickEvent getTickFunction()
+    }
 }

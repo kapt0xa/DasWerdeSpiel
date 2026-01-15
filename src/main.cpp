@@ -12,67 +12,131 @@ using namespace spiel;
 void PrintPuzzle(const Puzzle15& puzzle, std::ostream& os = std::cout);
 
 int gameCode();
-int loopTest();
 
 int main()
 {
-    std::cout << "programm started" << std::endl;
-    int x;
-    try
-    {
-        x = loopTest();
-    }
-    catch(const std::exception& e)
-    {
-        std::cout << e.what() << std::endl;
-        x = -1;
-    }
-    std::cout << "programm finished with " << x << std::endl;
-    return x;
+    return gameCode();
 }
 
-GameLoop globalLoop = {};
-
-class A
+class Game
 {
-    float t = 0;
-    int i = 0;
 public:
-    void print(float dt)
-    {
-        std::cout << (t+=dt) << ' ' << i++ << std::endl;
-        if(t > 10)
-        {
-            auto& loop = globalLoop;
+    Game& defaultInit();
 
-            auto stopper = [&loop](){loop.stopTicks();};
+    Game& setDefaultWindow();
+    Game& setWindow(std::unique_ptr<sf::RenderWindow> windowVal);
+    sf::RenderWindow& getWindow();
 
-            loop.addToQueue(std::move(stopper));
-        }
-    }
+    Game& loadDefaultFont();
+    Game& setFont(std::unique_ptr<const sf::Font> fontVal);
+    const sf::Font& getFont() const;
+
+    Game& setLoop();
+    GameLoop& getLoop();
+
+private:
+    std::unique_ptr<sf::RenderWindow> window;
+    std::unique_ptr<const sf::Font> font;
+    std::unique_ptr<GameLoop> loop;
 };
 
-int loopTest()
+class PuzzleRenderer
 {
-    A spammer;
+public:
+    PuzzleRenderer(Game& gameRef);
 
-    auto& loop = globalLoop;
+    void tick(float deltaTime)
+    {
+        auto& window = game.getWindow();
+        auto event = window.pollEvent();
 
-    loop.subscribeTickFunction([&spammer](float dt){spammer.print(dt);});
+        while(event)
+        {
+            if(event->is<sf::Event::Closed>())
+            {
+                auto closer = [&]()
+                {
+                    game.getLoop().stopTicks();
+                    window.close();
+                };
+                game.getLoop().addToQueue(std::move(closer));
+            }
+            auto key_event = event->getIf<sf::Event::KeyPressed>();
+            if (key_event)
+            {
+                auto to = puzzle.getEmptyTilePosCp();
+                switch (key_event->code)
+                {
+                    case sf::Keyboard::Key::Up:
+                        puzzle.moveTile(Puzzle15::up);
+                        break;
+                    case sf::Keyboard::Key::Down:
+                        puzzle.moveTile(Puzzle15::down);
+                        break;
+                    case sf::Keyboard::Key::Left:
+                        puzzle.moveTile(Puzzle15::left);
+                        break;
+                    case sf::Keyboard::Key::Right:
+                        puzzle.moveTile(Puzzle15::right);
+                        break;
+                    case sf::Keyboard::Key::Enter:
+                        if(puzzle.isSolved())
+                            window.close();
+                    default:
+                        break;
+                }
+                auto from = puzzle.getEmptyTilePosCp();
+                if (from != to)
+                {
+                    movingChip = std::make_tuple(from, to, 0.0f);
+                }
+            }
+            event = window.pollEvent();
+        }
 
-    loop.runTicks();
+        auto field =puzzle.getBoardCp();
+        auto size = puzzle.getSizeCp();
+        auto empty_pos = puzzle.getEmptyTilePosCp();
 
-    return 0;
-}
+        auto eraser = sf::RectangleShape(sf::Vector2f(step * size.real(), step * size.imag()));
+        for(int x = 0; x < size.real(); ++x)
+        {
+            for(int y = 0; y < size.imag(); ++y)
+            {
+                Comp2i pos{x, y};
+                if(pos == empty_pos) continue;
+                if(movingChip)
+                {
+                    auto& [from, to, progress] = *movingChip;
+                    if(pos == to) continue;
+                    continue here, write the moving tile later
+                }
+
+                int val = field[static_cast<size_t>(y * size.real() + x)];
+
+                auto tile = sf::Text(game.getFont(), std::to_string(val + 1), fontSize);
+                tile.setFillColor(sf::Color::Green);
+                tile.setPosition({x * step, y * step});
+                window.draw(tile);
+            }
+        }
+    }
+
+private:
+    Game& game;
+    Puzzle15 puzzle;
+    float step = 50;
+    uint fontSize = 20;
+    std::optional<std::tuple<Comp2i /*from*/, Comp2i /*to*/, float/*0..1 progress*/>> movingChip;
+    float speed = 10;
+};
 
 int gameCode()
 {
+    Game game;
+    game.defaultInit();
 
-    sf::RenderWindow window(sf::VideoMode({800, 800}), "Puzzle 15");
-
-    // Create a graphical text to display
-    const sf::Font font("../resrc/UbuntuSansMono[wght].ttf");
-    sf::Text renderedText(font, "initial\ntext", 50);
+    sf::Text renderedText(game.getFont(), "initial\ntext", 50);
     renderedText.setFillColor(sf::Color::Green);
 
     window.clear();
@@ -182,3 +246,47 @@ void PrintPuzzle(const Puzzle15& puzzle, std::ostream& os)
         os << "\n";
     }
 }
+
+    Game& Game::defaultInit()
+    {
+        setDefaultWindow();
+        loadDefaultFont();
+        setLoop();
+    }
+
+    Game& Game::setDefaultWindow()
+    {
+        auto new_window = std::make_unique<sf::RenderWindow>(sf::VideoMode({800, 800}), "Puzzle 15");
+        setWindow(std::move(new_window));
+    }
+    Game& Game::setWindow(std::unique_ptr<sf::RenderWindow> windowVal)
+    {
+        std::swap(window, windowVal);
+    }
+    sf::RenderWindow& Game::getWindow()
+    {
+        return *window;
+    }
+
+    Game& Game::loadDefaultFont()
+    {
+        auto new_font = std::make_unique<const sf::Font>("../resrc/UbuntuSansMono[wght].ttf");
+        setFont(std::move(new_font));
+    }
+    Game& Game::setFont(std::unique_ptr<const sf::Font> fontVal)
+    {
+        std::swap(font, fontVal);
+    }
+    const sf::Font& Game::getFont() const
+    {
+        return *font;
+    }
+
+    Game& Game::setLoop()
+    {
+        loop = std::make_unique<GameLoop>();
+    }
+    GameLoop& Game::getLoop()
+    {
+        return *loop;
+    }
