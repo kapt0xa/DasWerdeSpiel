@@ -103,20 +103,34 @@ public:
         {
             for(int y = 0; y < size.imag(); ++y)
             {
+                from here i lost the terridy of logic
+
+                int val = field[static_cast<size_t>(y * size.real() + x)];
+                auto tile = sf::Text(game.getFont(), std::to_string(val + 1), fontSize);
+                tile.setFillColor(sf::Color::Green);
+                tile.setPosition({x * step, y * step});
+
                 Comp2i pos{x, y};
                 if(pos == empty_pos) continue;
                 if(movingChip)
                 {
                     auto& [from, to, progress] = *movingChip;
-                    if(pos == to) continue;
-                    continue here, write the moving tile later
+                    if(pos == to) 
+                    {
+                        progress += deltaTime * speed;
+                        if(progress < 1.0f)
+                        {
+                            Comp2f delta = Cast<float>::Complex(to - from);
+                            delta *= progress;
+                            auto drawPos = Cast<float>::Complex(from) + delta;
+                            continue;
+                        }
+                        else
+                        {
+                            movingChip.reset();
+                        }
+                    }
                 }
-
-                int val = field[static_cast<size_t>(y * size.real() + x)];
-
-                auto tile = sf::Text(game.getFont(), std::to_string(val + 1), fontSize);
-                tile.setFillColor(sf::Color::Green);
-                tile.setPosition({x * step, y * step});
                 window.draw(tile);
             }
         }

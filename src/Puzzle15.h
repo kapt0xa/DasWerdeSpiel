@@ -8,6 +8,20 @@ namespace spiel
     using Comp2i = std::complex<int>;
     using Comp2f = std::complex<float>;
 
+    template<typename T1>
+    class Cast
+    {
+    public:
+        template<typename T2>
+        static std::complex<T1> Complex(const std::complex<T2>& val)
+        {
+            return std::complex<T1>{static_cast<T1>(val.real()), static_cast<T1>(val.imag())};
+        }
+    };
+
+    Comp2i x = {1, 0};
+    Comp2f y = Cast<float>::Complex(x);
+
     class Puzzle15
     {
     public:
