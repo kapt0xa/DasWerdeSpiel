@@ -2,6 +2,7 @@
 #include <thread>
 #include <algorithm>
 #include <execution>
+#include <iostream>
 
 #include "GameLoop.h"
 

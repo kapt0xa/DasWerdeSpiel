@@ -2,25 +2,57 @@
 #include <vector>
 #include <complex>
 #include <iostream>
+#include <SFML/System/Vector2.hpp>
 
 namespace spiel
 {
     using Comp2i = std::complex<int>;
     using Comp2f = std::complex<float>;
 
-    template<typename T1>
+    template<typename T>
+    T& X( std::complex<T>& c ) { return reinterpret_cast<T(&)[2]>(c)[0]; }
+    template<typename T>
+    T& Y( std::complex<T>& c ) { return reinterpret_cast<T(&)[2]>(c)[1]; }
+    template<typename T>
+    const T& X( const std::complex<T>& c ) { return reinterpret_cast<const T(&)[2]>(c)[0]; }
+    template<typename T>
+    const T& Y( const std::complex<T>& c ) { return reinterpret_cast<const T(&)[2]>(c)[1]; }
+
+    template<typename T1 = void>
     class Cast
     {
     public:
         template<typename T2>
-        static std::complex<T1> Complex(const std::complex<T2>& val)
+        static std::complex<T1> vect(const std::complex<T2>& val)
         {
-            return std::complex<T1>{static_cast<T1>(val.real()), static_cast<T1>(val.imag())};
+            return std::complex<T1>{static_cast<T1>(X(val)), static_cast<T1>(Y(val))};
+        }
+        template<typename T2>
+        static sf::Vector2<T1> vect(const sf::Vector2<T2>& val)
+        {
+            return sf::Vector2<T1>{static_cast<T1>(val.x), static_cast<T1>(val.y)};
+        }
+        template<typename T2>
+        inline static const std::complex<T2>& FromSF(const sf::Vector2<T2>& val)
+        {
+            return *reinterpret_cast<const std::complex<T2>&>(val);
+        }
+        template<typename T2>
+        inline static std::complex<T2>& FromSF(sf::Vector2<T2>& val)
+        {
+            return reinterpret_cast<std::complex<T2>&>(val);
+        }
+        template<typename T2>
+        inline static const sf::Vector2<T2>& ToSF(const std::complex<T2>& val)
+        {
+            return reinterpret_cast<const sf::Vector2<T2>&>(val);
+        }
+        template<typename T2>
+        inline static sf::Vector2<T2>& ToSF(std::complex<T2>& val)
+        {
+            return reinterpret_cast<sf::Vector2<T2>&>(val);
         }
     };
-
-    Comp2i x = {1, 0};
-    Comp2f y = Cast<float>::Complex(x);
 
     class Puzzle15
     {

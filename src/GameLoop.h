@@ -71,9 +71,4 @@ namespace spiel
         bool isTicking = false;
         std::atomic<bool> stopTickingFlag = false;
     };
-
-    class Timer
-    {
-        TickEvent getTickFunction()
-    }
 }
