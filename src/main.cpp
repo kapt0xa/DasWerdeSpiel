@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <sstream>
 #include <exception>
+#include <array>
 
 #include <SFML/Graphics.hpp>
 #include "Puzzle15.h"
@@ -11,6 +12,7 @@ using namespace spiel;
 
 int gameCode();
 void compilerValidation();
+std::tuple<int, std::string> getEventType(sf::Event& event);
 
 int main()
 {
@@ -87,6 +89,8 @@ private:
 
         while(event)
         {
+            auto [typeIndex, typeName] = getEventType(*event);
+            std::cerr << "Event type index: " << typeIndex << " (" << typeName << ")\n";
             event->visit(
                 [&](const auto e)
                 {
@@ -98,6 +102,11 @@ private:
                     else if constexpr (std::is_same_v<EventType, sf::Event::KeyPressed>)
                     {
                         handleKeyPressed(e);
+                    }
+                    else
+                    {
+                        std::cerr << "Unhandled event type in PuzzleRenderer." << std::endl;
+                        // unhandled event
                     }
                 }
             );
@@ -302,4 +311,70 @@ int gameCode()
     GameLoop& Game::getLoop()
     {
         return *loop;
+    }
+
+    std::tuple<int, std::string> getEventType(sf::Event& event)
+    {
+        std::array<const char*, 23> typeNames = {
+            "Closed",
+            "Resized",
+            "FocusLost",
+            "FocusGained",
+            "TextEntered",
+            "KeyPressed",
+            "KeyReleased",
+            "MouseWheelScrolled",
+            "MouseButtonPressed",
+            "MouseButtonReleased",
+            "MouseMoved",
+            "MouseMovedRaw",
+            "MouseEntered",
+            "MouseLeft",
+            "JoystickButtonPressed",
+            "JoystickButtonReleased",
+            "JoystickMoved",
+            "JoystickConnected",
+            "JoystickDisconnected",
+            "TouchBegan",
+            "TouchMoved",
+            "TouchEnded",
+            "SensorChanged"
+        };
+
+        int idx = -1;
+        event.visit([&](const auto& sub) {
+            using T = std::decay_t<decltype(sub)>;
+            if constexpr (std::is_same_v<T, sf::Event::Closed>)                 idx = 0;
+            else if constexpr (std::is_same_v<T, sf::Event::Resized>)           idx = 1;
+            else if constexpr (std::is_same_v<T, sf::Event::FocusLost>)         idx = 2;
+            else if constexpr (std::is_same_v<T, sf::Event::FocusGained>)       idx = 3;
+            else if constexpr (std::is_same_v<T, sf::Event::TextEntered>)       idx = 4;
+            else if constexpr (std::is_same_v<T, sf::Event::KeyPressed>)        idx = 5;
+            else if constexpr (std::is_same_v<T, sf::Event::KeyReleased>)       idx = 6;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseWheelScrolled>)idx = 7;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseButtonPressed>)idx = 8;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseButtonReleased>)idx = 9;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseMoved>)        idx = 10;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseMovedRaw>)     idx = 11;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseEntered>)      idx = 12;
+            else if constexpr (std::is_same_v<T, sf::Event::MouseLeft>)         idx = 13;
+            else if constexpr (std::is_same_v<T, sf::Event::JoystickButtonPressed>)  idx = 14;
+            else if constexpr (std::is_same_v<T, sf::Event::JoystickButtonReleased>) idx = 15;
+            else if constexpr (std::is_same_v<T, sf::Event::JoystickMoved>)     idx = 16;
+            else if constexpr (std::is_same_v<T, sf::Event::JoystickConnected>) idx = 17;
+            else if constexpr (std::is_same_v<T, sf::Event::JoystickDisconnected>) idx = 18;
+            else if constexpr (std::is_same_v<T, sf::Event::TouchBegan>)        idx = 19;
+            else if constexpr (std::is_same_v<T, sf::Event::TouchMoved>)        idx = 20;
+            else if constexpr (std::is_same_v<T, sf::Event::TouchEnded>)        idx = 21;
+            else if constexpr (std::is_same_v<T, sf::Event::SensorChanged>)     idx = 22;
+        });
+
+        if(idx != -1)
+        {
+            return {idx, typeNames[idx]};
+        }
+        else
+        {
+            return {-1, "Unknown"};
+        }
     }
