@@ -52,4 +52,11 @@ namespace spiel
     {
         return *loop;
     }
+
+    Game Game::buildDefaultGame()
+    {
+        Game game;
+        game.defaultInit();
+        return game;
+    }
 }

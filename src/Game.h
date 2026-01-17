@@ -7,8 +7,11 @@ namespace spiel
 {
     class Game
     {
-    public:
+    private:
+        Game() = default;
         Game& defaultInit();
+    public:
+        static Game buildDefaultGame();
 
         Game& setDefaultWindow();
         Game& setWindow(std::unique_ptr<sf::RenderWindow> windowVal);
