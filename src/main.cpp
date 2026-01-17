@@ -5,8 +5,10 @@
 #include <array>
 
 #include <SFML/Graphics.hpp>
+
 #include "Puzzle15.h"
 #include "GameLoop.h"
+#include "Game.h"
 
 using namespace spiel;
 
@@ -19,27 +21,6 @@ int main()
     return gameCode();
 }
 
-class Game
-{
-public:
-    Game& defaultInit();
-
-    Game& setDefaultWindow();
-    Game& setWindow(std::unique_ptr<sf::RenderWindow> windowVal);
-    sf::RenderWindow& getWindow();
-
-    Game& loadDefaultFont();
-    Game& setFont(std::unique_ptr<const sf::Font> fontVal);
-    const sf::Font& getFont() const;
-
-    Game& setLoop();
-    GameLoop& getLoop();
-
-private:
-    std::unique_ptr<sf::RenderWindow> window;
-    std::unique_ptr<const sf::Font> font;
-    std::unique_ptr<GameLoop> loop;
-};
 
 class PuzzleRenderer
 {
@@ -290,119 +271,68 @@ int gameCode()
     return 0;
 }
 
-    Game& Game::defaultInit()
-    {
-        setDefaultWindow();
-        loadDefaultFont();
-        setLoop();
-        return *this;
-    }
+std::tuple<int, std::string> getEventType(sf::Event& event)
+{
+    std::array<const char*, 23> typeNames = {
+        "Closed",
+        "Resized",
+        "FocusLost",
+        "FocusGained",
+        "TextEntered",
+        "KeyPressed",
+        "KeyReleased",
+        "MouseWheelScrolled",
+        "MouseButtonPressed",
+        "MouseButtonReleased",
+        "MouseMoved",
+        "MouseMovedRaw",
+        "MouseEntered",
+        "MouseLeft",
+        "JoystickButtonPressed",
+        "JoystickButtonReleased",
+        "JoystickMoved",
+        "JoystickConnected",
+        "JoystickDisconnected",
+        "TouchBegan",
+        "TouchMoved",
+        "TouchEnded",
+        "SensorChanged"
+    };
 
-    Game& Game::setDefaultWindow()
-    {
-        auto new_window = std::make_unique<sf::RenderWindow>(sf::VideoMode({800, 800}), "Puzzle 15");
-        setWindow(std::move(new_window));
-        return *this;
-    }
-    Game& Game::setWindow(std::unique_ptr<sf::RenderWindow> windowVal)
-    {
-        std::swap(window, windowVal);
-        return *this;
-    }
-    sf::RenderWindow& Game::getWindow()
-    {
-        return *window;
-    }
+    int idx = -1;
+    event.visit([&](const auto& sub) {
+        using T = std::decay_t<decltype(sub)>;
+        if constexpr (std::is_same_v<T, sf::Event::Closed>)                 idx = 0;
+        else if constexpr (std::is_same_v<T, sf::Event::Resized>)           idx = 1;
+        else if constexpr (std::is_same_v<T, sf::Event::FocusLost>)         idx = 2;
+        else if constexpr (std::is_same_v<T, sf::Event::FocusGained>)       idx = 3;
+        else if constexpr (std::is_same_v<T, sf::Event::TextEntered>)       idx = 4;
+        else if constexpr (std::is_same_v<T, sf::Event::KeyPressed>)        idx = 5;
+        else if constexpr (std::is_same_v<T, sf::Event::KeyReleased>)       idx = 6;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseWheelScrolled>)idx = 7;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseButtonPressed>)idx = 8;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseButtonReleased>)idx = 9;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseMoved>)        idx = 10;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseMovedRaw>)     idx = 11;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseEntered>)      idx = 12;
+        else if constexpr (std::is_same_v<T, sf::Event::MouseLeft>)         idx = 13;
+        else if constexpr (std::is_same_v<T, sf::Event::JoystickButtonPressed>)  idx = 14;
+        else if constexpr (std::is_same_v<T, sf::Event::JoystickButtonReleased>) idx = 15;
+        else if constexpr (std::is_same_v<T, sf::Event::JoystickMoved>)     idx = 16;
+        else if constexpr (std::is_same_v<T, sf::Event::JoystickConnected>) idx = 17;
+        else if constexpr (std::is_same_v<T, sf::Event::JoystickDisconnected>) idx = 18;
+        else if constexpr (std::is_same_v<T, sf::Event::TouchBegan>)        idx = 19;
+        else if constexpr (std::is_same_v<T, sf::Event::TouchMoved>)        idx = 20;
+        else if constexpr (std::is_same_v<T, sf::Event::TouchEnded>)        idx = 21;
+        else if constexpr (std::is_same_v<T, sf::Event::SensorChanged>)     idx = 22;
+    });
 
-    Game& Game::loadDefaultFont()
+    if(idx != -1)
     {
-        auto new_font = std::make_unique<const sf::Font>("../resrc/UbuntuSansMono[wght].ttf");
-        setFont(std::move(new_font));
-        return *this;
+        return {idx, typeNames[idx]};
     }
-    Game& Game::setFont(std::unique_ptr<const sf::Font> fontVal)
+    else
     {
-        std::swap(font, fontVal);
-        return *this;
+        return {-1, "Unknown"};
     }
-    const sf::Font& Game::getFont() const
-    {
-        return *font;
-    }
-
-    Game& Game::setLoop()
-    {
-        loop = std::make_unique<GameLoop>();
-        return *this;
-    }
-
-    GameLoop& Game::getLoop()
-    {
-        return *loop;
-    }
-
-    std::tuple<int, std::string> getEventType(sf::Event& event)
-    {
-        std::array<const char*, 23> typeNames = {
-            "Closed",
-            "Resized",
-            "FocusLost",
-            "FocusGained",
-            "TextEntered",
-            "KeyPressed",
-            "KeyReleased",
-            "MouseWheelScrolled",
-            "MouseButtonPressed",
-            "MouseButtonReleased",
-            "MouseMoved",
-            "MouseMovedRaw",
-            "MouseEntered",
-            "MouseLeft",
-            "JoystickButtonPressed",
-            "JoystickButtonReleased",
-            "JoystickMoved",
-            "JoystickConnected",
-            "JoystickDisconnected",
-            "TouchBegan",
-            "TouchMoved",
-            "TouchEnded",
-            "SensorChanged"
-        };
-
-        int idx = -1;
-        event.visit([&](const auto& sub) {
-            using T = std::decay_t<decltype(sub)>;
-            if constexpr (std::is_same_v<T, sf::Event::Closed>)                 idx = 0;
-            else if constexpr (std::is_same_v<T, sf::Event::Resized>)           idx = 1;
-            else if constexpr (std::is_same_v<T, sf::Event::FocusLost>)         idx = 2;
-            else if constexpr (std::is_same_v<T, sf::Event::FocusGained>)       idx = 3;
-            else if constexpr (std::is_same_v<T, sf::Event::TextEntered>)       idx = 4;
-            else if constexpr (std::is_same_v<T, sf::Event::KeyPressed>)        idx = 5;
-            else if constexpr (std::is_same_v<T, sf::Event::KeyReleased>)       idx = 6;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseWheelScrolled>)idx = 7;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseButtonPressed>)idx = 8;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseButtonReleased>)idx = 9;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseMoved>)        idx = 10;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseMovedRaw>)     idx = 11;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseEntered>)      idx = 12;
-            else if constexpr (std::is_same_v<T, sf::Event::MouseLeft>)         idx = 13;
-            else if constexpr (std::is_same_v<T, sf::Event::JoystickButtonPressed>)  idx = 14;
-            else if constexpr (std::is_same_v<T, sf::Event::JoystickButtonReleased>) idx = 15;
-            else if constexpr (std::is_same_v<T, sf::Event::JoystickMoved>)     idx = 16;
-            else if constexpr (std::is_same_v<T, sf::Event::JoystickConnected>) idx = 17;
-            else if constexpr (std::is_same_v<T, sf::Event::JoystickDisconnected>) idx = 18;
-            else if constexpr (std::is_same_v<T, sf::Event::TouchBegan>)        idx = 19;
-            else if constexpr (std::is_same_v<T, sf::Event::TouchMoved>)        idx = 20;
-            else if constexpr (std::is_same_v<T, sf::Event::TouchEnded>)        idx = 21;
-            else if constexpr (std::is_same_v<T, sf::Event::SensorChanged>)     idx = 22;
-        });
-
-        if(idx != -1)
-        {
-            return {idx, typeNames[idx]};
-        }
-        else
-        {
-            return {-1, "Unknown"};
-        }
-    }
+}
