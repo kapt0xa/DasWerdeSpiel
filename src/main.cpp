@@ -50,21 +50,6 @@ public:
         redraw();
     }
 
-
-    void tick(float deltaTime)
-    {
-        handleEvents();
-
-        if(moveProgress < 1)
-        {
-            moveProgress += deltaTime * speed;
-            if(moveProgress > 1.0f) moveProgress = 1.0f;
-            drawMovingTile(deltaTime);
-        }
-
-        game.getWindow().display();
-    }
-
     TickEvent getTickFunction()
     {
         return [this](float deltaTime)
@@ -82,6 +67,21 @@ public:
     }
 
 private:
+
+    void tick(float deltaTime)
+    {
+        handleEvents();
+
+        if(moveProgress < 1)
+        {
+            moveProgress += deltaTime * speed;
+            if(moveProgress > 1.0f) moveProgress = 1.0f;
+            drawMovingTile(deltaTime);
+        }
+
+        game.getWindow().display();
+    }
+
     void handleEvents()
     {
         auto& window = game.getWindow();
@@ -89,12 +89,10 @@ private:
 
         while(event)
         {
-            auto [typeIndex, typeName] = getEventType(*event);
-            std::cerr << "Event type index: " << typeIndex << " (" << typeName << ")\n";
             event->visit(
                 [&](const auto e)
                 {
-                    using EventType = decltype(e);
+                    using EventType = std::decay_t<decltype(e)>;
                     if constexpr (std::is_same_v<EventType, sf::Event::Closed>)
                     {
                         handleClosed();
@@ -105,7 +103,6 @@ private:
                     }
                     else
                     {
-                        std::cerr << "Unhandled event type in PuzzleRenderer." << std::endl;
                         // unhandled event
                     }
                 }
@@ -148,6 +145,10 @@ private:
         auto from = puzzle.getEmptyTilePosCp();
         if (from != to)
         {
+            if(moveProgress < 1.0f)
+            {
+                abortedMoves.push_back(lastMovedTile);
+            }
             lastMovedTile = to;
             moveProgress = 0.0f;
         }
@@ -183,23 +184,20 @@ private:
             }
         }
 
+        abortedMoves.clear();
         fieldsNeedRedraw = false;
     }
     void drawMovingTile(float deltaTime)
     {
         if(fieldsNeedRedraw)
-        {
-            redraw();
-        }
+        { redraw();}
+        if(abortedMoves.empty() == false)
+        { repairAborted(); }
 
         Comp2f delta = Cast<float>::vect(lastMovedTile - puzzle.getEmptyTilePosCp());
 
         // ersse all area of moving tile
-        auto eraser = sf::RectangleShape(Cast<>::ToSF((delta + Comp2f{1,1})* step));
-        eraser.setFillColor(sf::Color::Black);
-        eraser.setPosition({
-            std::min(X(lastMovedTile), X(puzzle.getEmptyTilePosCp())) * step,
-            std::min(Y(lastMovedTile), Y(puzzle.getEmptyTilePosCp())) * step});
+        auto eraser = coverFields(lastMovedTile, puzzle.getEmptyTilePosCp());
         game.getWindow().draw(eraser);
 
         // draw moving tile at new position
@@ -210,7 +208,36 @@ private:
         text.setPosition({X(drawPos) * step, Y(drawPos) * step});
         game.getWindow().draw(text);
     }
-
+    sf::RectangleShape coverFields(Comp2i pos1, Comp2i pos2)
+    {
+        auto rect = sf::RectangleShape (sf::Vector2f{
+            (std::abs(X(pos1) - X(pos2)) + 1) * step,
+            (std::abs(Y(pos1) - Y(pos2)) + 1) * step
+        });
+        rect.setPosition(sf::Vector2f{
+            std::min(X(pos1), X(pos2)) * step,
+            std::min(Y(pos1), Y(pos2)) * step
+        });
+        rect.setFillColor(sf::Color::Black);
+        return rect;
+    }
+    void redraw(Comp2i pos)
+    {
+        auto eraser = coverFields(pos, pos);
+        game.getWindow().draw(eraser);
+        sf::Text text(game.getFont(), std::to_string(puzzle.AtCp(pos) + 1), fontSize);
+        text.setFillColor(sf::Color::Green);
+        text.setPosition({X(pos) * step, Y(pos) * step});
+        game.getWindow().draw(text);
+    }
+    void repairAborted()
+    {
+        for(auto pos : abortedMoves)
+        {
+            redraw(pos);
+        }
+        abortedMoves.clear();
+    }
 private:
     Game& game;
     Puzzle15 puzzle;
@@ -220,6 +247,7 @@ private:
     float moveProgress = 0.0f;
     float speed = 10;
     bool fieldsNeedRedraw = true;
+    std::vector<Comp2i> abortedMoves;
 };
 
 
