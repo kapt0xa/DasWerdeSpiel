@@ -7,6 +7,7 @@ namespace spiel
 {
     using Comp2i = std::complex<int>;
     using Comp2f = std::complex<float>;
+    using Mat2f = std::array<Comp2f, 2>;
 
     // float ieee754 limits
     constexpr float floatMinNormal = 1.175494351e-38f; // 2^-126
@@ -22,6 +23,13 @@ namespace spiel
     const T& X( const std::complex<T>& c ) { return reinterpret_cast<const T(&)[2]>(c)[0]; }
     template<typename T>
     const T& Y( const std::complex<T>& c ) { return reinterpret_cast<const T(&)[2]>(c)[1]; }
+    Mat2f RotCompToMat(Comp2f rotation);
+    Mat2f operator*(const Mat2f& a, const Mat2f& b);
+    float det(const Mat2f& m);
+    float dot(const Comp2f& a, const Comp2f& b);
+    Mat2f inverse(const Mat2f& m);
+    Comp2f operator*(const Comp2f& v, const Mat2f& m);
+    Comp2f& operator*=(Comp2f& v, const Mat2f& m);
 
     Comp2f normalized(Comp2f vec, Comp2f defaultVec = {1.0f, 0.0f});
     float magnitude(Comp2f vec);

@@ -161,4 +161,52 @@ namespace spiel
         rectangle.setPosition(rect.position + rect.size * 0.5f);
         return rectangle;
     }
+
+    Mat2f RotCompToMat(Comp2f rotation)
+    {
+        Mat2f result;
+        X(result[0]) = X(rotation);
+        Y(result[0]) = -Y(rotation);
+        X(result[1]) = Y(rotation);
+        Y(result[1]) = X(rotation);
+        return result;
+    }
+    Mat2f operator*(const Mat2f& a, const Mat2f& b)
+    {
+        Mat2f result;
+        X(result[0]) = X(a[0]) * X(b[0]) + Y(a[0]) * X(b[1]);
+        Y(result[0]) = X(a[0]) * Y(b[0]) + Y(a[0]) * Y(b[1]);
+        X(result[1]) = X(a[1]) * X(b[0]) + Y(a[1]) * X(b[1]);
+        Y(result[1]) = X(a[1]) * Y(b[0]) + Y(a[1]) * Y(b[1]);
+        return result;
+    }
+    float det(const Mat2f& m)
+    {
+        return X(m[0]) * Y(m[1]) - Y(m[0]) * X(m[1]);
+    }
+    float dot(const Comp2f& a, const Comp2f& b)
+    {
+        return X(a) * X(b) + Y(a) * Y(b);
+    }
+    Mat2f inverse(const Mat2f& m)
+    {
+        float determinant = det(m);
+        Mat2f result;
+        X(result[0]) =  Y(m[1]) / determinant;
+        Y(result[0]) = -Y(m[0]) / determinant;
+        X(result[1]) = -X(m[1]) / determinant;
+        Y(result[1]) =  X(m[0]) / determinant;
+        return result;
+    }
+    Comp2f operator*(const Comp2f& v, const Mat2f& m)
+    {
+        Comp2f result;
+        X(result) = X(v) * X(m[0]) + Y(v) * X(m[1]);
+        Y(result) = X(v) * Y(m[0]) + Y(v) * Y(m[1]);
+        return result;
+    }
+    Comp2f& operator*=(Comp2f& v, const Mat2f& m)
+    {
+        return v = v * m;
+    }
 }

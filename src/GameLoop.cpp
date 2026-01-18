@@ -15,7 +15,7 @@ namespace spiel
         stopTicks();
     };
 
-    size_t GameLoop::subscribeTickFunction(TickEvent func)
+    size_t GameLoop::subscribeTickFunctionRaw(TickEvent func)
     {
         std::lock_guard lock(substribtionMutex);
         size_t id;
@@ -167,5 +167,30 @@ namespace spiel
     void GameLoop::setTimeScale(float value)
     {
         timeScale = value;
+    }
+
+    SubscribtionGuard::SubscribtionGuard(GameLoop& loopRef, size_t idVal)
+        : loop(&loopRef), id(idVal) {}
+    
+    SubscribtionGuard::~SubscribtionGuard()
+    {
+        unsubscribe();
+    }
+
+    bool SubscribtionGuard::unsubscribe()
+    {
+        if(loop)
+        {
+            bool result = loop->removeTickFunction(static_cast<int>(id));
+            loop = nullptr;
+            return result;
+        }
+        return false;
+    }
+
+    SubscribtionGuard GameLoop::subscribeTickFunction(TickEvent func)
+    {
+        size_t id = subscribeTickFunctionRaw(std::move(func));
+        return SubscribtionGuard(*this, id);
     }
 }

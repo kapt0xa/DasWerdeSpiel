@@ -16,6 +16,7 @@ namespace spiel
     using TickEvent = std::function<void(float deltaTime)>;
     using SimpleEvent = std::function<void()>;
 
+    class SubscribtionGuard;
     class GameLoop
     {
     public:
@@ -27,10 +28,10 @@ namespace spiel
         ~GameLoop();
 
         // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)
-        size_t subscribeTickFunction(TickEvent func);
         // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)
         bool removeTickFunction(int id);
 
+        SubscribtionGuard subscribeTickFunction(TickEvent func);
         // u can use this method in addToQueue, it will not lead to dead lock
         void addToQueue(SimpleEvent func);
 
@@ -44,6 +45,10 @@ namespace spiel
 
         // result is not immediate
         bool stopTicks();
+    
+    private:
+
+        size_t subscribeTickFunctionRaw(TickEvent func);
 
         void tick(float deltaTime);
         void executeQueue();
@@ -70,5 +75,18 @@ namespace spiel
         std::mutex loopLaunchMutex;
         bool isTicking = false;
         std::atomic<bool> stopTickingFlag = false;
+    };
+
+    class SubscribtionGuard
+    {
+    private:
+        friend class GameLoop;
+        SubscribtionGuard(GameLoop& loopRef, size_t id);
+    public:
+        bool unsubscribe();
+        ~SubscribtionGuard();
+    private:
+        GameLoop* loop;
+        size_t id;
     };
 }

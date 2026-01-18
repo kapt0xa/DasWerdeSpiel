@@ -3,6 +3,12 @@
 #include <sstream>
 #include <exception>
 #include <array>
+#include <cmath>
+#include <random>
+#include <vector>
+#include <memory>
+#include <string>
+#include <chrono>
 
 #include <SFML/Graphics.hpp>
 
@@ -14,10 +20,11 @@ using namespace spiel;
 
 void compilerValidation();
 
+constexpr float pi = 3.14159265358979323846f;
+
 int main()
 {
-    compilerValidation();
-    return puzzleGameCode();
+    
 }
 
 
