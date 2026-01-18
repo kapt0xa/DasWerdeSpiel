@@ -23,7 +23,7 @@ namespace spiel
     const T& X( const std::complex<T>& c ) { return reinterpret_cast<const T(&)[2]>(c)[0]; }
     template<typename T>
     const T& Y( const std::complex<T>& c ) { return reinterpret_cast<const T(&)[2]>(c)[1]; }
-    Mat2f RotCompToMat(Comp2f rotation);
+    Mat2f rotCompToMat(Comp2f rotation);
     Mat2f operator*(const Mat2f& a, const Mat2f& b);
     float det(const Mat2f& m);
     float dot(const Comp2f& a, const Comp2f& b);
@@ -67,6 +67,24 @@ namespace spiel
         inline static sf::Vector2<T2>& ToSF(std::complex<T2>& val)
         {
             return reinterpret_cast<sf::Vector2<T2>&>(val);
+        }
+        inline static sf::Transform ToSFTransform(const Mat2f& m, const Comp2f& offset)
+        {
+            return sf::Transform(
+                X(m[0]), Y(m[0]), X(offset),
+                X(m[1]), Y(m[1]), Y(offset),
+                0.0f,    0.0f,    1.0f
+            );
+        }
+        inline static std::tuple<Mat2f, Comp2f> FromSFTransform(const sf::Transform& t)
+        {
+            return {
+                Mat2f{
+                    Comp2f{t.getMatrix()[0], t.getMatrix()[3]},
+                    Comp2f{t.getMatrix()[1], t.getMatrix()[4]}
+                },
+                Comp2f{t.getMatrix()[2], t.getMatrix()[5]}
+            };
         }
     };
 

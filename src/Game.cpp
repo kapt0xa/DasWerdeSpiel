@@ -59,4 +59,74 @@ namespace spiel
         game.defaultInit();
         return game;
     }
+
+    GameObjectProperty::GameObjectProperty(GameObject& ownerRef)
+        : owner(ownerRef)
+    {
+    }
+
+    bool GameObjectProperty::subscribe(GameLoop& loop)
+    {
+        if (subscribtion.unsubscribe())
+        {
+            subscribtion = loop.subscribeTickFunction(getTickFunction());
+            return true;
+        }
+        return false;
+    }
+
+    bool GameObjectProperty::unsubscribe()
+    {
+        return subscribtion.unsubscribe();
+    }
+
+    const Comp2f& Transform2D::getPosition() const
+    {
+        return pos;
+    }
+
+    void Transform2D::setPosition(const Comp2f& positionVal)
+    {
+        pos = positionVal;
+    }
+
+    const Comp2f& Transform2D::getRotation() const
+    {
+        return rot;
+    }
+
+    void Transform2D::setRotation(const Comp2f& rotationVal)
+    {
+        rot = rotationVal;
+    }
+
+    const Mat2f& Transform2D::getScale() const
+    {
+        return scale;
+    }
+
+    void Transform2D::setScale(const Mat2f& scaleVal)
+    {
+        scale = scaleVal;
+    }
+
+    Comp2f Transform2D::getScaleSimple() const
+    {
+        return Comp2f{X(scale[0]), Y(scale[1])};
+    }
+
+    void Transform2D::setScaleSimple(const Comp2f& scaleVal)
+    {
+        scale = {Comp2f{X(scaleVal), 0.0f}, Comp2f{0.0f, Y(scaleVal)}};
+    }
+
+    Mat2f Transform2D::getMatrix() const
+    {
+        return rotCompToMat(rot) * scale;
+    }
+
+    sf::Transform Transform2D::getSFTransform() const
+    {
+        return Cast<>::ToSFTransform(getMatrix(), pos);
+    }
 }

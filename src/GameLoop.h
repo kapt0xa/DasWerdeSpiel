@@ -83,10 +83,15 @@ namespace spiel
         friend class GameLoop;
         SubscribtionGuard(GameLoop& loopRef, size_t id);
     public:
+        SubscribtionGuard() = default;
+        SubscribtionGuard(const SubscribtionGuard&) = delete;
+        SubscribtionGuard& operator=(const SubscribtionGuard&) = delete;
+        SubscribtionGuard(SubscribtionGuard&& other) noexcept;
+        SubscribtionGuard& operator=(SubscribtionGuard&& other) noexcept;
         bool unsubscribe();
         ~SubscribtionGuard();
     private:
-        GameLoop* loop;
-        size_t id;
+        GameLoop* loop = nullptr;
+        size_t id = 0;
     };
 }

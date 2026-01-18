@@ -59,25 +59,23 @@ namespace spiel
     class Transform2D
     {
     public:
-        Transform2D();
-        ~Transform2D() = default;
-
         const Comp2f& getPosition() const;
         void setPosition(const Comp2f& positionVal);
 
         const Comp2f& getRotation() const;
         void setRotation(const Comp2f& rotationVal);
 
-        const std::array<Comp2f,2>& getScale() const;
-        void setScale(const std::array<Comp2f,2>& scaleVal);
+        const Mat2f& getScale() const;
+        void setScale(const Mat2f& scaleVal);
 
         Comp2f getScaleSimple() const;
         void setScaleSimple(const Comp2f& scaleVal);
 
-        std::array<Comp2f,2> getMatrix() const;
+        Mat2f getMatrix() const;
+        sf::Transform getSFTransform() const;
     private:
-        Comp2f pos;
-        Comp2f rot;
-        std::array<Comp2f,2> scale;
+        Comp2f pos = {0.0f, 0.0f};
+        Comp2f rot = {1.0f, 0.0f};
+        Mat2f scale = {Comp2f{1.0f, 0.0f}, Comp2f{0.0f, 1.0f}};
     };
 }

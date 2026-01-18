@@ -193,4 +193,22 @@ namespace spiel
         size_t id = subscribeTickFunctionRaw(std::move(func));
         return SubscribtionGuard(*this, id);
     }
+
+    SubscribtionGuard::SubscribtionGuard(SubscribtionGuard&& other) noexcept
+        : loop(other.loop), id(other.id)
+    {
+        other.loop = nullptr;
+    }
+
+    SubscribtionGuard& SubscribtionGuard::operator=(SubscribtionGuard&& other) noexcept
+    {
+        if(this != &other)
+        {
+            unsubscribe();
+            loop = other.loop;
+            id = other.id;
+            other.loop = nullptr;
+        }
+        return *this;
+    }
 }

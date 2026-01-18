@@ -162,7 +162,7 @@ namespace spiel
         return rectangle;
     }
 
-    Mat2f RotCompToMat(Comp2f rotation)
+    Mat2f rotCompToMat(Comp2f rotation)
     {
         Mat2f result;
         X(result[0]) = X(rotation);
