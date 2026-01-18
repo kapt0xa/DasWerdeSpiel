@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
-#include <SFML/Graphics.hpp>
 #include <array>
 
+#include "MySfml.h"
 #include "GameLoop.h"
 
 namespace spiel

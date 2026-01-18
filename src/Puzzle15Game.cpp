@@ -207,8 +207,10 @@ namespace spiel
 
         PuzzleRenderer renderer(game);
 
-        game.getLoop().subscribeTickFunctionRaw(renderer.getTickFunction());
-        game.getLoop().runTicks();
+        {
+            auto subscribtion = game.getLoop().subscribeTickFunction(renderer.getTickFunction());
+            game.getLoop().runTicks();
+        }
 
         std::cout << "Game is closed.\n";
 

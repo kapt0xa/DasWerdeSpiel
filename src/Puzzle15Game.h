@@ -39,7 +39,7 @@ namespace spiel
         Game& game;
         Puzzle15 puzzle;
         float step = 50;
-        uint fontSize = 20;
+        int fontSize = 20;
         Comp2i lastMovedTile;
         float moveProgress = 0.0f;
         float speed = 10;
