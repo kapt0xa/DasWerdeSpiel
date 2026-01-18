@@ -40,3 +40,22 @@ this is offline version. once U downloaded all requirements, U dont need interne
     "version": 4
 }
 ```
+
+``` c_cpp_properties.json
+{
+    "configurations": [
+        {
+            "name": "Windows",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/build/_deps/sfml-src/include"
+            ],
+            "compilerPath": "clang++",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "windows-clang-x64" 
+        }
+    ],
+    "version": 4
+}
+```
