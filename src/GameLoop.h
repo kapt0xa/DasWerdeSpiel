@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <variant>
 #include <functional> // using std::function<returnType(inputTypes)>
+#include <map>
 
 namespace spiel
 {
@@ -29,7 +30,7 @@ namespace spiel
 
         // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)
         // never use this method in the tick function, it will lead to dead lock. U can do that in queue (addToQueue)
-        bool removeTickFunction(int id);
+        bool removeTickFunction(size_t id);
 
         SubscribtionGuard subscribeTickFunction(TickEvent func);
         // u can use this method in addToQueue, it will not lead to dead lock
@@ -48,7 +49,7 @@ namespace spiel
     
     private:
 
-        size_t subscribeTickFunctionRaw(TickEvent func);
+        size_t subscribeTickFunctionRaw(TickEvent func, ptrdiff_t executionOrder = 0);
 
         void tick(float deltaTime);
         void executeQueue();
@@ -60,7 +61,8 @@ namespace spiel
 
         // dont change map into array, U tried once, and got problems with subscribtion ID's
         std::mutex substribtionMutex;
-        std::unordered_map<size_t,TickEvent> subscribedFunctions;
+        std::unordered_map<size_t, ptrdiff_t> subscribtionOrder;
+        std::map<ptrdiff_t, std::unordered_map<size_t, TickEvent>> subscribedFunctionsOrdered; // order of execution
         std::vector<size_t> deadIds;
         size_t nextId = 0;
 

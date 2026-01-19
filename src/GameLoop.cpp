@@ -15,7 +15,7 @@ namespace spiel
         stopTicks();
     };
 
-    size_t GameLoop::subscribeTickFunctionRaw(TickEvent func)
+    size_t GameLoop::subscribeTickFunctionRaw(TickEvent func, ptrdiff_t executionOrder)
     {
         std::lock_guard lock(substribtionMutex);
         size_t id;
@@ -28,18 +28,20 @@ namespace spiel
         {
             id = nextId++;
         }
+        auto& subscribedFunctions = subscribedFunctionsOrdered[executionOrder];
         subscribedFunctions.emplace(id, std::move(func));
         return id;
     }
 
-    bool GameLoop::removeTickFunction(int id)
+    bool GameLoop::removeTickFunction(size_t id)
     {
         std::lock_guard lock(substribtionMutex);
-        auto it = subscribedFunctions.find(static_cast<size_t>(id));
+        auto& subscribedFunctions = subscribedFunctionsOrdered[subscribtionOrder[id]];
+        auto it = subscribedFunctions.find(id);
         if(it != subscribedFunctions.end())
         {
             subscribedFunctions.erase(it);
-            deadIds.push_back(static_cast<size_t>(id));
+            deadIds.push_back(id);
             return true;
         }
         return false;
@@ -107,7 +109,7 @@ namespace spiel
 
     void GameLoop::addToQueue(SimpleEvent func)
     {
-        std::lock_guard<std::mutex> lock(loopLaunchMutex);
+        std::lock_guard<std::mutex> lock(queueMutex);
         queuedEvents.push_back(std::move(func));
     }
 
@@ -123,19 +125,25 @@ namespace spiel
         std::lock_guard<std::mutex> lock(substribtionMutex);
         if(isParallelExecutionPolicy)
         {
-            std::for_each(std::execution::par, subscribedFunctions.begin(), subscribedFunctions.end(),
-                            [deltaTime](const auto& entry)
-                            {
-                                entry.second(deltaTime);
-                            });
+            for(auto& [order, subscribedFunctions] : subscribedFunctionsOrdered)
+            {
+                std::for_each(std::execution::par, subscribedFunctions.begin(), subscribedFunctions.end(),
+                                [deltaTime](const auto& entry)
+                                {
+                                    entry.second(deltaTime);
+                                });
+            }
         }
         else
         {
-            std::for_each(std::execution::seq, subscribedFunctions.begin(), subscribedFunctions.end(),
-                            [deltaTime](const auto& entry)
-                            {
-                                entry.second(deltaTime);
-                            });
+            for(auto& [order, subscribedFunctions] : subscribedFunctionsOrdered)
+            {
+                std::for_each(std::execution::seq, subscribedFunctions.begin(), subscribedFunctions.end(),
+                                [deltaTime](const auto& entry)
+                                {
+                                    entry.second(deltaTime);
+                                });
+            }
         }
     }
 
