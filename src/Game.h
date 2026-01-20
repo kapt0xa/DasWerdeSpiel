@@ -36,7 +36,29 @@ namespace spiel
     class Transform2D;
     class GameObject
     {
+    public:
+        GameObject() = default;
+        GameObject(const GameObject&) = delete;
+        GameObject& operator=(const GameObject&) = delete;
+        GameObject(GameObject&&) = delete;
+        GameObject& operator=(GameObject&&) = delete;
+        ~GameObject() = default;
 
+        template<typename T, typename... Args>
+        T& addProperty(Args&&... args)
+        {
+            auto prop = std::make_unique<T>(*this, std::forward<Args>(args)...);
+            T& ref = *prop;
+            properties.push_back(std::move(prop));
+            return ref;
+        }
+
+        Transform2D& getTransform();
+
+        const Transform2D& getTransform() const;
+    private:
+        std::vector<std::unique_ptr<GameObjectProperty>> properties;
+        Transform2D transform;
     };
 
     class GameObjectProperty
@@ -52,7 +74,6 @@ namespace spiel
         virtual TickEvent getTickFunction() = 0;
     private:
         GameObject& owner;
-    protected:
         SubscribtionGuard subscribtion;
     };
 
