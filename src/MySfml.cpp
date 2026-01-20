@@ -1,12 +1,13 @@
 #include "MySfml.h"
 #include <array>
+#include <functional>
 
 namespace spiel
 {
     // 0..22 known type, -1 unknown
-    int getEventType(sf::Event& event)
+    ptrdiff_t getEventType(const sf::Event& event)
     {
-        int idx = -1;
+        ptrdiff_t idx = -1;
         event.visit([&](const auto& sub) {
             using T = std::decay_t<decltype(sub)>;
             if constexpr (std::is_same_v<T, sf::Event::Closed>)                 idx = 0;
@@ -61,7 +62,7 @@ namespace spiel
         "TouchEnded",
         "SensorChanged"
     };
-    std::string getEventTypeName(sf::Event& event)
+    std::string getEventTypeName(const sf::Event& event)
     {
 
         int idx = getEventType(event);
@@ -143,6 +144,15 @@ namespace spiel
         sf::CircleShape circle(radius, pointCount);
         circle.setOrigin({radius, radius});
         return circle;
+    }
+
+    sf::Rect<float> Cover(Comp2f a, Comp2f b)
+    {
+        float left = std::min(X(a), X(b));
+        float top = std::min(Y(a), Y(b));
+        float right = std::max(X(a), X(b));
+        float bottom = std::max(Y(a), Y(b));
+        return sf::Rect<float>({left, top}, {right - left, bottom - top});
     }
 
     sf::Rect<float> Cover(sf::Rect<float> a, sf::Rect<float> b)
