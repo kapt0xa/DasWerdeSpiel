@@ -29,7 +29,7 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 # boost QVM should be installed. watch Readme.md to see how to install the lib
-include_directories(${PROJECT_SOURCE_DIR}/../BoostQVM)
+include_directories(${PROJECT_SOURCE_DIR}/../BoostQVM/include)
 
 add_executable(DWS ${SOURCES})
 
