@@ -70,4 +70,4 @@ this is offline version. once U downloaded all requirements, U dont need interne
     }
     ```
 
--   the repository: https://github.com/kapt0xa/DasWerdeSpiel 
+-   this repository: https://github.com/kapt0xa/DasWerdeSpiel 
