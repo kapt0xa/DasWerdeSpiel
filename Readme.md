@@ -52,7 +52,7 @@
     }
     ```
     or for windows:
-    ``` c_cpp_properties.json
+    ```
     {
         "configurations": [
             {
