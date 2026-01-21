@@ -31,7 +31,7 @@
 
 # vscode setup:
 
--   for comrortable code editing: \
+-   for comfortable code editing: \
     c_cpp_properties.json:
     ``` 
     {
