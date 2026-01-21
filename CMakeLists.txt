@@ -28,6 +28,9 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
+# boost QVM should be installed. watch Readme.md to see how to install the lib
+include_directories(${PROJECT_SOURCE_DIR}/../BoostQVM)
+
 add_executable(DWS ${SOURCES})
 
 # Set the C++ standard to C++20
