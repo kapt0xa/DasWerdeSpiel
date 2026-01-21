@@ -14,7 +14,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "MySfml.h"
-#include <
+#include <boost/qvm_lite.hpp>
 
 using namespace spiel;
 

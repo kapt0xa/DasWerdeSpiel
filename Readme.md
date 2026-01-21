@@ -40,7 +40,8 @@
                 "name": "Linux",
                 "includePath": [
                     "${workspaceFolder}/**",
-                    "${workspaceFolder}/build/_deps/sfml-src/include"
+                    "${workspaceFolder}/build/_deps/sfml-src/include",
+                    "${workspaceFolder}/../BoostQVM/include"
                 ],
                 "compilerPath": "/usr/bin/g++",
                 "cStandard": "c17",
@@ -59,7 +60,8 @@
                 "name": "Windows",
                 "includePath": [
                     "${workspaceFolder}/**",
-                    "${workspaceFolder}/build/_deps/sfml-src/include"
+                    "${workspaceFolder}/build/_deps/sfml-src/include",
+                    "${workspaceFolder}/../BoostQVM/include"
                 ],
                 "compilerPath": "clang++",
                 "cStandard": "c17",
