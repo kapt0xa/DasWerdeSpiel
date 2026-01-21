@@ -1,24 +1,19 @@
 # game with c++ and SFML
 
 # requirements
--   ! instalation guide expects U to create build folder in the root folder of project
-    all commands are executed from this `./build` folder.
-    you can build in other way, but you may need to use other relative paths during setup.
+-   ! instalation guide expects U to create build folder in the root folder of project \n
+    all commands are executed from this `./build` folder. \n
+    you can build in other way, but you may need to use other relative paths during setup. \n
 
--   SFML 3.0 
-    the repository https://github.com/SFML/cmake-sfml-project
-    the exact version https://github.com/SFML/cmake-sfml-project/tree/98e2d5c3d5f0906a89606044b42f1b756fd7fd4b
-    to install lib:
-    ``` executed from {root_path}/build
-    git clone https://github.com/SFML/SFML.git ../../SFML
-    ```
+-   SFML 3.0 \n
+    the repository https://github.com/SFML/cmake-sfml-project \n
+    the exact version https://github.com/SFML/cmake-sfml-project/tree/98e2d5c3d5f0906a89606044b42f1b756fd7fd4b \n
+    to install lib: \n
+    `git clone https://github.com/SFML/SFML.git ../../SFML` (executed from {root_path}/build) \n
 
--   Boost QVM
-    to install it:
-    ``` executed from {root_path}/build
-    cd build
-    git clone https://github.com/boostorg/qvm.git ../../BoostQVM
-    ```
+-   Boost QVM \n
+    to install it: \n
+    `git clone https://github.com/boostorg/qvm.git ../../BoostQVM` (executed from {root_path}/build) \n
 
 this is offline version. once U downloaded all requirements, U dont need internet connection to rebuild the project with cmake. read Cmakelists.txt to understand how to setup external dependencies (ctrl+F "GIT").
 
@@ -35,42 +30,42 @@ this is offline version. once U downloaded all requirements, U dont need interne
 
 # vscode setup:
 
- for comrortable code editing:
-
-``` c_cpp_properties.json
-{
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/build/_deps/sfml-src/include"
-            ],
-            "compilerPath": "/usr/bin/g++",
-            "cStandard": "c17",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "linux-gcc-x64" 
-        }
-    ],
-    "version": 4
-}
-```
-
-``` c_cpp_properties.json
-{
-    "configurations": [
-        {
-            "name": "Windows",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/build/_deps/sfml-src/include"
-            ],
-            "compilerPath": "clang++",
-            "cStandard": "c17",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "windows-clang-x64" 
-        }
-    ],
-    "version": 4
-}
-```
+-   for comrortable code editing: \n
+    c_cpp_properties.json: \n
+    ``` 
+    {
+        "configurations": [
+            {
+                "name": "Linux",
+                "includePath": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/build/_deps/sfml-src/include"
+                ],
+                "compilerPath": "/usr/bin/g++",
+                "cStandard": "c17",
+                "cppStandard": "c++20",
+                "intelliSenseMode": "linux-gcc-x64" 
+            }
+        ],
+        "version": 4
+    }
+    ```
+    or for windows: \n
+    ``` c_cpp_properties.json
+    {
+        "configurations": [
+            {
+                "name": "Windows",
+                "includePath": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/build/_deps/sfml-src/include"
+                ],
+                "compilerPath": "clang++",
+                "cStandard": "c17",
+                "cppStandard": "c++20",
+                "intelliSenseMode": "windows-clang-x64" 
+            }
+        ],
+        "version": 4
+    }
+    ```
