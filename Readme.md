@@ -3,17 +3,17 @@
 # requirements
 -   ! instalation guide expects U to create build folder in the root folder of project \
     all commands are executed from this `./build` folder. \
-    you can build in other way, but you may need to use other relative paths during setup. \
+    you can build in other way, but you may need to use other relative paths during setup.
 
 -   SFML 3.0 \
     the repository https://github.com/SFML/cmake-sfml-project \
     the exact version https://github.com/SFML/cmake-sfml-project/tree/98e2d5c3d5f0906a89606044b42f1b756fd7fd4b \
     to install lib: \
-    `git clone https://github.com/SFML/SFML.git ../../SFML` (executed from {root_path}/build) \
+    `git clone https://github.com/SFML/SFML.git ../../SFML` (executed from {root_path}/build)
 
 -   Boost QVM \
     to install it: \
-    `git clone https://github.com/boostorg/qvm.git ../../BoostQVM` (executed from {root_path}/build) \
+    `git clone https://github.com/boostorg/qvm.git ../../BoostQVM` (executed from {root_path}/build)
 
 this is offline version. once U downloaded all requirements, U dont need internet connection to rebuild the project with cmake. read Cmakelists.txt to understand how to setup external dependencies (ctrl+F "GIT").
 
@@ -31,7 +31,7 @@ this is offline version. once U downloaded all requirements, U dont need interne
 # vscode setup:
 
 -   for comrortable code editing: \
-    c_cpp_properties.json: \
+    c_cpp_properties.json:
     ``` 
     {
         "configurations": [
@@ -50,7 +50,7 @@ this is offline version. once U downloaded all requirements, U dont need interne
         "version": 4
     }
     ```
-    or for windows: \
+    or for windows:
     ``` c_cpp_properties.json
     {
         "configurations": [
