@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "Vectors.h"
 #include "MySfml.h"
 
 namespace spiel
@@ -18,10 +19,10 @@ namespace spiel
 
         void setNone();
         sf::CircleShape& setCircle(float radius, int pointCount = 30);
-        sf::ConvexShape& setLine(Comp2f from, Comp2f to, float width = 1);
-        sf::RectangleShape& setRectangle(Comp2f angle1, Comp2f angle2);
+        sf::ConvexShape& setLine(Vec2f from, Vec2f to, float width = 1);
+        sf::RectangleShape& setRectangle(Vec2f angle1, Vec2f angle2);
         sf::RectangleShape& setRectangle(sf::Rect<float> rect);
-        sf::ConvexShape& setPolygon(const std::vector<Comp2f>& points);
+        sf::ConvexShape& setPolygon(const std::vector<Vec2f>& points);
     private:
         std::unique_ptr<sf::Shape> shape;
 
@@ -35,8 +36,8 @@ namespace spiel
             float radius;
             float rotation;
             uint32_t pointCount;
-            Comp2f position;
-            Comp2f origin;
+            Vec2f position;
+            Vec2f origin;
             sf::Color fillColor;
         };
         struct RectangleData

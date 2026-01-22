@@ -10,9 +10,6 @@
 
 namespace spiel
 {
-    using std::int32_t;
-    using std::uint32_t;
-
     using boost::qvm::mag;
     using boost::qvm::mag_sqr;
     using boost::qvm::normalize;
@@ -44,6 +41,10 @@ namespace spiel
     using boost::qvm::col_mat; // matrix with col
     using boost::qvm::row_mat; // matrix with row
     using boost::qvm::identity_mat;
+
+    using boost::qvm::vec;
+    using boost::qvm::quat;
+    using boost::qvm::mat;
 
     using Vec2f = boost::qvm::vec<float, 2>;
     using Vec2i = boost::qvm::vec<int32_t, 2>;
