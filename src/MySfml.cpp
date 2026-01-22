@@ -76,58 +76,13 @@ namespace spiel
         }
     }
 
-    float magnitude(Comp2f vec)
-    {
-        auto len2 = X(vec) * X(vec) + Y(vec) * Y(vec);
-        if(len2 < floatMinNormal)
-        {
-            if(X(vec) == 0 && Y(vec) == 0)
-            {
-                return 0;
-            }
-            vec *= (1 / floatHalfSmall);
-            len2 = X(vec) * X(vec) + Y(vec) * Y(vec);
-            if(len2 < floatMinNormal)
-            {
-                vec *= (1 / floatRelativeEpsilon);
-                len2 = X(vec) * X(vec) + Y(vec) * Y(vec);
-                return std::sqrt(len2) * floatRelativeEpsilon * floatHalfSmall;
-            }
-            return std::sqrt(len2) * floatHalfSmall;
-        }
-        else if(std::isinf(len2))
-        {
-            vec *= floatHalfSmall;
-            len2 = X(vec) * X(vec) + Y(vec) * Y(vec);
-            return std::sqrt(len2) * (1 / floatHalfSmall);
-        }
-        return std::sqrt(len2);
-    }
-
-    Comp2f normalized(Comp2f vec, Comp2f defaultVec)
-    {
-        float length = magnitude(vec);
-
-        if(length < floatMinNormal)
-        {
-            if(length == 0.0f)
-            {
-                return defaultVec;
-            }
-            vec *= (1 / floatHalfSmall);
-            return vec / magnitude(vec);
-        }
-        auto result = vec / length;
-        return result;
-    }
-
-    sf::ConvexShape Line(Comp2f from, Comp2f to, float width)
+    sf::ConvexShape Line(Vec2f from, Vec2f to, float width)
     {
         if(from == to)
         {
             return sf::ConvexShape();
         }
-        sf::Vector2f direction = Cast<>::ToSF(to - from).normalized();
+        sf::Vector2f direction = vectorCast::toSFML(normalized(to - from));
         sf::Vector2f normal = {-direction.y, direction.x};
 
         sf::ConvexShape line;
@@ -146,7 +101,7 @@ namespace spiel
         return circle;
     }
 
-    sf::Rect<float> Cover(Comp2f a, Comp2f b)
+    sf::Rect<float> Cover(Vec2f a, Vec2f b)
     {
         float left = std::min(X(a), X(b));
         float top = std::min(Y(a), Y(b));
@@ -170,53 +125,5 @@ namespace spiel
         rectangle.setOrigin(rect.size * 0.5f);
         rectangle.setPosition(rect.position + rect.size * 0.5f);
         return rectangle;
-    }
-
-    Mat2f rotCompToMat(Comp2f rotation)
-    {
-        Mat2f result;
-        X(result[0]) = X(rotation);
-        Y(result[0]) = -Y(rotation);
-        X(result[1]) = Y(rotation);
-        Y(result[1]) = X(rotation);
-        return result;
-    }
-    Mat2f operator*(const Mat2f& a, const Mat2f& b)
-    {
-        Mat2f result;
-        X(result[0]) = X(a[0]) * X(b[0]) + Y(a[0]) * X(b[1]);
-        Y(result[0]) = X(a[0]) * Y(b[0]) + Y(a[0]) * Y(b[1]);
-        X(result[1]) = X(a[1]) * X(b[0]) + Y(a[1]) * X(b[1]);
-        Y(result[1]) = X(a[1]) * Y(b[0]) + Y(a[1]) * Y(b[1]);
-        return result;
-    }
-    float det(const Mat2f& m)
-    {
-        return X(m[0]) * Y(m[1]) - Y(m[0]) * X(m[1]);
-    }
-    float dot(const Comp2f& a, const Comp2f& b)
-    {
-        return X(a) * X(b) + Y(a) * Y(b);
-    }
-    Mat2f inverse(const Mat2f& m)
-    {
-        float determinant = det(m);
-        Mat2f result;
-        X(result[0]) =  Y(m[1]) / determinant;
-        Y(result[0]) = -Y(m[0]) / determinant;
-        X(result[1]) = -X(m[1]) / determinant;
-        Y(result[1]) =  X(m[0]) / determinant;
-        return result;
-    }
-    Comp2f operator*(const Comp2f& v, const Mat2f& m)
-    {
-        Comp2f result;
-        X(result) = X(v) * X(m[0]) + Y(v) * X(m[1]);
-        Y(result) = X(v) * Y(m[0]) + Y(v) * Y(m[1]);
-        return result;
-    }
-    Comp2f& operator*=(Comp2f& v, const Mat2f& m)
-    {
-        return v = v * m;
     }
 }

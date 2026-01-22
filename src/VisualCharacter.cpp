@@ -1,4 +1,4 @@
-#include "VisualVharacter.h"
+#include "VisualCharacter.h"
 #include <sstream>
 
 namespace spiel
