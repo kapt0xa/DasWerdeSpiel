@@ -20,6 +20,5 @@ using namespace spiel;
 
 int main()
 {
-    std::cout << "Test vector: (" << test.a[0] << ", " << test.a[1] << ")\n";
     sf::RenderWindow window(sf::VideoMode({800, 600}), "My SFML Window");
 }
