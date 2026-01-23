@@ -40,23 +40,23 @@ namespace spiel
         return *this;
     }
 
-    Puzzle15::Puzzle15(Comp2i size_val)
+    Puzzle15::Puzzle15(Vec2i size_val)
         : size(size_val)
-        , board(size.real() * size.imag())
-        , emptyTilePos({size.real() - 1, size.imag() - 1})
+        , board(X(size) * Y(size))
+        , emptyTilePos({X(size) - 1, Y(size) - 1})
         , emptyTileVal(mapPosToIndex(emptyTilePos))
         , debugOs(nullptr)
     {
-        assert(size.real() >= 2 && size.imag() >= 2 && "Puzzle size must be at least 2x2");
+        assert(X(size) >= 2 && Y(size) >= 2 && "Puzzle size must be at least 2x2");
         for (int i = 0; i < static_cast<int>(board.size()); ++i)
         {
             board[i] = i;
         }
     }
 
-    bool Puzzle15::moveTile(Comp2i direction)
+    bool Puzzle15::moveTile(Vec2i direction)
     {
-        Comp2i targetPos = emptyTilePos - direction;
+        Vec2i targetPos = emptyTilePos - direction;
         if(!isValidPos(targetPos))
             return false;
 
@@ -65,23 +65,23 @@ namespace spiel
         return true;
     }
 
-    bool Puzzle15::isValidPos(Comp2i pos) const
+    bool Puzzle15::isValidPos(Vec2i pos) const
     {
-        return (pos.real() >= 0 && pos.real() < size.real() &&
-                pos.imag() >= 0 && pos.imag() < size.imag());
+        return (X(pos) >= 0 && X(pos) < X(size) &&
+                Y(pos) >= 0 && Y(pos) < Y(size));
     }
 
-    Comp2i Puzzle15::mapIndexToPos(int index) const
+    Vec2i Puzzle15::mapIndexToPos(int index) const
     {
-        return {index % size.real(), index / size.real()};
+        return {index % X(size), index / X(size)};
     }
 
-    int Puzzle15::mapPosToIndex(Comp2i pos) const
+    int Puzzle15::mapPosToIndex(Vec2i pos) const
     {
-        return static_cast<int>(pos.imag() * size.real() + pos.real());
+        return static_cast<int>(Y(pos) * X(size) + X(pos));
     }
 
-    const Comp2i& Puzzle15::getSize() const
+    const Vec2i& Puzzle15::getSize() const
     {
         return size;
     }
@@ -91,7 +91,7 @@ namespace spiel
         return board;
     }
 
-    const Comp2i& Puzzle15::getEmptyTilePos() const
+    const Vec2i& Puzzle15::getEmptyTilePos() const
     {
         return emptyTilePos;
     }
@@ -99,7 +99,7 @@ namespace spiel
     void Puzzle15::shuffle()
     {
         auto rng_raw = std::default_random_engine(static_cast<unsigned int>(std::time(nullptr)));
-        int fieldSize = static_cast<int>(size.real() * size.imag());
+        int fieldSize = static_cast<int>(X(size) * Y(size));
         std::uniform_int_distribution<int> rng(0, fieldSize - 1);
 
         bool odd_swaps = true;
@@ -120,7 +120,7 @@ namespace spiel
 
         // count oddity of swaps required to move empty tile to correct position
         auto delta = newEmptyTilePos - emptyTilePos;
-        odd_swaps = (delta.real() + delta.imag()) % 2 == 0 ? odd_swaps : !odd_swaps;
+        odd_swaps = (X(delta) + Y(delta)) % 2 == 0 ? odd_swaps : !odd_swaps;
 
         // update empty tile position
         emptyTilePos = newEmptyTilePos;
@@ -129,29 +129,29 @@ namespace spiel
         if(!odd_swaps)
         {
             // perform a simple swap to fix parity. avoid swapping the empty tile
-            if(emptyTilePos.real() != 0)
+            if(X(emptyTilePos) != 0)
             {
-                std::swap((*this)[Comp2i{0,0}], (*this)[Comp2i{0,1}]);
+                std::swap((*this)[Vec2i{0,0}], (*this)[Vec2i{0,1}]);
             }
             else
             {
-                std::swap((*this)[Comp2i{1,0}], (*this)[Comp2i{1,1}]);
+                std::swap((*this)[Vec2i{1,0}], (*this)[Vec2i{1,1}]);
             }
         }
     }
 
-    int Puzzle15::operator[](Comp2i pos) const
+    int Puzzle15::operator[](Vec2i pos) const
     {
         return const_cast<Puzzle15*>(this)->operator[](pos);
     }
 
-    int& Puzzle15::operator[](Comp2i pos)
+    int& Puzzle15::operator[](Vec2i pos)
     {
         assert(isValidPos(pos) && "Position out of bounds");
         return  board[mapPosToIndex(pos)];
     }
 
-    Comp2i Puzzle15::getSizeCp() const
+    Vec2i Puzzle15::getSizeCp() const
     {
         return getSize();
     }
@@ -161,20 +161,20 @@ namespace spiel
         return getBoard();
     }
 
-    Comp2i Puzzle15::getEmptyTilePosCp() const
+    Vec2i Puzzle15::getEmptyTilePosCp() const
     {
         return getEmptyTilePos();
     }
 
-    int Puzzle15::DistMaskAt(Comp2i pos) const
+    int Puzzle15::DistMaskAt(Vec2i pos) const
     {
         int val = (*this)[pos];
 
-        Comp2i delta = mapIndexToPos(val) - pos;
-        return static_cast<int>(std::abs(delta.real()) + std::abs(delta.imag()));
+        Vec2i delta = mapIndexToPos(val) - pos;
+        return static_cast<int>(std::abs(X(delta)) + std::abs(Y(delta)));
     }
 
-    Comp2i Puzzle15::OffetrsMaskAt(Comp2i pos) const
+    Vec2i Puzzle15::OffetsMaskAt(Vec2i pos) const
     {
         int val = (*this)[pos];
         return mapIndexToPos(val) - pos;
@@ -185,9 +185,9 @@ namespace spiel
         std::vector<int> maskedBoard;
         maskedBoard.reserve(board.size());
 
-        for(int y = 0; y < size.imag(); ++y)
+        for(int y = 0; y < Y(size); ++y)
         {
-            for(int x = 0; x < size.real(); ++x)
+            for(int x = 0; x < X(size); ++x)
             {
                 maskedBoard.push_back(DistMaskAt({x, y}));
             }
@@ -196,16 +196,16 @@ namespace spiel
         return maskedBoard;
     }
 
-    std::vector<Comp2i> Puzzle15::getBoardWithMaskOffets() const
+    std::vector<Vec2i> Puzzle15::getBoardWithMaskOffets() const
     {
-        std::vector<Comp2i> maskedBoard;
+        std::vector<Vec2i> maskedBoard;
         maskedBoard.reserve(board.size());
 
-        for(int y = 0; y < size.imag(); ++y)
+        for(int y = 0; y < Y(size); ++y)
         {
-            for(int x = 0; x < size.real(); ++x)
+            for(int x = 0; x < X(size); ++x)
             {
-                maskedBoard.push_back(OffetrsMaskAt({x, y}));
+                maskedBoard.push_back(OffetsMaskAt({x, y}));
             }
         }
 
@@ -226,7 +226,7 @@ namespace spiel
 
     bool Puzzle15::isSolvable() const
     {
-        int fieldSize = static_cast<int>(size.real() * size.imag());
+        int fieldSize = static_cast<int>(X(size) * Y(size));
 
         auto boardCopy = board;
 
@@ -240,12 +240,12 @@ namespace spiel
         }
 
         auto delta = emptyTilePos - mapIndexToPos(emptyTileVal);
-        odd_swaps = (delta.real() + delta.imag()) % 2 == 0 ? odd_swaps : !odd_swaps;
+        odd_swaps = (X(delta) + Y(delta)) % 2 == 0 ? odd_swaps : !odd_swaps;
 
         return odd_swaps;
     }
 
-    int Puzzle15::AtCp(Comp2i pos) const
+    int Puzzle15::AtCp(Vec2i pos) const
     {
         return (*this)[pos];
     }

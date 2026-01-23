@@ -62,13 +62,13 @@ namespace spiel
         return static_cast<sf::CircleShape&>(*shape);
     }
 
-    sf::ConvexShape& VisualDetail::setLine(Comp2f from, Comp2f to, float width = 1)
+    sf::ConvexShape& VisualDetail::setLine(Vec2f from, Vec2f to, float width = 1)
     {
         shape = std::make_unique<sf::ConvexShape>(Line(from, to, width));
         return static_cast<sf::ConvexShape&>(*shape);
     }
 
-    sf::RectangleShape& VisualDetail::setRectangle(Comp2f angle1, Comp2f angle2)
+    sf::RectangleShape& VisualDetail::setRectangle(Vec2f angle1, Vec2f angle2)
     {
         shape = std::make_unique<sf::RectangleShape>(Rectangle(Cover(angle1, angle2)));
         return static_cast<sf::RectangleShape&>(*shape);
@@ -80,12 +80,12 @@ namespace spiel
         return static_cast<sf::RectangleShape&>(*shape);
     }
 
-    sf::ConvexShape& VisualDetail::setPolygon(const std::vector<Comp2f>& points)
+    sf::ConvexShape& VisualDetail::setPolygon(const std::vector<Vec2f>& points)
     {
         shape = std::make_unique<sf::ConvexShape>(sf::ConvexShape(points.size()));
         for(size_t i = 0; i < points.size(); ++i)
         {
-            static_cast<sf::ConvexShape&>(*shape).setPoint(i, Cast<>::ToSF(points[i]));
+            static_cast<sf::ConvexShape&>(*shape).setPoint(i, vectorCast::toSFML(points[i]));
         }
         return static_cast<sf::ConvexShape&>(*shape);
     }

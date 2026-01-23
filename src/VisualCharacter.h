@@ -11,7 +11,7 @@ namespace spiel
 {
     class VisualDetail
     {
-        void saveByte(std::ostream& out);
+        void saveByte(std::ostream& out, bool ignoreUnknown);
         bool loadByte(std::istream& in);
 
         inline sf::Shape& getShape() { return *shape; }
@@ -26,10 +26,10 @@ namespace spiel
     private:
         std::unique_ptr<sf::Shape> shape;
 
-        static constexpr uint16_t shapeTypeNone = 0;
-        static constexpr uint16_t shapeTypeCircle = 1;
-        static constexpr uint16_t shapeTypeRectangle = 2;
-        static constexpr uint16_t shapeTypePolygon = 3;
+        static constexpr int16_t shapeTypeNone = 0;
+        static constexpr int16_t shapeTypeCircle = 1;
+        static constexpr int16_t shapeTypeRectangle = 2;
+        static constexpr int16_t shapeTypePolygon = 3;
 
         struct CircleData
         {

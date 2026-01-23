@@ -10,35 +10,35 @@ namespace spiel
     class Puzzle15
     {
     public:
-        explicit inline Puzzle15() : Puzzle15(Comp2i{4, 4}) {}
+        explicit inline Puzzle15() : Puzzle15(Vec2i{4, 4}) {}
         Puzzle15(Puzzle15 const&);
         Puzzle15& operator=(Puzzle15 const&);
         Puzzle15(Puzzle15&&);
         Puzzle15& operator=(Puzzle15&&);
         ~Puzzle15() = default;
 
-        Puzzle15(Comp2i size_val);
+        Puzzle15(Vec2i size_val);
 
-        static constexpr Comp2i up = {0, -1};
-        static constexpr Comp2i down = {0, 1};
-        static constexpr Comp2i left = {-1, 0};
-        static constexpr Comp2i right = {1, 0};
+        static constexpr Vec2i up = {0, -1};
+        static constexpr Vec2i down = {0, 1};
+        static constexpr Vec2i left = {-1, 0};
+        static constexpr Vec2i right = {1, 0};
 
-        bool moveTile(Comp2i direction);
+        bool moveTile(Vec2i direction);
 
-        Comp2i mapIndexToPos(int index) const;
-        int mapPosToIndex(Comp2i pos) const;
+        Vec2i mapIndexToPos(int index) const;
+        int mapPosToIndex(Vec2i pos) const;
 
-        Comp2i getSizeCp() const;
+        Vec2i getSizeCp() const;
         std::vector<int> getBoardCp() const;
-        Comp2i getEmptyTilePosCp() const;
+        Vec2i getEmptyTilePosCp() const;
 
         std::vector<int> getBoardWithMaskDist() const;
-        std::vector<Comp2i> getBoardWithMaskOffets() const;
+        std::vector<Vec2i> getBoardWithMaskOffets() const;
 
-        int AtCp(Comp2i pos) const;
-        int DistMaskAt(Comp2i pos) const;
-        Comp2i OffetrsMaskAt(Comp2i pos) const;
+        int AtCp(Vec2i pos) const;
+        int DistMaskAt(Vec2i pos) const;
+        Vec2i OffetsMaskAt(Vec2i pos) const;
 
         void shuffle();
 
@@ -48,19 +48,19 @@ namespace spiel
 
     private:
 
-        const Comp2i& getSize() const;
+        const Vec2i& getSize() const;
         const std::vector<int>& getBoard() const;
-        const Comp2i& getEmptyTilePos() const;
+        const Vec2i& getEmptyTilePos() const;
 
-        int operator[](Comp2i pos) const;
-        int& operator[](Comp2i pos);
+        int operator[](Vec2i pos) const;
+        int& operator[](Vec2i pos);
 
-        bool isValidPos(Comp2i pos) const;
+        bool isValidPos(Vec2i pos) const;
 
     private:
-        Comp2i size;
+        Vec2i size;
         std::vector<int> board;
-        Comp2i emptyTilePos;
+        Vec2i emptyTilePos;
         const int emptyTileVal;
     public:
         mutable std::ostream* debugOs = nullptr;
