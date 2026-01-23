@@ -3,6 +3,64 @@
 
 namespace spiel
 {
+    namespace binarySaveLoad
+    {
+        struct FloatWrapper
+        {
+            float value;
+            FloatWrapper(float&& v) : value(v) {}
+        };
+        struct FloatRefWrapper
+        {
+            float& value;
+            FloatRefWrapper(float& v) : value(v) {}
+        };
+        std::ostream& operator<<(std::ostream& out, const sf::Vector2f& vec)
+        {
+            out.write(reinterpret_cast<const char*>(&vec.x), sizeof(vec.x));
+            out.write(reinterpret_cast<const char*>(&vec.y), sizeof(vec.y));
+            return out;
+        }
+        std::ostream& operator<<(std::ostream& out, const sf::Color& color)
+        {
+            uint32_t colorInt = color.toInteger();
+            out.write(reinterpret_cast<const char*>(&colorInt), sizeof(colorInt));
+            return out;
+        }
+        std::ostream& operator<<(std::ostream& out, FloatWrapper value)
+        {
+            out.write(reinterpret_cast<const char*>(&value.value), sizeof(value.value));
+            return out;
+        }
+        std::ostream& operator<<(std::ostream& out, FloatRefWrapper value)
+        {
+            out.write(reinterpret_cast<const char*>(&value.value), sizeof(value.value));
+            return out;
+        }
+        std::istream& operator>>(std::istream& in, sf::Vector2f& vec)
+        {
+            in.read(reinterpret_cast<char*>(&vec.x), sizeof(vec.x));
+            in.read(reinterpret_cast<char*>(&vec.y), sizeof(vec.y));
+            return in;
+        }
+        std::istream& operator>>(std::istream& in, sf::Color& color)
+        {
+            uint32_t colorInt;
+            in.read(reinterpret_cast<char*>(&colorInt), sizeof(colorInt));
+            color = sf::Color(colorInt);
+            return in;
+        }
+        std::istream& operator>>(std::istream& in, FloatWrapper& value)
+        {
+            in.read(reinterpret_cast<char*>(&value.value), sizeof(value.value));
+            return in;
+        }
+        std::istream& operator>>(std::istream& in, FloatRefWrapper& value)
+        {
+            in.read(reinterpret_cast<char*>(&value.value), sizeof(value.value));
+            return in;
+        }
+    }
     void VisualDetail::saveByte(std::ostream& out)
     {
         uint16_t dataSize;

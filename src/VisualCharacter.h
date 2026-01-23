@@ -11,7 +11,7 @@ namespace spiel
 {
     class VisualDetail
     {
-        void saveByte(std::ostream& out, bool ignoreUnknown);
+        void saveByte(std::ostream& out);
         bool loadByte(std::istream& in);
 
         inline sf::Shape& getShape() { return *shape; }
@@ -31,19 +31,29 @@ namespace spiel
         static constexpr int16_t shapeTypeRectangle = 2;
         static constexpr int16_t shapeTypePolygon = 3;
 
-        struct CircleData
-        {
-            float radius;
-            float rotation;
-            uint32_t pointCount;
-            Vec2f position;
-            Vec2f origin;
-            sf::Color fillColor;
-        };
-        struct RectangleData
-        {
-            float 
-        };
-        
+        // struct ShapeData
+        // {
+        //     Vec2f position;
+        //     Vec2f origin;
+        //     float rotation{0};
+        //     Vec2f scale{1, 1};
+        //     uint32_t fillColor{static_cast<uint32_t>(sf::Color::Green.toInteger())};
+        //     uint32_t outlineColor{0};
+        //     float outlineThickness{0};
+        // };
+
+        // struct CircleData : public ShapeData
+        // {
+        //     float radius;
+        //     uint32_t pointCount{30};
+        // };
+        // struct RectangleData : public ShapeData
+        // {
+        //     Vec2f size;
+        // };
+        // struct PolygonData : public ShapeData
+        // {
+        //     std::vector<Vec2f> points;
+        // };
     };
 } // namespace spiel
