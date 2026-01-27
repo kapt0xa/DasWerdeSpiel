@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <stdexcept>
 
 #include "Vectors.h"
 #include "MySfml.h"
@@ -11,11 +12,13 @@ namespace spiel
 {
     class VisualDetail
     {
-        void saveByte(std::ostream& out);
+    public:
+        void saveByte(std::ostream& out) const;
         void loadByte(std::istream& in);
 
-        inline sf::Shape& getShape() { return *shape; }
-        inline const sf::Shape& getShape() const { return *shape; }
+        inline bool isNone() const { return shape == nullptr; }
+        inline sf::Shape& getShape() { if(isNone()) throw std::runtime_error("VisualDetail::getShape: Shape is None"); return *shape; }
+        inline const sf::Shape& getShape() const { if(isNone()) throw std::runtime_error("VisualDetail::getShape: Shape is None"); return *shape; }
 
         void setNone();
         sf::CircleShape& setCircle(float radius, int pointCount = 30);
@@ -30,30 +33,21 @@ namespace spiel
         static constexpr int16_t shapeTypeCircle = 1;
         static constexpr int16_t shapeTypeRectangle = 2;
         static constexpr int16_t shapeTypePolygon = 3;
+    };
+    class VisualCharacter
+    {
+    public:
+        void saveByte(std::ostream& out);
+        void loadByte(std::istream& in);
 
-        // struct ShapeData
-        // {
-        //     Vec2f position;
-        //     Vec2f origin;
-        //     float rotation{0};
-        //     Vec2f scale{1, 1};
-        //     uint32_t fillColor{static_cast<uint32_t>(sf::Color::Green.toInteger())};
-        //     uint32_t outlineColor{0};
-        //     float outlineThickness{0};
-        // };
+        inline VisualDetail& getDetail(size_t index) { return details.at(index); }
+        inline const VisualDetail& getDetail(size_t index) const { return details.at(index); }
 
-        // struct CircleData : public ShapeData
-        // {
-        //     float radius;
-        //     uint32_t pointCount{30};
-        // };
-        // struct RectangleData : public ShapeData
-        // {
-        //     Vec2f size;
-        // };
-        // struct PolygonData : public ShapeData
-        // {
-        //     std::vector<Vec2f> points;
-        // };
+        inline size_t getDetailCount() const { return details.size(); }
+        inline void setDetailCount(size_t count) { details.resize(count); }
+
+        std::vector<size_t> findNoneDetails() const;
+    private:
+        std::vector<VisualDetail> details;
     };
 } // namespace spiel

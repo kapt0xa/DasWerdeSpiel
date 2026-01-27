@@ -122,7 +122,7 @@ namespace spiel
         shape.setRotation(sf::radians(rotationRadians));
         shape.setScale(scale);
     }
-    void VisualDetail::saveByte(std::ostream& out)
+    void VisualDetail::saveByte(std::ostream& out) const
     {
         using namespace binarySaveLoad;
 
@@ -183,6 +183,7 @@ namespace spiel
            >> TRefWrapper(shapeType);
 
         std::string bufStr;
+        assert(static_cast<size_t>(dataSize) >= sizeof(shapeType) + sizeof(dataSize) );
         bufStr.resize(static_cast<size_t>(dataSize) - sizeof(shapeType) - sizeof(dataSize));
         in.read(bufStr.data(), bufStr.size());
         std::stringstream buf(std::move(bufStr));
@@ -271,4 +272,42 @@ namespace spiel
         return static_cast<sf::ConvexShape&>(*shape);
     }
 
+    void VisualCharacter::saveByte(std::ostream& out)
+    {
+        using namespace binarySaveLoad;
+
+        uint32_t detailCount = static_cast<uint32_t>(details.size());
+        assert(details.size() <= UINT32_MAX);
+        out << TRefWrapper(detailCount);
+        for(auto& detail : details)
+        {
+            detail.saveByte(out);
+        }
+    }
+
+    void VisualCharacter::loadByte(std::istream& in)
+    {
+        using namespace binarySaveLoad;
+
+        uint32_t detailCount;
+        in >> TRefWrapper(detailCount);
+        details.resize(detailCount);
+        for(auto& d : details)
+        {
+            d.loadByte(in);
+        }
+    }
+
+    std::vector<size_t> VisualCharacter::findNoneDetails() const
+    {
+        std::vector<size_t> noneIndices;
+        for(size_t i = 0; i < details.size(); ++i)
+        {
+            if(details[i].getShape().getPointCount() == 0)
+            {
+                noneIndices.push_back(i);
+            }
+        }
+        return noneIndices;
+    }
 } // namespace spiel
