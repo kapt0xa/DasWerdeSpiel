@@ -49,6 +49,12 @@ namespace spiel
             in.read(reinterpret_cast<char*>(&vec.y), sizeof(vec.y));
             return in;
         }
+        std::istream& operator>>(std::istream& in, Vec2f& vec)
+        {
+            in.read(reinterpret_cast<char*>(&X(vec)), sizeof(X(vec)));
+            in.read(reinterpret_cast<char*>(&Y(vec)), sizeof(Y(vec)));
+            return in;
+        }
         std::istream& operator>>(std::istream& in, sf::Color& color)
         {
             uint32_t colorInt;
@@ -156,8 +162,8 @@ namespace spiel
         }
         else
         {
-            // Unknown shape type
             throw std::runtime_error("VisualDetail::saveByte: Unknown shape type");
+            // Unknown shape type
         }
         std::string bufStr = buf.str();
         dataSize = static_cast<uint16_t>(bufStr.size() + sizeof(shapeType) + sizeof(dataSize));
@@ -166,62 +172,64 @@ namespace spiel
             << TRefWrapper(shapeType)
             << bufStr;
     }
-    bool VisualDetail::loadByte(std::istream& in)
+    void VisualDetail::loadByte(std::istream& in)
     {
-        check this copilot written
-        // using namespace binarySaveLoad;
+        using namespace binarySaveLoad;
 
-        // uint16_t dataSize;
-        // uint16_t shapeType;
+        uint16_t dataSize;
+        uint16_t shapeType;
 
-        // in >> TRefWrapper(dataSize)
-        //    >> TRefWrapper(shapeType);
+        in >> TRefWrapper(dataSize)
+           >> TRefWrapper(shapeType);
 
-        // switch(shapeType)
-        // {
-        //     case shapeTypeNone:
-        //     {
-        //         setNone();
-        //         break;
-        //     }
-        //     case shapeTypeCircle:
-        //     {
-        //         float radius;
-        //         uint32_t pointCount;
-        //         in >> TRefWrapper(radius)
-        //            >> TRefWrapper(pointCount);
-        //         auto& circle = setCircle(radius, static_cast<int>(pointCount));
-        //         loadByteShape(in, circle);
-        //         break;
-        //     }
-        //     case shapeTypeRectangle:
-        //     {
-        //         sf::Vector2f size;
-        //         in >> TRefWrapper(size);
-        //         auto& rectangle = setRectangle(sf::Rect<float>({0, 0}, size));
-        //         loadByteShape(in, rectangle);
-        //         break;
-        //     }
-        //     case shapeTypePolygon:
-        //     {
-        //         uint32_t pointCount;
-        //         in >> TRefWrapper(pointCount);
-        //         std::vector<Vec2f> points(pointCount);
-        //         for(uint32_t i = 0; i < pointCount; ++i)
-        //         {
-        //             in >> points[i];
-        //         }
-        //         auto& polygon = setPolygon(points);
-        //         loadByteShape(in, polygon);
-        //         break;
-        //     }
-        //     default:
-        //     {
-        //         // Unknown shape type
-        //         throw std::runtime_error("VisualDetail::loadByte: Unknown shape type");
-        //     }
-        // }
-        // return true;
+        std::string bufStr;
+        bufStr.resize(static_cast<size_t>(dataSize) - sizeof(shapeType) - sizeof(dataSize));
+        in.read(bufStr.data(), bufStr.size());
+        std::stringstream buf(std::move(bufStr));
+
+        switch(shapeType)
+        {
+            case shapeTypeNone:
+            {
+                setNone();
+                break;
+            }
+            case shapeTypeCircle:
+            {
+                float radius;
+                uint32_t pointCount;
+                buf >> TRefWrapper(radius)
+                    >> TRefWrapper(pointCount);
+                auto& circle = setCircle(radius, static_cast<int>(pointCount));
+                loadByteShape(buf, circle);
+                break;
+            }
+            case shapeTypeRectangle:
+            {
+                sf::Vector2f size;
+                buf >> TRefWrapper(size);
+                auto& rectangle = setRectangle(sf::Rect<float>({0, 0}, size));
+                loadByteShape(buf, rectangle);
+                break;
+            }
+            case shapeTypePolygon:
+            {
+                uint32_t pointCount;
+                buf >> TRefWrapper(pointCount);
+                std::vector<Vec2f> points(pointCount);
+                for(uint32_t i = 0; i < pointCount; ++i)
+                {
+                    buf >> points[i];
+                }
+                auto& polygon = setPolygon(points);
+                loadByteShape(buf, polygon);
+                break;
+            }
+            default:
+            {
+                throw std::runtime_error("VisualDetail::loadByte: Unknown shape type");
+            }
+        }
     }
 
     void VisualDetail::setNone()

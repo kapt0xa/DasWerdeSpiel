@@ -12,7 +12,7 @@ namespace spiel
     class VisualDetail
     {
         void saveByte(std::ostream& out);
-        bool loadByte(std::istream& in);
+        void loadByte(std::istream& in);
 
         inline sf::Shape& getShape() { return *shape; }
         inline const sf::Shape& getShape() const { return *shape; }
