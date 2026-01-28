@@ -1,6 +1,7 @@
 #include "MySfml.h"
 #include <array>
 #include <functional>
+#include <filesystem>
 
 namespace spiel
 {
@@ -125,5 +126,11 @@ namespace spiel
         rectangle.setOrigin(rect.size * 0.5f);
         rectangle.setPosition(rect.position + rect.size * 0.5f);
         return rectangle;
+    }
+
+    sf::Font& GetDefaultFont()
+    {
+        sf::Font defaultFont(std::filesystem::path("../resrc/UbuntuSansMono[wght].ttf"));
+        return defaultFont;
     }
 }
