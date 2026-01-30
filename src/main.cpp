@@ -21,9 +21,9 @@ using namespace spiel;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "My SFML Window");
-
-    window.setView({{0.f, 0.f}, {800.f, 600.f}});
+    sf::View view({0.f, 0.f}, {800.f, 600.f});
+    sf::RenderWindow window(sf::VideoMode(static_cast<sf::Vector2u>(view.getSize())), "My SFML Window");
+    window.setView(view);
 
     DefaultButton button("Click Me", {200.f, 80.f});
     button.asTransformable().setPosition({0.f, 0.f});
