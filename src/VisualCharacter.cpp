@@ -238,13 +238,13 @@ namespace spiel
         shape.reset();
     }
 
-    sf::CircleShape& VisualDetail::setCircle(float radius, int pointCount = 30)
+    sf::CircleShape& VisualDetail::setCircle(float radius, int pointCount)
     {
         shape = std::make_unique<sf::CircleShape>(radius, pointCount);
         return static_cast<sf::CircleShape&>(*shape);
     }
 
-    sf::ConvexShape& VisualDetail::setLine(Vec2f from, Vec2f to, float width = 1)
+    sf::ConvexShape& VisualDetail::setLine(Vec2f from, Vec2f to, float width)
     {
         shape = std::make_unique<sf::ConvexShape>(Line(from, to, width));
         return static_cast<sf::ConvexShape&>(*shape);

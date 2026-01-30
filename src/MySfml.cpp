@@ -130,7 +130,7 @@ namespace spiel
 
     sf::Font& GetDefaultFont()
     {
-        sf::Font defaultFont(std::filesystem::path("../resrc/UbuntuSansMono[wght].ttf"));
+        static sf::Font defaultFont(std::filesystem::path("../resrc/UbuntuSansMono[wght].ttf"));
         return defaultFont;
     }
 }

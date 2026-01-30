@@ -39,34 +39,34 @@ namespace spiel
         std::conditional_t<Index == 21, sf::Event::TouchEnded,
         std::conditional_t<Index == 22, sf::Event::SensorChanged,
         void
-        >>>>>>>>>>>>>>>>>>>>>>>>;
+        >>>>>>>>>>>>>>>>>>>>>>>;
 
     template<typename T>
     constexpr ptrdiff_t eventTypeId =
-        std::conditional_t<std::is_same_v<T, EventType<0>>, ptrdiff_t{0},
-        std::conditional_t<std::is_same_v<T, EventType<1>>, ptrdiff_t{1},
-        std::conditional_t<std::is_same_v<T, EventType<2>>, ptrdiff_t{2},
-        std::conditional_t<std::is_same_v<T, EventType<3>>, ptrdiff_t{3},
-        std::conditional_t<std::is_same_v<T, EventType<4>>, ptrdiff_t{4},
-        std::conditional_t<std::is_same_v<T, EventType<5>>, ptrdiff_t{5},
-        std::conditional_t<std::is_same_v<T, EventType<6>>, ptrdiff_t{6},
-        std::conditional_t<std::is_same_v<T, EventType<7>>, ptrdiff_t{7},
-        std::conditional_t<std::is_same_v<T, EventType<8>>, ptrdiff_t{8},
-        std::conditional_t<std::is_same_v<T, EventType<9>>, ptrdiff_t{9},
-        std::conditional_t<std::is_same_v<T, EventType<10>>, ptrdiff_t{10},
-        std::conditional_t<std::is_same_v<T, EventType<11>>, ptrdiff_t{11},
-        std::conditional_t<std::is_same_v<T, EventType<12>>, ptrdiff_t{12},
-        std::conditional_t<std::is_same_v<T, EventType<13>>, ptrdiff_t{13},
-        std::conditional_t<std::is_same_v<T, EventType<14>>, ptrdiff_t{14},
-        std::conditional_t<std::is_same_v<T, EventType<15>>, ptrdiff_t{15},
-        std::conditional_t<std::is_same_v<T, EventType<16>>, ptrdiff_t{16},
-        std::conditional_t<std::is_same_v<T, EventType<17>>, ptrdiff_t{17},
-        std::conditional_t<std::is_same_v<T, EventType<18>>, ptrdiff_t{18},
-        std::conditional_t<std::is_same_v<T, EventType<19>>, ptrdiff_t{19},
-        std::conditional_t<std::is_same_v<T, EventType<20>>, ptrdiff_t{20},
-        std::conditional_t<std::is_same_v<T, EventType<21>>, ptrdiff_t{21},
-        std::conditional_t<std::is_same_v<T, EventType<22>>, ptrdiff_t{22},
-        ptrdiff_t{-1}>>>>>>>>>>>>>>>>>>>>>>>;
+        std::conditional_t<std::is_same_v<T, EventType<0>>, std::integral_constant<ptrdiff_t, 0>,
+        std::conditional_t<std::is_same_v<T, EventType<1>>, std::integral_constant<ptrdiff_t, 1>,
+        std::conditional_t<std::is_same_v<T, EventType<2>>, std::integral_constant<ptrdiff_t, 2>,
+        std::conditional_t<std::is_same_v<T, EventType<3>>, std::integral_constant<ptrdiff_t, 3>,
+        std::conditional_t<std::is_same_v<T, EventType<4>>, std::integral_constant<ptrdiff_t, 4>,
+        std::conditional_t<std::is_same_v<T, EventType<5>>, std::integral_constant<ptrdiff_t, 5>,
+        std::conditional_t<std::is_same_v<T, EventType<6>>, std::integral_constant<ptrdiff_t, 6>,
+        std::conditional_t<std::is_same_v<T, EventType<7>>, std::integral_constant<ptrdiff_t, 7>,
+        std::conditional_t<std::is_same_v<T, EventType<8>>, std::integral_constant<ptrdiff_t, 8>,
+        std::conditional_t<std::is_same_v<T, EventType<9>>, std::integral_constant<ptrdiff_t, 9>,
+        std::conditional_t<std::is_same_v<T, EventType<10>>, std::integral_constant<ptrdiff_t, 10>,
+        std::conditional_t<std::is_same_v<T, EventType<11>>, std::integral_constant<ptrdiff_t, 11>,
+        std::conditional_t<std::is_same_v<T, EventType<12>>, std::integral_constant<ptrdiff_t, 12>,
+        std::conditional_t<std::is_same_v<T, EventType<13>>, std::integral_constant<ptrdiff_t, 13>,
+        std::conditional_t<std::is_same_v<T, EventType<14>>, std::integral_constant<ptrdiff_t, 14>,
+        std::conditional_t<std::is_same_v<T, EventType<15>>, std::integral_constant<ptrdiff_t, 15>,
+        std::conditional_t<std::is_same_v<T, EventType<16>>, std::integral_constant<ptrdiff_t, 16>,
+        std::conditional_t<std::is_same_v<T, EventType<17>>, std::integral_constant<ptrdiff_t, 17>,
+        std::conditional_t<std::is_same_v<T, EventType<18>>, std::integral_constant<ptrdiff_t, 18>,
+        std::conditional_t<std::is_same_v<T, EventType<19>>, std::integral_constant<ptrdiff_t, 19>,
+        std::conditional_t<std::is_same_v<T, EventType<20>>, std::integral_constant<ptrdiff_t, 20>,
+        std::conditional_t<std::is_same_v<T, EventType<21>>, std::integral_constant<ptrdiff_t, 21>,
+        std::conditional_t<std::is_same_v<T, EventType<22>>, std::integral_constant<ptrdiff_t, 22>,
+        std::integral_constant<ptrdiff_t, -1>>>>>>>>>>>>>>>>>>>>>>>>::value;
 
     sf::ConvexShape Line(Vec2f from, Vec2f to, float width = 1);
     sf::CircleShape Circle(float radius, int pointCount = 30);

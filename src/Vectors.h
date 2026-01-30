@@ -87,15 +87,15 @@ namespace spiel
         template<typename T>
         [[nodiscard]] inline sf::Vector2<T> toSFML(const boost::qvm::vec<T, 2>& v)
         {
-            return sf::Vector2<T>(boost::qvm::get<0>(v), boost::qvm::get<1>(v));
+            return sf::Vector2<T>(X(v), Y(v));
         }
 
         template<typename T>
         [[nodiscard]] inline boost::qvm::vec<T, 2> fromSFML(const sf::Vector2<T>& v)
         {
             boost::qvm::vec<T, 2> result;
-            boost::qvm::set<0>(result, v.x);
-            boost::qvm::set<1>(result, v.y);
+            X(result) = v.x;
+            Y(result) = v.y;
             return result;
         }
 
