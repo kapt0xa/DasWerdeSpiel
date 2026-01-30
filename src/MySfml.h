@@ -74,5 +74,5 @@ namespace spiel
     sf::Rect<float> Cover(sf::Rect<float> a, sf::Rect<float> b);
     sf::RectangleShape Rectangle(sf::Rect<float> rect);
     
-    sf::Font& GetDefaultFont();
+    sf::Font& getDefaultFont();
 }

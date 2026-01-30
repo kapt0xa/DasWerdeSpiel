@@ -42,6 +42,7 @@ int main()
                     if (button.isInArea(vectorCast::fromSFML(pos)))
                     {
                         std::cout << "Button clicked!" << std::endl;
+                        button.setVisualPressedState(true);
                     }
                 }
             }
@@ -50,16 +51,23 @@ int main()
                 auto pos = window.mapPixelToCoords(mouseMovedEvent->position);
                 if (button.isInArea(vectorCast::fromSFML(pos)))
                 {
-                    button.setVisualState(true, false);
+                    button.setVisualHoveredState(true);
                 }
                 else
                 {
-                    button.setVisualState(false, false);
+                    button.setVisualHoveredState(false);
+                }
+            }
+            else if (auto mouseButtonReleasedEvent = event->getIf<sf::Event::MouseButtonReleased>())
+            {
+                if(mouseButtonReleasedEvent->button == sf::Mouse::Button::Left)
+                {
+                    button.setVisualPressedState(false);
                 }
             }
         }
 
-        window.clear(sf::Color::Green);
+        window.clear(sf::Color::Black);
         window.draw(button);
         window.display();
     }

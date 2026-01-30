@@ -2,26 +2,37 @@
 
 namespace spiel
 {
-    const sf::Font& DefaultButton::defaultFont = GetDefaultFont();
+    void DefaultButton::resolveVisualState()
+    {
+        if (isPressed)
+            label.setFillColor(pressedFillColor);
+        else if (isHovered)
+            label.setFillColor(hoverFillColor);
+        else
+            label.setFillColor(stdFillColor);
+    }
 
     DefaultButton::DefaultButton(const std::string& text, Vec2f size, unsigned int characterSize)
-        : label(defaultFont, text, characterSize)
+        : label(getDefaultFont(), text, characterSize)
         , size(size)
     {
         label.setOutlineThickness(1.0f);
         label.setOutlineColor(sf::Color::Black);
         auto textSize = label.getLocalBounds().size;
         label.setOrigin(textSize * 0.5f);
+        resolveVisualState();
     }
 
-    void DefaultButton::setVisualState(bool hovered, bool pressed)
+    void DefaultButton::setVisualHoveredState(bool hovered)
     {
-        if (pressed)
-            label.setFillColor(pressedFillColor);
-        else if (hovered)
-            label.setFillColor(hoverFillColor);
-        else
-            label.setFillColor(stdFillColor);
+        isHovered = hovered;
+        resolveVisualState();
+    }
+
+    void DefaultButton::setVisualPressedState(bool pressed)
+    {
+        isPressed = pressed;
+        resolveVisualState();
     }
 
     bool DefaultButton::isInArea(const Vec2f& point) const

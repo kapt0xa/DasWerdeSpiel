@@ -15,7 +15,10 @@ namespace spiel
         virtual Vec2f getSize() const = 0;
         virtual void setSize(const Vec2f& size) = 0;
 
-        virtual void setVisualState(bool hovered, bool pressed) = 0;
+        virtual void setVisualHoveredState(bool hovered) = 0;
+        virtual void setVisualPressedState(bool pressed) = 0;
+        virtual bool getVisualHoveredState() const = 0;
+        virtual bool getVisualPressedState() const = 0;
 
         virtual void setStandardFillColor(const sf::Color& color) = 0;
         virtual void setHoverFillColor(const sf::Color& color) = 0;
@@ -33,12 +36,17 @@ namespace spiel
     class DefaultButton final : public Button
     {
     private:
-        static const sf::Font& defaultFont;
+        void resolveVisualState();
     public:
         DefaultButton(const std::string& text, Vec2f size, unsigned int characterSize = 30);
 
         inline void draw(sf::RenderTarget& target, sf::RenderStates states) const override { target.draw(label, states); }
-        void setVisualState(bool hovered, bool pressed) override;
+
+        void setVisualHoveredState(bool hovered) override;
+        void setVisualPressedState(bool pressed) override;
+        inline bool getVisualHoveredState() const override { return isHovered; }
+        inline bool getVisualPressedState() const override { return isPressed; }
+
         operator sf::Transformable&() override { return label; }
         operator const sf::Transformable&() const override { return label; }
 
@@ -60,6 +68,8 @@ namespace spiel
     private:
         sf::Text label;
         Vec2f size;
+        bool isHovered = false;
+        bool isPressed = false;
         sf::Color stdFillColor = sf::Color::Green;
         sf::Color hoverFillColor = sf::Color::Cyan;
         sf::Color pressedFillColor = sf::Color::Blue;
