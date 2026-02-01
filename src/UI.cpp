@@ -4,12 +4,20 @@ namespace spiel
 {
     void DefaultButton::resolveVisualState()
     {
-        if (isPressed)
-            label.setFillColor(pressedFillColor);
-        else if (isHovered)
-            label.setFillColor(hoverFillColor);
+        if (visualState.isPressed)
+            label.setFillColor(colorPalette.pressed);
+        else if (visualState.isHovered)
+            label.setFillColor(colorPalette.hovered);
         else
-            label.setFillColor(stdFillColor);
+            label.setFillColor(colorPalette.usual);
+    }
+
+    bool DefaultButton::isInAreaVirt(const Vec2f& point) const
+    {
+        auto pos = label.getPosition();
+        auto halfSize = size * 0.5f;
+        return (X(point) >= pos.x - X(halfSize)) && (X(point) <= pos.x + X(halfSize)) &&
+               (Y(point) >= pos.y - Y(halfSize)) && (Y(point) <= pos.y + Y(halfSize));
     }
 
     DefaultButton::DefaultButton(const std::string& text, Vec2f size, unsigned int characterSize)
@@ -23,22 +31,17 @@ namespace spiel
         resolveVisualState();
     }
 
-    void DefaultButton::setVisualHoveredState(bool hovered)
+    void DefaultButton::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
-        isHovered = hovered;
-        resolveVisualState();
-    }
+        sf::RectangleShape background;
+        background.setSize(vectorCast::toSFML(size));
+        background.setOrigin(background.getSize() * 0.5f);
+        background.setFillColor(backgroundColor);
+        background.setPosition(getTransformableRef().getPosition());
+        background.setRotation(getTransformableRef().getRotation());
+        background.setScale(getTransformableRef().getScale());
 
-    void DefaultButton::setVisualPressedState(bool pressed)
-    {
-        isPressed = pressed;
-        resolveVisualState();
-    }
-
-    bool DefaultButton::isInArea(const Vec2f& point) const
-    {
-        Vec2f pos = {label.getPosition().x, label.getPosition().y};
-        sf::FloatRect bounds(vectorCast::toSFML(pos) - vectorCast::toSFML(size) * 0.5f, vectorCast::toSFML(size));
-        return bounds.contains(vectorCast::toSFML(point));
+        target.draw(background, states);
+        target.draw(label, states);
     }
 }
