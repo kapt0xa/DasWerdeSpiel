@@ -7,6 +7,32 @@
     then change the directory int the path: `cd ./build`  
     this is offline version. once U downloaded all requirements, U dont need internet connection to rebuild the project with cmake. read Cmakelists.txt to understand how to setup external dependencies (ctrl+F "GIT").  
 
+# suggested file organisation:
+all comands suggested in this tutorial for setup are written to be executed from build bolder, related to context module.
+comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
+```
+    SFML (cloned from github)
+    └build (created manually, building of SFML happens from here)
+     ├lib (created after building the SFML)
+     │ ├Debug (contains .lib files)
+     │ │ └*.lib
+     │ └Release (contains .lib files)
+     │   └*.lib
+     └src (include path)
+      └SFML
+    TGUI (cloned from github)
+    └build (created manually, building of TGUI happens from here)
+    BoostQVM (cloned from github)
+    └include (include path)
+     └boost
+    DasWerdeSpiel (the folder with this project)
+    ├build (created manually, building of this project happens from here)
+    ├resrc (resources, contains some files used in game)
+    ├src (source code)
+    ├CmakeLists.txt (filoe with project settings)
+    └Readme.md (this readme file itself)
+```
+
 -   git, cmake, some compiler (g++/clang for ubuntu, clang++/visual studio compiler for windows), some build system (GNU make for g++, LLVM for clang, visual studio for visual studio)  
 
 -   SFML 3.0  
