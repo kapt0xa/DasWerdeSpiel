@@ -1,16 +1,12 @@
 # game with c++ and SFML
 
-# requirements
--   ! instalation guide expects U to create build folder in the root folder of project  
-    all commands are executed from this `./build` folder that you should create manually.  
-    create the build folder in root path of project: `mkdir build`  
-    then change the directory int the path: `cd ./build`  
-    this is offline version. once U downloaded all requirements, U dont need internet connection to rebuild the project with cmake. read Cmakelists.txt to understand how to setup external dependencies (ctrl+F "GIT").  
+first installation process is dscribed.  
+usage will be described (not yet) afrer installation  
 
 # suggested file organisation:
 all comands suggested in this tutorial for setup are written to be executed from build bolder, related to context module.
 comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
-```
+    ```
     <parent_path> (folder with libs and project. for me it is dev_cpp)
     ├SFML (cloned from github)
     │ └build (created manually, building of SFML happens from here)
@@ -32,20 +28,37 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
       ├src (source code)
       ├CmakeLists.txt (filoe with project settings)
       └Readme.md (this readme file itself)
-```
+    ```
+
+# requirements
+-   first read suggested file organisation, it is above.  
 
 -   git, cmake, some compiler (g++/clang for ubuntu, clang++/visual studio compiler for windows), some build system (GNU make for g++, LLVM for clang, visual studio for visual studio)  
 
 -   SFML 3.0  
-    the repository https://github.com/SFML/cmake-sfml-project  
-    the exact version https://github.com/SFML/cmake-sfml-project/tree/98e2d5c3d5f0906a89606044b42f1b756fd7fd4b  
+    the repository: https://github.com/SFML/SFML.git  
+    the exact version: not defined yet, last for ~jan 2026  
     to download lib:  
-    `git clone https://github.com/SFML/SFML.git ./SFML` (executed from parent_path, outside this project)
+    `git clone https://github.com/SFML/SFML.git ./SFML`  
+    (executed from parent_path, outside this project)  
+    or just download it manually without git  
 
     for Linux might require additional installing:  
     `sudo apt update`  
-    `sudo apt install libxrandr-dev libxcursor-dev libxi-dev libudev-dev libfreetype-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev`  
-    (this list might be overkill)  
+    ```
+    sudo apt install \
+        libxrandr-dev \
+        libxcursor-dev \
+        libxi-dev \
+        libudev-dev \
+        libfreetype-dev \
+        libflac-dev \
+        libvorbis-dev \
+        libgl1-mesa-dev \
+        libegl1-mesa-dev \
+        libfreetype-dev
+    ```  
+    (this list is taken from https://github.com/SFML/cmake-sfml-project )  
 
     to build lib:  
     `cmake ..` (executed from SFML's build folder)  
@@ -69,7 +82,7 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 
 # vscode setup:
 
--   for comfortable code editing: \
+-   for comfortable code editing:  
     c_cpp_properties.json:
     ``` 
     {
