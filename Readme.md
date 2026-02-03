@@ -9,17 +9,14 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     ```
     <parent_path> (folder with libs and project. for me it is dev_cpp)
     ├SFML (cloned from github)
-    │ └build (created manually, building of SFML happens from here)
-    │  ├lib (created after building the SFML)
-    │  │ ├Debug (contains .lib files)
-    │  │ │ └*.lib
-    │  │ └Release (contains .lib files)
-    │  │   └*.lib
-    │  └src (include path)
+    │ ├build (created manually, building of SFML happens from here)
+    │ │└lib (created after building the SFML, should contain .lib files)
+    │ │ └*.lib (read below about Windows)
+    │ └include (include path)
     │   └SFML
     ├TGUI (cloned from github)
     │ └build (created manually, building of TGUI happens from here)
-    │ BoostQVM (cloned from github)
+    ├BoostQVM (cloned from github)
     │ └include (include path)
     │  └boost
     └DasWerdeSpiel (the folder with this project)
@@ -62,8 +59,14 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 
     to build lib:  
     `cmake ..` (executed from SFML's build folder)  
+    `cmake --build ./`  
+
+    for Windows U might need so specify release or debug version:
     `cmake --build ./ --config=Release`  
     `cmake --build ./ --config=Debug`  
+    also microsoft visual studio locates the built fules in additional directory, which is unwanted.  
+    make sure U move compiled files from `lib/Release` or `lib/Debug` to folder `lib`.  
+    the project is cross-platform, but ubuntu is prioritised, so windows separation into debug and release is not supported. choose only one option or edit cmakelists.  
 
 -   Boost QVM  
     to install it:  
