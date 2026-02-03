@@ -11,26 +11,27 @@
 all comands suggested in this tutorial for setup are written to be executed from build bolder, related to context module.
 comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
 ```
-    SFML (cloned from github)
-    └build (created manually, building of SFML happens from here)
-     ├lib (created after building the SFML)
-     │ ├Debug (contains .lib files)
-     │ │ └*.lib
-     │ └Release (contains .lib files)
-     │   └*.lib
-     └src (include path)
-      └SFML
-    TGUI (cloned from github)
-    └build (created manually, building of TGUI happens from here)
-    BoostQVM (cloned from github)
-    └include (include path)
-     └boost
-    DasWerdeSpiel (the folder with this project)
-    ├build (created manually, building of this project happens from here)
-    ├resrc (resources, contains some files used in game)
-    ├src (source code)
-    ├CmakeLists.txt (filoe with project settings)
-    └Readme.md (this readme file itself)
+    <parent_path> (folder with libs and project. for me it is dev_cpp)
+    ├SFML (cloned from github)
+    │ └build (created manually, building of SFML happens from here)
+    │  ├lib (created after building the SFML)
+    │  │ ├Debug (contains .lib files)
+    │  │ │ └*.lib
+    │  │ └Release (contains .lib files)
+    │  │   └*.lib
+    │  └src (include path)
+    │   └SFML
+    ├TGUI (cloned from github)
+    │ └build (created manually, building of TGUI happens from here)
+    │ BoostQVM (cloned from github)
+    │ └include (include path)
+    │  └boost
+    └DasWerdeSpiel (the folder with this project)
+      ├build (created manually, building of this project happens from here)
+      ├resrc (resources, contains some files used in game)
+      ├src (source code)
+      ├CmakeLists.txt (filoe with project settings)
+      └Readme.md (this readme file itself)
 ```
 
 -   git, cmake, some compiler (g++/clang for ubuntu, clang++/visual studio compiler for windows), some build system (GNU make for g++, LLVM for clang, visual studio for visual studio)  
@@ -38,8 +39,18 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 -   SFML 3.0  
     the repository https://github.com/SFML/cmake-sfml-project  
     the exact version https://github.com/SFML/cmake-sfml-project/tree/98e2d5c3d5f0906a89606044b42f1b756fd7fd4b  
-    to install lib:  
-    `git clone https://github.com/SFML/SFML.git ../../SFML` (executed from {project_root_path}/build)  
+    to download lib:  
+    `git clone https://github.com/SFML/SFML.git ./SFML` (executed from parent_path, outside this project)
+
+    for Linux might require additional installing:  
+    `sudo apt update`  
+    `sudo apt install libxrandr-dev libxcursor-dev libxi-dev libudev-dev libfreetype-dev libflac-dev libvorbis-dev libgl1-mesa-dev libegl1-mesa-dev`  
+    (this list might be overkill)  
+
+    to build lib:  
+    `cmake ..` (executed from SFML's build folder)  
+    `cmake --build ./ --config=Release`  
+    `cmake --build ./ --config=Debug`  
 
 -   Boost QVM  
     to install it:  
