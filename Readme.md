@@ -100,12 +100,12 @@ the `<parent_path>` can be named anyway.
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
 >   `cmake -B <path to build> -D<additional paraments>`  
 
-    for Windows/MacOS if cmake is using visual studio, U might need so specify release or debug version:  
-    `cmake --build build --config=Release`  
->   `--config=Release` - visual studio requires this comand. it builds Debug by default. without Release the `--install` comand will fail  
     if not VisualStudio:  
     `cmake --build build`  
 >   `cmake --build <path to build>`  
+    for Windows/MacOS if cmake is using visual studio, U might need so specify release or debug version:  
+    `cmake --build build --config=Release`  
+>   `--config=Release` - visual studio requires this comand. it builds Debug by default. without Release the `--install` comand will fail  
 
     Then install the SFML:  
     ubuntu/linux:  
