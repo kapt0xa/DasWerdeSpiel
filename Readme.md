@@ -74,13 +74,7 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 
     (executed from SFML's build folder)  
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
->   `-B` - keyword to set path for build files
->   `build` - the path related to `-B` keyword
->   `-D` - keyword to pass some variable into cmake
->   `BUILD_SHARED_LIBS=ON` - the variable passed into cmake related to `-D`
-    `cmake --build build` (not in case of Windows + visual studio)  
->   `--build` - comand for cmake that builds project
->   `build` - the path where the project is located
+>   `cmake -B <path to build> -D<additional paraments>`
 
     for Windows if cmake is usind visual studio, U might need so specify release or debug version:  
     `cmake --build build --config=Release`  
@@ -95,13 +89,11 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     for windows it is likely to fail if cmake used visual studio and u did not build release version.  
 
 >   `sudo` - linux analog to window's administrator access  
->   `build` - path of project   
->   `--prefix` - keyword for path of installation
->   `../SFML` - relative path of instalation
+>   `cmake --install <path to build> --prefix <path to install>`
 
 -   Boost QVM  
     to install it:  
-    `git clone https://github.com/boostorg/qvm.git ../../BoostQVM` (executed from {project_root_path}/build)  
+    `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
 
 # build
 ## Ubuntu
