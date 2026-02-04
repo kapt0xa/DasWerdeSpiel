@@ -9,8 +9,8 @@ if u are not familliar with terminal/cmd, google about them.
 also google about cd (windows and linux), sudo (linux), apt (linux), path variables (windows and linux)
 if you install components correctly, usually U should worry about path variables.
 
-all comands suggested in this tutorial for setup are written to be executed from build bolder, related to context module.
-comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
+the instruction is written for this file organisation:
+the `<parent_path>` can be named anyway.
 ```
     <parent_path> (folder with libs and project. for me it is dev_cpp)
     ├SFML_SRC (source cloned from github)
@@ -42,12 +42,12 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 
 -   SFML 3.0  
     the repository: https://github.com/SFML/SFML.git  
-    the exact version: not defined yet, last for ~jan 2026  
-    to download lib:  
+    the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
+    download lib via git:  
+    `cd <parent_path>`
     `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
 >   `git clone <url or path from> <path to>`
-    (executed from parent_path, outside this project)  
-    or just download it manually without git  
+    or just download it manually without git and locate it in <parent path>  
 
     for Linux might require additional installing:  
     ```
@@ -66,10 +66,7 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     ```  
     (this list of dependencies is taken from https://github.com/SFML/cmake-sfml-project )  
 
-    to build lib:  
-    or at least add it before `sfml_set_option`  
-
-    (executed from SFML's build folder)  
+    `cd ./SFML_SRC`
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
 >   `cmake -B <path to build> -D<additional paraments>`
 
