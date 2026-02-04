@@ -13,20 +13,17 @@ all comands suggested in this tutorial for setup are written to be executed from
 comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
 ```
     <parent_path> (folder with libs and project. for me it is dev_cpp)
-    ├SFML (cloned from github)
-    │ ├build (created with "sfml -B build" comand)
-    │ └include (include path)
-    │   └SFML
+    ├SFML_SRC (source cloned from github)
+    ├SFML (installed via cmake)
+    │ ├bin
+    │ ├include
+    │ └lib
     ├TGUI (cloned from github)
-    │ └build (created with "sfml -B build" comand)
     ├BoostQVM (cloned from github)
     │ └include (include path)
     │  └boost
     └DasWerdeSpiel (the folder with this project)
       ├build (created with "sfml -B build" comand)
-      ├resrc (resources, contains some files used in game)
-      ├src (source code)
-      ├CmakeLists.txt (filoe with project settings)
       └Readme.md (this readme file itself)
 ```
 
