@@ -43,36 +43,69 @@ the `<parent_path>` can be named anyway.
 -   SFML 3.0  
     the repository: https://github.com/SFML/SFML.git  
     the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
+    ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
     download lib via git:  
     `cd <parent_path>`
     `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
 >   `git clone <url or path from> <path to>`
     or just download it manually without git and locate it in <parent path>  
 
-    for Linux might require additional installing:  
+    for Linux might require additional installing.  
+    from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
+    ```
+    SFML depends on a few other libraries, which will be automatically built as part of the SFML project unless otherwise specified by the SFML_USE_SYSTEM_DEPS option (see below). On Linux, however, this option is disabled by default, so either enable it, or ensure the following packages are installed on your system:
+
+    -freetype
+    -harfbuzz
+    -flac
+    -ogg
+    -vorbis
+    -vorbisenc
+    -vorbisfile
+    -mbedtls
+
+    On Linux there are also other system dependencies that must be installed in all cases:
+
+    -x11
+    -xrandr
+    -xcursor
+    -xi
+    -udev
+    -opengl
+    -pthread
+
+    The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
+    ```
+    for ubuntu this installations are recomended:  
     ```
     sudo apt update
     sudo apt install \
+        libfreetype-dev \
+        libharfbuzz-dev \
+        libflac-dev \
+        libogg-dev \
+        libvorbis-dev \
+        libmbedtls-dev \
+        libx11-dev \
         libxrandr-dev \
         libxcursor-dev \
         libxi-dev \
         libudev-dev \
-        libfreetype-dev \
-        libflac-dev \
-        libvorbis-dev \
         libgl1-mesa-dev \
-        libegl1-mesa-dev \
-        libfreetype-dev
+        libopenal-dev
     ```  
-    (this list of dependencies is taken from https://github.com/SFML/cmake-sfml-project )  
+    yes, this list doesnt match well with SFML documentation  
 
-    `cd ./SFML_SRC`
+    `cd ./SFML_SRC`  
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
->   `cmake -B <path to build> -D<additional paraments>`
+>   `cmake -B <path to build> -D<additional paraments>`  
 
-    for Windows if cmake is usind visual studio, U might need so specify release or debug version:  
+    for Windows/MacOS if cmake is using visual studio, U might need so specify release or debug version:  
     `cmake --build build --config=Release`  
 >   `--config=Release` - visual studio requires this comand. it builds Debug by default. without Release the `--install` comand will fail  
+    if not VisualStudio:  
+    `cmake --build build`  
+>   `cmake --build <path to build>`  
 
     Then install the SFML:  
     ubuntu/linux:  
