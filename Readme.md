@@ -6,8 +6,7 @@ usage will be described (not yet) afrer installation
 # suggested file organisation:
 all comands suggested in this tutorial for setup are written to be executed from build bolder, related to context module.
 comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
-
-    ```
+```
     <parent_path> (folder with libs and project. for me it is dev_cpp)
     ├SFML (cloned from github)
     │ ├build (created manually, building of SFML happens from here)
@@ -26,7 +25,7 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
       ├src (source code)
       ├CmakeLists.txt (filoe with project settings)
       └Readme.md (this readme file itself)
-    ```
+```
 
 # requirements
 -   first read suggested file organisation, it is above.  
