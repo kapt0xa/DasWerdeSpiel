@@ -69,6 +69,20 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     (this list of dependencies is taken from https://github.com/SFML/cmake-sfml-project )  
 
     to build lib:  
+    open CMakeLists.txt in the SFML's project, and edit:  
+    find this:  
+    ```
+        # disable static libraries on Android
+        if(SFML_OS_ANDROID)
+            set(BUILD_SHARED_LIBS ON)
+        endif()
+    ```
+    and change into this:  
+    ```
+        set(BUILD_SHARED_LIBS ON)
+    ```
+    or at least add it before `sfml_set_option`  
+
     (executed from SFML's build folder)  
     `cmake ..`  
     `cmake --build ./` (not in case of Windows + visual studio)  
