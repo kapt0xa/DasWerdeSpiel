@@ -69,33 +69,21 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     (this list of dependencies is taken from https://github.com/SFML/cmake-sfml-project )  
 
     to build lib:  
-    open CMakeLists.txt in the SFML's project, and edit:  
-    find this:  
-    ```
-        # disable static libraries on Android
-        if(SFML_OS_ANDROID)
-            set(BUILD_SHARED_LIBS ON)
-        endif()
-    ```
-    and change into this:  
-    ```
-        set(BUILD_SHARED_LIBS ON)
-    ```
     or at least add it before `sfml_set_option`  
 
     (executed from SFML's build folder)  
-    `cmake ..`  
-    `cmake --build ./` (not in case of Windows + visual studio)  
+    `cmake -B build`  
+    `cmake --build build -D BUILD_SHARED_LIBS=ON` (not in case of Windows + visual studio)  
 
     for Windows if cmake is usind visual studio, U might need so specify release or debug version:  
-    `cmake --build ./ --config=Release`  
+    `cmake --build build -D BUILD_SHARED_LIBS=ON --config=Release`  
 
     Then install the SFML:  
     ubuntu/linux:  
-    `sudo cmake --install ./`  
+    `sudo cmake --install build`  
     windows:  
     run cmd.exe as administrator, navigate to required path and run the comand:  
-    `cmake --install ./`  
+    `cmake --install build`  
     for windows it is likely to fail if cmake used visual studio and u did not build release version.  
 
 >   on failure dont hurry to delete all files in build folder  
