@@ -30,7 +30,15 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 # requirements
 -   first read suggested file organisation, it is above.  
 
--   git, cmake, some compiler (g++/clang for ubuntu, clang++/visual studio compiler for windows), some build system (GNU make for g++, LLVM for clang, visual studio for visual studio)  
+-   developer's tools:
+    git  
+    cmake  
+    some compiler:  
+        g++/clang for linux/ubuntu  
+        clang++/visual studio compiler for windows  
+    some build system:  
+        GNU make for linux/ubuntu  
+        Visual studio or Ninja for windows  
 
 -   SFML 3.0  
     the repository: https://github.com/SFML/SFML.git  
@@ -41,8 +49,8 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     or just download it manually without git  
 
     for Linux might require additional installing:  
-    `sudo apt update`  
     ```
+    sudo apt update
     sudo apt install \
         libxrandr-dev \
         libxcursor-dev \
@@ -55,18 +63,32 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
         libegl1-mesa-dev \
         libfreetype-dev
     ```  
-    (this list is taken from https://github.com/SFML/cmake-sfml-project )  
+    (this list of dependencies is taken from https://github.com/SFML/cmake-sfml-project )  
 
     to build lib:  
-    `cmake ..` (executed from SFML's build folder)  
-    `cmake --build ./`  
+    (executed from SFML's build folder)  
+    `cmake ..`  
+    `cmake --build ./` (not in case of Windows + visual studio)  
 
-    for Windows U might need so specify release or debug version:
+    for Windows if cmake is usind visual studio, U might need so specify release or debug version:  
     `cmake --build ./ --config=Release`  
-    `cmake --build ./ --config=Debug`  
-    also microsoft visual studio locates the built fules in additional directory, which is unwanted.  
-    make sure U move compiled files from `lib/Release` or `lib/Debug` to folder `lib`.  
-    the project is cross-platform, but ubuntu is prioritised, so windows separation into debug and release is not supported. choose only one option or edit cmakelists.  
+
+    Then install the SFML:  
+    ubuntu/linux:  
+    `sudo cmake --install ./`  
+    windows:  
+    run cmd.exe as administrator, navigate to required path and run the comand:  
+    `cmake --install ./`  
+    for windows it is likely to fail if cmake used visual studio and u did not build release version.  
+
+        on failure dont hurry to delete all files in build folder  
+        if u dont want to uninstall SFML:  
+        manually delete all installed files.  
+        the files would be listed in `install_manifest.txt`  
+        this install manifest should be located at `SFML/build` after installation  
+        if u can not find `install_manifest.txt`, try to find folder SFML on Ur PC  
+        for me on windows it is `C:\Program Files (x86)\SFML`  
+        i did not test it for ubuntu yet.  
 
 -   Boost QVM  
     to install it:  
