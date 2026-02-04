@@ -72,11 +72,11 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     or at least add it before `sfml_set_option`  
 
     (executed from SFML's build folder)  
-    `cmake -B build`  
-    `cmake --build build -D BUILD_SHARED_LIBS=ON` (not in case of Windows + visual studio)  
+    `cmake -B build -DBUILD_SHARED_LIBS=ON`  
+    `cmake --build build` (not in case of Windows + visual studio)  
 
     for Windows if cmake is usind visual studio, U might need so specify release or debug version:  
-    `cmake --build build -D BUILD_SHARED_LIBS=ON --config=Release`  
+    `cmake --build build --config=Release`  
 
     Then install the SFML:  
     ubuntu/linux:  
