@@ -81,7 +81,7 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     `cmake --install ./`  
     for windows it is likely to fail if cmake used visual studio and u did not build release version.  
 
-        on failure dont hurry to delete all files in build folder  
+-       on failure dont hurry to delete all files in build folder  
         if u dont want to uninstall SFML:  
         manually delete all installed files.  
         the files would be listed in `install_manifest.txt`  
