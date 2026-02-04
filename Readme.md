@@ -80,10 +80,10 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 
     Then install the SFML:  
     ubuntu/linux:  
-    `sudo cmake --install build`  
+    `sudo cmake --install build --prefix <desired path>`  
     windows:  
     run cmd.exe as administrator, navigate to required path and run the comand:  
-    `cmake --install build`  
+    `cmake --install build --prefix <desired path>`  
     for windows it is likely to fail if cmake used visual studio and u did not build release version.  
 
 >   on failure dont hurry to delete all files in build folder  
