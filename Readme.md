@@ -48,7 +48,7 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     the exact version: not defined yet, last for ~jan 2026  
     to download lib:  
     `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
->              ^^ url/path from                 ^^ path to
+>   `git clone <url or path from>               <path to>`
     (executed from parent_path, outside this project)  
     or just download it manually without git  
 
