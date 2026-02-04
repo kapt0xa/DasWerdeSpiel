@@ -47,7 +47,8 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
     the repository: https://github.com/SFML/SFML.git  
     the exact version: not defined yet, last for ~jan 2026  
     to download lib:  
-    `git clone https://github.com/SFML/SFML.git ./SFML`  
+    `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
+>              ^^ url/path from                 ^^ path to
     (executed from parent_path, outside this project)  
     or just download it manually without git  
 
@@ -73,27 +74,30 @@ comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U shou
 
     (executed from SFML's build folder)  
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
+>   `-B` - keyword to set path for build files
+>   `build` - the path related to `-B` keyword
+>   `-D` - keyword to pass some variable into cmake
+>   `BUILD_SHARED_LIBS=ON` - the variable passed into cmake related to `-D`
     `cmake --build build` (not in case of Windows + visual studio)  
+>   `--build` - comand for cmake that builds project
+>   `build` - the path where the project is located
 
     for Windows if cmake is usind visual studio, U might need so specify release or debug version:  
     `cmake --build build --config=Release`  
+>   `--config=Release` - visual studio requires this comand. it builds Debug by default. without Release the `--install` comand will fail  
 
     Then install the SFML:  
     ubuntu/linux:  
-    `sudo cmake --install build --prefix <desired path>`  
+    `sudo cmake --install build --prefix ../SFML`  
     windows:  
     run cmd.exe as administrator, navigate to required path and run the comand:  
-    `cmake --install build --prefix <desired path>`  
+    `cmake --install build --prefix ../SFML`  
     for windows it is likely to fail if cmake used visual studio and u did not build release version.  
 
->   on failure dont hurry to delete all files in build folder  
->   if u dont want to uninstall SFML:  
->   manually delete all installed files.  
->   the files would be listed in `install_manifest.txt`  
->   this install manifest should be located at `SFML/build` after installation  
->   if u can not find `install_manifest.txt`, try to find folder SFML on Ur PC  
->   for me on windows it is `C:\Program Files (x86)\SFML`  
->   i did not test it for ubuntu yet.  
+>   `sudo` - linux analog to window's administrator access  
+>   `build` - path of project   
+>   `--prefix` - keyword for path of installation
+>   `../SFML` - relative path of instalation
 
 -   Boost QVM  
     to install it:  
