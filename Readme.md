@@ -4,23 +4,26 @@ first installation process is dscribed.
 usage will be described (not yet) afrer installation  
 
 # suggested file organisation:
+the commands in this tutorial are runned from terminal (for ubuntu/linux) or from cmd.exe (for windows)
+if u are not familliar with terminal/cmd, google about them.  
+also google about cd (windows and linux), sudo (linux), apt (linux), path variables (windows and linux)
+if you install components correctly, usually U should worry about path variables.
+
 all comands suggested in this tutorial for setup are written to be executed from build bolder, related to context module.
 comands like `cd <path>` or `mkdir build` are not listed in tutorial, but U should use them to execute command correctly
 ```
     <parent_path> (folder with libs and project. for me it is dev_cpp)
     ├SFML (cloned from github)
-    │ ├build (created manually, building of SFML happens from here)
-    │ │└lib (created after building the SFML, should contain .lib files)
-    │ │ └*.lib (read below about Windows)
+    │ ├build (created with "sfml -B build" comand)
     │ └include (include path)
     │   └SFML
     ├TGUI (cloned from github)
-    │ └build (created manually, building of TGUI happens from here)
+    │ └build (created with "sfml -B build" comand)
     ├BoostQVM (cloned from github)
     │ └include (include path)
     │  └boost
     └DasWerdeSpiel (the folder with this project)
-      ├build (created manually, building of this project happens from here)
+      ├build (created with "sfml -B build" comand)
       ├resrc (resources, contains some files used in game)
       ├src (source code)
       ├CmakeLists.txt (filoe with project settings)
