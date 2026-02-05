@@ -147,6 +147,11 @@ the instruction is written for this file organisation:
     `git clone https://github.com/texus/TGUI/ ./TGUI_SRC`  
     (or just download it manually without git and locate it into `<parent path>`)  
     .  
+    for release version:
+    `cd TGUI`
+    `cmake -B build -DTGUI_BACKEND=SFML_GRAPHICS -DSFML_DIR=<parent_path>/SFML_RLS/lib/cmake/SFML`
+    `cmake --build build --parallel`
+    .  
 
 -   Boost QVM  
     .  
