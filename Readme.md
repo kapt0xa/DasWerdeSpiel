@@ -126,7 +126,7 @@ windows:
 run cmd.exe as administrator, navigate to required path and run the comand:  
 `cd <parent_path>/SFML`  
 `cmake --install build --prefix ../SFML`  
-> `cmake --install <path to build> --prefix <path to install>`
+> `(sudo) cmake --install <path to build> --prefix <path to install>`
 
 - Boost QVM  
 to install it:  
