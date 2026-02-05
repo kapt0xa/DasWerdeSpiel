@@ -39,6 +39,13 @@ the `<parent_path>` can be named anyway.
     &emsp;GNU make for linux/ubuntu  
     &emsp;Visual studio or Ninja for windows  
     (recomdnded but you might use any analog of theese tools)  
+    .  
+    for windows users:
+    you might need use `\` instead of `/` in paths  
+    also if you have more than one disk, then pay attention on executing commands `cd <path>`.
+    `cd` is for navigating through path and on windows it cant switch disks.
+    use `<disk_name>:` to navigate to other disk, like `D:`  
+    .  
 
 -   short list of libs:  
     SFML 3 (download and install)  
