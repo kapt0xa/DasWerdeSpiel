@@ -1,23 +1,4 @@
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <exception>
-#include <array>
-#include <cmath>
-#include <random>
-#include <vector>
-#include <memory>
-#include <string>
-#include <chrono>
-#include <variant>
-
 #include <SFML/Graphics.hpp>
-
-#include "MySfml.h"
-#include <boost/qvm_lite.hpp>
-
-using namespace spiel;
-
 #include <TGUI/TGUI.hpp>
 #include <iostream>
 
@@ -26,7 +7,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML 3 + TGUI 1.x");
     
     // TGUI's Gui object handles the interaction between SFML and the widgets
-    tgui::GuiSFML gui{window};
+    tgui::Gui gui{window};
 
     // Create a simple button using TGUI 1.x syntax
     auto button = tgui::Button::create("Click Me!");

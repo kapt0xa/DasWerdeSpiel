@@ -46,10 +46,7 @@ FetchContent_MakeAvailable(SFML)
 set(TGUI_BACKEND SFML_GRAPHICS CACHE STRING "TGUI Backend")
 FetchContent_Declare(TGUI
     GIT_REPOSITORY "${TGUI_REPOS}"
-    GIT_TAG v1.12.0
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
+    GIT_TAG v1.12.0)
 FetchContent_MakeAvailable(TGUI)
 
 FetchContent_Declare(BoostQVM
