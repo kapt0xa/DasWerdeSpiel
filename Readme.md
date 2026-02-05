@@ -130,8 +130,8 @@ not described yet, first you need download and install depended libraries.
 
 # vscode setup:
 
-- for comfortable code editing:  
-c_cpp_properties.json:
+- for comfortable code editing, c_cpp_properties.json:
+for Linux:
 ```
 {
     "configurations": [
