@@ -8,14 +8,9 @@ usage will be described (not yet) afrer installation
 the instruction is written for this file organisation:
 ```
 <parent_path>
-  ├SFML_SRC (source cloned from github)
-  ├SFML (installed via cmake)
-  │ ├bin
-  │ ├include
-  │ └lib
-  ├SFML_DBG (installed via cmake, optional)
-  ├TGUI (cloned from github)
-  ├BoostQVM (cloned from github)
+  ├SFML (source cloned from github)
+  ├TGUI (source cloned from github)
+  ├BoostQVM (source cloned from github)
   │ └include (include path)
   │  └boost
   └DasWerdeSpiel (the folder with this project)
@@ -50,9 +45,9 @@ the instruction is written for this file organisation:
     .  
 
 -   short list of libs:  
-    SFML 3 (download and install)  
-    TGUI (not described yet)  
-    BoostQVM (just download)  
+    SFML 3  
+    TGUI  
+    BoostQVM  
 
 -   SFML 3.0  
     .  
@@ -62,8 +57,7 @@ the instruction is written for this file organisation:
     .  
     download lib via git:  
     `cd <parent_path>`  
-    `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
-    `cd ./SFML_SRC` (navigate into the cloned repository arter downloading it)  
+    `git clone https://github.com/SFML/SFML.git ./SFML`  
     (or just download it manually without git and locate it into `<parent path>`)  
     .  
     for Linux might require additional installing.  
@@ -116,25 +110,6 @@ the instruction is written for this file organisation:
     `libopenal-dev` is fir OpenAL, is not listed in SFML documentation but is required
     others fit pattern `lib<name>-dev`)  
     .  
-    setup the build:  
-    `cmake -B build -DBUILD_SHARED_LIBS=ON`  
-    .  
-    run building:  
-    `cmake --build build  --parallel` (`--parallel` is optional, it might make building faster)  
-    if cmake uses visual studio, it would likely build Debug version by default  
-    (build files go into `SFML_SRC/build/lib` in that case):  
-    in that case you likely require both versions - debug and release  
-    use this to build:  
-    `cmake --build build --config=Release --parallel`  
-    `cmake --build build --config=Debug --parallel`  
-    .  
-    install SFML:  
-    `cmake --install build --prefix ../SFML`  
-    without `--prefix` it might require arministrator/sudo access  
-    if cmake is using visual studio, you would need to install both debug and release versions:  
-    `cmake --install build --prefix ../SFML --config=Release`  
-    `cmake --install build --prefix ../SFML_DBG --config=Debug`  
-    .  
 
 -   TGUI
     .  
@@ -144,7 +119,7 @@ the instruction is written for this file organisation:
     .  
     download lib via git:  
     `cd <parent_path>`  
-    `git clone https://github.com/texus/TGUI/ ./TGUI_SRC`  
+    `git clone https://github.com/texus/TGUI/ ./TGUI`  
     (or just download it manually without git and locate it into `<parent path>`)  
     .  
 
