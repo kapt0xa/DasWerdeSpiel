@@ -12,19 +12,19 @@ if you install components correctly, usually you should worry about path variabl
 the instruction is written for this file organisation:
 the `<parent_path>` can be named anyway.
 ```
-    <parent_path> (folder with libs and project. for me it is dev_cpp)
-    ├SFML_SRC (source cloned from github)
-    ├SFML (installed via cmake)
-    │ ├bin
-    │ ├include
-    │ └lib
-    ├TGUI (cloned from github)
-    ├BoostQVM (cloned from github)
-    │ └include (include path)
-    │  └boost
-    └DasWerdeSpiel (the folder with this project)
-      ├build (created with "sfml -B build" comand)
-      └Readme.md (this readme file itself)
+<parent_path> (folder with libs and project. for me it is dev_cpp)
+├SFML_SRC (source cloned from github)
+├SFML (installed via cmake)
+│ ├bin
+│ ├include
+│ └lib
+├TGUI (cloned from github)
+├BoostQVM (cloned from github)
+│ └include (include path)
+│  └boost
+└DasWerdeSpiel (the folder with this project)
+    ├build (created with "sfml -B build" comand)
+    └Readme.md (this readme file itself)
 ```
 
 # requirements
@@ -49,11 +49,12 @@ BoostQVM (just download)
 the repository: https://github.com/SFML/SFML.git  
 the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
 ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
+  
 download lib via git:  
 `cd <parent_path>`  
 `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
 or just download it manually without git and locate it into `<parent path>`  
-
+  
 for Linux might require additional installing.  
 from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
 ```
@@ -98,18 +99,18 @@ sudo apt install \
     libgl1-mesa-dev \
     libopenal-dev
 ```
-
+  
 setup the build:  
 `cd ./SFML_SRC`  
 `cmake -B build -DBUILD_SHARED_LIBS=ON`  
-
+  
 run building:  
 if not visual studio (if build files go into `SFML_SRC/build/lib`):  
 `cmake --build build`  
-
+  
 if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
 `cmake --build build --config=Release`  
-
+  
 install SFML:  
 ubuntu/linux:  
 `sudo cmake --install build --prefix ../SFML`  
