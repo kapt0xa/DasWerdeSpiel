@@ -52,10 +52,10 @@ ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/gettin
 download lib via git:  
 `cd <parent_path>`
 `git clone https://github.com/SFML/SFML.git ./SFML_SRC`
->   on windows if `<parent path>` is not located on main disk, you might need to use `<disk_name>:` to switch disk, like `D:`  
->   `git clone <url or path from> <path to>`  
->   paths are written with `/` but on windows you might need to use `\` instead of `/`
-or just download it manually without git and locate it in <parent path>  
+> on windows if `<parent path>` is not located on main disk, you might need to use `<disk_name>:` to switch disk, like `D:`  
+> `git clone <url or path from> <path to>`  
+> paths are written with `/` but on windows you might need to use `\` instead of `/`
+or just download it manually without git and locate it into `<parent path>`  
 
 for Linux might require additional installing.  
 from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
@@ -101,31 +101,32 @@ sudo apt install \
     libgl1-mesa-dev \
     libopenal-dev
 ```
->   yes, this list doesnt match well with SFML documentation.  
->   `libgl1-mesa-dev` - it is for opengl, might depend on videocard driver  
->   `libopenal-dev` - openAL is not listed in SFML documentation, but it is requires for audio  
->   `libvorbis-dev`- contains not just vorbis, but also vorbisenc and vorbisfile  
+> yes, this list doesnt match well with SFML documentation.  
+> `libgl1-mesa-dev` - it is for opengl, might depend on videocard driver  
+> `libopenal-dev` - openAL is not listed in SFML documentation, but it is requires for audio  
+> `libvorbis-dev`- contains not just vorbis, but also vorbisenc and vorbisfile  
 
+setup the build:  
 `cd ./SFML_SRC`  
 `cmake -B build -DBUILD_SHARED_LIBS=ON`  
->   `cmake -B <path to build> -D<additional paraments>`  
+> `cmake -B <path to build> -D<additional paraments>`  
 
+run building:  
 if not visual studio (if build files go into `SFML_SRC/build/lib`):  
 `cmake --build build`  
->   `cmake --build <path to build>`  
-    if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
-    `cmake --build build --config=Release`  
->   `--config=Release` - without Release the `--install` comand will fail and visual studio builds Debug by default  
+> `cmake --build <path to build>`  
+if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
+`cmake --build build --config=Release`  
+> `--config=Release` - without Release the `--install` comand will fail and visual studio builds Debug by default  
 
-Then install the SFML:  
+install SFML:  
 ubuntu/linux:  
 `sudo cmake --install build --prefix ../SFML`  
 windows:  
 run cmd.exe as administrator, navigate to required path and run the comand:  
 `cd <parent_path>/SFML`  
 `cmake --install build --prefix ../SFML`  
->   `sudo` - linux analog to window's administrator access  
->   `cmake --install <path to build> --prefix <path to install>`
+> `cmake --install <path to build> --prefix <path to install>`
 
 - Boost QVM  
 to install it:  
