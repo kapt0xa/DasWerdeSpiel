@@ -1,46 +1,74 @@
-#include <SFML/Graphics.hpp>
-#include <TGUI/TGUI.hpp>
 #include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <exception>
+#include <array>
+#include <cmath>
+#include <random>
+#include <vector>
+#include <memory>
+#include <string>
+#include <chrono>
+#include <variant>
 
-int main() {
-    // SFML 3 uses sf::Vector2u/sf::Vector2f for sizes instead of two ints
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML 3 + TGUI 1.x");
-    
-    // TGUI's Gui object handles the interaction between SFML and the widgets
-    tgui::Gui gui{window};
+#include <SFML/Graphics.hpp>
 
-    // Create a simple button using TGUI 1.x syntax
-    auto button = tgui::Button::create("Click Me!");
-    button->setPosition({200, 150});
-    button->setSize({200, 50});
-    
-    // Simple callback when the button is pressed
-    button->onPress([]() {
-        std::cout << "Button clicked!" << std::endl;
-    });
+#include "MySfml.h"
+#include "UI.h"
+#include <boost/qvm_lite.hpp>
 
-    gui.add(button);
+using namespace spiel;
 
-    // Main loop
-    while (window.isOpen()) {
-        // SFML 3: pollEvent now returns std::optional<sf::Event>
-        while (const std::optional event = window.pollEvent()) {
-            // Pass the event to TGUI first
-            gui.handleEvent(*event);
+int main()
+{
+    sf::View view({0.f, 0.f}, {800.f, 600.f});
+    sf::RenderWindow window(sf::VideoMode(static_cast<sf::Vector2u>(view.getSize())), "My SFML Window");
+    window.setView(view);
 
-            // Check for standard window close event
-            if (event->is<sf::Event::Closed>()) {
-                window.close();
+    DefaultButton button("Click Me", {200.f, 80.f});
+    button.asTransformable().setPosition({0.f, 0.f});
+
+    while (window.isOpen())
+    {
+        while (auto event = window.pollEvent())
+        {
+            if (event->getIf<sf::Event::Closed>())
+            { window.close(); }
+            else if (auto mouseButtonEvent = event->getIf<sf::Event::MouseButtonPressed>())
+            {
+                if(mouseButtonEvent->button == sf::Mouse::Button::Left)
+                {
+                    auto pos = window.mapPixelToCoords(mouseButtonEvent->position);
+                    if (button.isInArea(vectorCast::fromSFML(pos)))
+                    {
+                        std::cout << "Button clicked!" << std::endl;
+                        button.setVisualPressedState(true);
+                    }
+                }
+            }
+            else if (auto mouseMovedEvent = event->getIf<sf::Event::MouseMoved>())
+            {
+                auto pos = window.mapPixelToCoords(mouseMovedEvent->position);
+                if (button.isInArea(vectorCast::fromSFML(pos)))
+                {
+                    button.setVisualHoveredState(true);
+                }
+                else
+                {
+                    button.setVisualHoveredState(false);
+                }
+            }
+            else if (auto mouseButtonReleasedEvent = event->getIf<sf::Event::MouseButtonReleased>())
+            {
+                if(mouseButtonReleasedEvent->button == sf::Mouse::Button::Left)
+                {
+                    button.setVisualPressedState(false);
+                }
             }
         }
 
-        window.clear(sf::Color(40, 40, 40));
-        
-        // Draw the GUI widgets
-        gui.draw();
-        
+        window.clear(sf::Color::Black);
+        window.draw(button);
         window.display();
     }
-
-    return 0;
 }
