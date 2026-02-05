@@ -51,10 +51,9 @@ the `<parent_path>` can be named anyway.
 >   `git clone <url or path from> <path to>`  
 >   paths are written with `/` but on windows you might need to use `\` instead of `/`
     or just download it manually without git and locate it in <parent path>  
-
+    
     for Linux might require additional installing.  
     from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
-
 ```
     SFML depends on a few other libraries, which will be automatically built as part of the SFML project unless otherwise specified by the SFML_USE_SYSTEM_DEPS option (see below). On Linux, however, this option is disabled by default, so either enable it, or ensure the following packages are installed on your system:
 
@@ -79,7 +78,6 @@ the `<parent_path>` can be named anyway.
 
     The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
 ```
-
     for ubuntu this installations are recomended:  
 ```
     sudo apt update
