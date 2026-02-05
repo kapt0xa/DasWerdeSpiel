@@ -33,11 +33,11 @@ the `<parent_path>` can be named anyway.
 git  
 cmake  
 some compiler:  
-` ` g++/clang for linux/ubuntu  
-` ` clang++/visual studio compiler for windows  
+&ensp;g++/clang for linux/ubuntu  
+&ensp;clang++/visual studio compiler for windows  
 some build system:  
-` ` GNU make for linux/ubuntu  
-` ` Visual studio or Ninja for windows  
+&ensp;GNU make for linux/ubuntu  
+&ensp;Visual studio or Ninja for windows  
 
 - SFML 3.0  
 the repository: https://github.com/SFML/SFML.git  
