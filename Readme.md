@@ -38,7 +38,12 @@ some compiler:
 some build system:  
 &emsp;GNU make for linux/ubuntu  
 &emsp;Visual studio or Ninja for windows  
-(recomdnded but you might use any analog)  
+(recomdnded but you might use any analog of theese tools)  
+
+- short list of libs:  
+SFML 3 (download and install)  
+TGUI (not described yet)  
+BoostQVM (just download)  
 
 - SFML 3.0  
 the repository: https://github.com/SFML/SFML.git  
