@@ -50,8 +50,8 @@ the repository: https://github.com/SFML/SFML.git
 the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
 ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
 download lib via git:  
-`cd <parent_path>`
-`git clone https://github.com/SFML/SFML.git ./SFML_SRC`
+`cd <parent_path>`  
+`git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
 > on windows if `<parent path>` is not located on main disk, you might need to use `<disk_name>:` to switch disk, like `D:`  
 > `git clone <url or path from> <path to>`  
 > paths are written with `/` but on windows you might need to use `\` instead of `/`
