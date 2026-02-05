@@ -46,6 +46,12 @@ the `<parent_path>` can be named anyway.
     `cd` is for navigating through path and on windows it cant switch disks.
     use `<disk_name>:` to navigate to other disk, like `D:`  
     .  
+    `visual studio` and `visual studio code` are not same.  
+    `visual studio` - contains its own build system, available for windows and macos  
+    `visual studio code` (or VScode) - another simplified but more flexible application  
+    visual studio has its own issues with debug and release versions.  
+    also for visual studio you should ensure that you have modules for c/c++  
+    .  
 
 -   short list of libs:  
     SFML 3 (download and install)  
@@ -189,4 +195,5 @@ not described yet, first you need download and install depended libraries.
     ```
 
 # this repository:
-https://github.com/kapt0xa/DasWerdeSpiel 
+https://github.com/kapt0xa/DasWerdeSpiel  
+in vscode
