@@ -54,6 +54,7 @@ the `<parent_path>` can be named anyway.
 
     for Linux might require additional installing.  
     from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
+
     ```
     SFML depends on a few other libraries, which will be automatically built as part of the SFML project unless otherwise specified by the SFML_USE_SYSTEM_DEPS option (see below). On Linux, however, this option is disabled by default, so either enable it, or ensure the following packages are installed on your system:
 
@@ -78,6 +79,7 @@ the `<parent_path>` can be named anyway.
 
     The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
     ```
+
     for ubuntu this installations are recomended:  
     ```
     sudo apt update
@@ -95,11 +97,11 @@ the `<parent_path>` can be named anyway.
         libudev-dev \
         libgl1-mesa-dev \
         libopenal-dev
-    ```  
->   yes, this list doesnt match well with SFML documentation.
->   `libgl1-mesa-dev` - it is for opengl, might depend on videocard driver
->   `libopenal-dev` - openAL is not listed in SFML documentation, but it is requires for audio
->   `libvorbis-dev`- contains not just vorbis, but also vorbisenc and vorbisfile
+    ```
+>   yes, this list doesnt match well with SFML documentation.  
+>   `libgl1-mesa-dev` - it is for opengl, might depend on videocard driver  
+>   `libopenal-dev` - openAL is not listed in SFML documentation, but it is requires for audio  
+>   `libvorbis-dev`- contains not just vorbis, but also vorbisenc and vorbisfile  
 
     `cd ./SFML_SRC`  
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
