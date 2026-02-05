@@ -132,45 +132,45 @@ not described yet, first you need download and install depended libraries.
 # vscode setup:
 
 - for comfortable code editing, c_cpp_properties.json:  
-for Linux:
-```
-{
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/build/_deps/sfml-src/include",
-                "${workspaceFolder}/../BoostQVM/include"
-            ],
-            "compilerPath": "/usr/bin/g++",
-            "cStandard": "c17",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "linux-gcc-x64" 
-        }
-    ],
-    "version": 4
-}
-```
-or for windows:
-```
-{
-    "configurations": [
-        {
-            "name": "Windows",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/build/_deps/sfml-src/include",
-                "${workspaceFolder}/../BoostQVM/include"
-            ],
-            "compilerPath": "clang++",
-            "cStandard": "c17",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "windows-clang-x64" 
-        }
-    ],
-    "version": 4
-}
-```
+    for Linux:
+    ```
+    {
+        "configurations": [
+            {
+                "name": "Linux",
+                "includePath": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/build/_deps/sfml-src/include",
+                    "${workspaceFolder}/../BoostQVM/include"
+                ],
+                "compilerPath": "/usr/bin/g++",
+                "cStandard": "c17",
+                "cppStandard": "c++20",
+                "intelliSenseMode": "linux-gcc-x64" 
+            }
+        ],
+        "version": 4
+    }
+    ```
+    or for windows:
+    ```
+    {
+        "configurations": [
+            {
+                "name": "Windows",
+                "includePath": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/build/_deps/sfml-src/include",
+                    "${workspaceFolder}/../BoostQVM/include"
+                ],
+                "compilerPath": "clang++",
+                "cStandard": "c17",
+                "cppStandard": "c++20",
+                "intelliSenseMode": "windows-clang-x64" 
+            }
+        ],
+        "version": 4
+    }
+    ```
 
 -   this repository: https://github.com/kapt0xa/DasWerdeSpiel 
