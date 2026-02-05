@@ -45,19 +45,20 @@ SFML 3 (download and install)
 TGUI (not described yet)  
 BoostQVM (just download)  
 
-- SFML 3.0  
-.  
-the repository: https://github.com/SFML/SFML.git  
-the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
-ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
-.  
-download lib via git:  
-`cd <parent_path>`  
-`git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
-or just download it manually without git and locate it into `<parent path>`  
-.  
-for Linux might require additional installing.  
-from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
+-   SFML 3.0  
+    .  
+    the repository: https://github.com/SFML/SFML.git  
+    the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
+    ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
+    .  
+    download lib via git:  
+    `cd <parent_path>`  
+    `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
+    or just download it manually without git and locate it into `<parent path>`  
+    .  
+    for Linux might require additional installing.  
+    from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
+    ```
     SFML depends on a few other libraries, which will be automatically built as part of the SFML project unless otherwise specified by the SFML_USE_SYSTEM_DEPS option (see below). On Linux, however, this option is disabled by default, so either enable it, or ensure the following packages are installed on your system:
 
     -freetype
@@ -80,7 +81,9 @@ from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/b
     -pthread
 
     The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
-for ubuntu this installations are recomended:  
+    ```
+    for ubuntu this installations are recomended:  
+    ```
     sudo apt update
     sudo apt install \
         libfreetype-dev \
@@ -96,25 +99,26 @@ for ubuntu this installations are recomended:
         libudev-dev \
         libgl1-mesa-dev \
         libopenal-dev
-.  
-setup the build:  
-`cd ./SFML_SRC`  
-`cmake -B build -DBUILD_SHARED_LIBS=ON`  
-.  
-run building:  
-if not visual studio (if build files go into `SFML_SRC/build/lib`):  
-`cmake --build build`  
-.  
-if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
-`cmake --build build --config=Release`  
-.  
-install SFML:  
-ubuntu/linux:  
-`sudo cmake --install build --prefix ../SFML`  
-windows:  
-run cmd.exe as administrator, navigate to required path and run the comand:  
-`cd <parent_path>/SFML`  
-`cmake --install build --prefix ../SFML`  
+    ```
+    .  
+    setup the build:  
+    `cd ./SFML_SRC`  
+    `cmake -B build -DBUILD_SHARED_LIBS=ON`  
+    .  
+    run building:  
+    if not visual studio (if build files go into `SFML_SRC/build/lib`):  
+    `cmake --build build`  
+    .  
+    if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
+    `cmake --build build --config=Release`  
+    .  
+    install SFML:  
+    ubuntu/linux:  
+    `sudo cmake --install build --prefix ../SFML`  
+    windows:  
+    run cmd.exe as administrator, navigate to required path and run the comand:  
+    `cd <parent_path>/SFML`  
+    `cmake --install build --prefix ../SFML`  
 
 - Boost QVM  
 to install it:  
