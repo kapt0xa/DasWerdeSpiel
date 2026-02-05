@@ -41,7 +41,7 @@ the `<parent_path>` can be named anyway.
     (recomdnded but you might use any analog of theese tools)  
     .  
     for windows users:
-    you might need use `\` instead of `/` in paths  
+    you might need use `\` instead of `/` in paths.  
     also if you have more than one disk, then pay attention on executing commands `cd <path>`.
     `cd` is for navigating through path and on windows it cant switch disks.
     use `<disk_name>:` to navigate to other disk, like `D:`  
