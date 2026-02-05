@@ -58,48 +58,44 @@ or just download it manually without git and locate it into `<parent path>`
 .  
 for Linux might require additional installing.  
 from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
-```
-SFML depends on a few other libraries, which will be automatically built as part of the SFML project unless otherwise specified by the SFML_USE_SYSTEM_DEPS option (see below). On Linux, however, this option is disabled by default, so either enable it, or ensure the following packages are installed on your system:
+    SFML depends on a few other libraries, which will be automatically built as part of the SFML project unless otherwise specified by the SFML_USE_SYSTEM_DEPS option (see below). On Linux, however, this option is disabled by default, so either enable it, or ensure the following packages are installed on your system:
 
--freetype
--harfbuzz
--flac
--ogg
--vorbis
--vorbisenc
--vorbisfile
--mbedtls
+    -freetype
+    -harfbuzz
+    -flac
+    -ogg
+    -vorbis
+    -vorbisenc
+    -vorbisfile
+    -mbedtls
 
-On Linux there are also other system dependencies that must be installed in all cases:
+    On Linux there are also other system dependencies that must be installed in all cases:
 
--x11
--xrandr
--xcursor
--xi
--udev
--opengl
--pthread
+    -x11
+    -xrandr
+    -xcursor
+    -xi
+    -udev
+    -opengl
+    -pthread
 
-The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
-```
+    The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
 for ubuntu this installations are recomended:  
-```
-sudo apt update
-sudo apt install \
-    libfreetype-dev \
-    libharfbuzz-dev \
-    libflac-dev \
-    libogg-dev \
-    libvorbis-dev \
-    libmbedtls-dev \
-    libx11-dev \
-    libxrandr-dev \
-    libxcursor-dev \
-    libxi-dev \
-    libudev-dev \
-    libgl1-mesa-dev \
-    libopenal-dev
-```
+    sudo apt update
+    sudo apt install \
+        libfreetype-dev \
+        libharfbuzz-dev \
+        libflac-dev \
+        libogg-dev \
+        libvorbis-dev \
+        libmbedtls-dev \
+        libx11-dev \
+        libxrandr-dev \
+        libxcursor-dev \
+        libxi-dev \
+        libudev-dev \
+        libgl1-mesa-dev \
+        libopenal-dev
 .  
 setup the build:  
 `cd ./SFML_SRC`  
