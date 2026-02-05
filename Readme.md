@@ -106,19 +106,16 @@ the `<parent_path>` can be named anyway.
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
     .  
     run building:  
-    if not visual studio (if build files go into `SFML_SRC/build/lib`):  
     `cmake --build build`  
-    .  
-    if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
+    if cmake uses visual studio, it would likely build Debug version by default  
+    (build files go into `SFML_SRC/build/lib` in that case):  
+    in that case Release version is required to succeed on next step  
+    use this to build release  
     `cmake --build build --config=Release`  
     .  
     install SFML:  
-    ubuntu/linux:  
-    `sudo cmake --install build --prefix ../SFML`  
-    windows:  
-    run cmd.exe as administrator, navigate to required path and run the comand:  
-    `cd <parent_path>/SFML`  
     `cmake --install build --prefix ../SFML`  
+    without `--prefix` it might require arministrator/sudo access  
     .  
 
 -   Boost QVM  
