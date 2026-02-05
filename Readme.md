@@ -100,6 +100,11 @@ the `<parent_path>` can be named anyway.
         libgl1-mesa-dev \
         libopenal-dev
     ```
+    (yes, this list doesnt qite fit SFML documentation.  
+    `libvorbis-dev` is for 3 components - vorbis, vorbisenc and vorbisfile  
+    `libgl1-mesa-dev` is for openGL and might depend on your videocard driver  
+    `libopenal-dev` is fir OpenAL, is not listed in SFML documentation but is required
+    others fit pattern `lib<name>-dev`)  
     .  
     setup the build:  
     `cd ./SFML_SRC`  
