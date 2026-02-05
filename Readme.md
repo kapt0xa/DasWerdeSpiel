@@ -29,7 +29,7 @@ the `<parent_path>` can be named anyway.
 
 # requirements
 
-## developer's tools:
+- developer's tools:
 git  
 cmake  
 some compiler:  
@@ -39,7 +39,7 @@ some build system:
     GNU make for linux/ubuntu  
     Visual studio or Ninja for windows  
 
-## SFML 3.0  
+- SFML 3.0  
 the repository: https://github.com/SFML/SFML.git  
 the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
 ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
@@ -121,7 +121,7 @@ run cmd.exe as administrator, navigate to required path and run the comand:
 >   `sudo` - linux analog to window's administrator access  
 >   `cmake --install <path to build> --prefix <path to install>`
 
-## Boost QVM  
+- Boost QVM  
 to install it:  
 `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
 
@@ -130,46 +130,46 @@ not described yet, first you need download and install depended libraries.
 
 # vscode setup:
 
--   for comfortable code editing:  
-    c_cpp_properties.json:
-    ``` 
-    {
-        "configurations": [
-            {
-                "name": "Linux",
-                "includePath": [
-                    "${workspaceFolder}/**",
-                    "${workspaceFolder}/build/_deps/sfml-src/include",
-                    "${workspaceFolder}/../BoostQVM/include"
-                ],
-                "compilerPath": "/usr/bin/g++",
-                "cStandard": "c17",
-                "cppStandard": "c++20",
-                "intelliSenseMode": "linux-gcc-x64" 
-            }
-        ],
-        "version": 4
-    }
-    ```
-    or for windows:
-    ```
-    {
-        "configurations": [
-            {
-                "name": "Windows",
-                "includePath": [
-                    "${workspaceFolder}/**",
-                    "${workspaceFolder}/build/_deps/sfml-src/include",
-                    "${workspaceFolder}/../BoostQVM/include"
-                ],
-                "compilerPath": "clang++",
-                "cStandard": "c17",
-                "cppStandard": "c++20",
-                "intelliSenseMode": "windows-clang-x64" 
-            }
-        ],
-        "version": 4
-    }
-    ```
+- for comfortable code editing:  
+c_cpp_properties.json:
+``` 
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/build/_deps/sfml-src/include",
+                "${workspaceFolder}/../BoostQVM/include"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "linux-gcc-x64" 
+        }
+    ],
+    "version": 4
+}
+```
+or for windows:
+```
+{
+    "configurations": [
+        {
+            "name": "Windows",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/build/_deps/sfml-src/include",
+                "${workspaceFolder}/../BoostQVM/include"
+            ],
+            "compilerPath": "clang++",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "windows-clang-x64" 
+        }
+    ],
+    "version": 4
+}
+```
 
 -   this repository: https://github.com/kapt0xa/DasWerdeSpiel 
