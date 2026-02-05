@@ -5,9 +5,9 @@ usage will be described (not yet) afrer installation
 
 # suggested file organisation:
 the commands in this tutorial are runned from terminal (for ubuntu/linux) or from cmd.exe (for windows)
-if u are not familliar with terminal/cmd, google about them.  
+if you are not familliar with terminal/cmd, google about them.  
 also google about cd (windows and linux), sudo (linux), apt (linux), path variables (windows and linux)
-if you install components correctly, usually U should worry about path variables.
+if you install components correctly, usually you should worry about path variables.
 
 the instruction is written for this file organisation:
 the `<parent_path>` can be named anyway.
@@ -46,8 +46,10 @@ the `<parent_path>` can be named anyway.
     ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
     download lib via git:  
     `cd <parent_path>`
+>   on windows if `<parent path>` is not located on main disk you might need to use `<disk_name>:` to switch disk, like `D:`
     `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
 >   `git clone <url or path from> <path to>`
+>   paths are written with `/` but on windows you might need to use `\` instead of `/`
     or just download it manually without git and locate it in <parent path>  
 
     for Linux might require additional installing.  
@@ -94,26 +96,29 @@ the `<parent_path>` can be named anyway.
         libgl1-mesa-dev \
         libopenal-dev
     ```  
-    yes, this list doesnt match well with SFML documentation  
+>   yes, this list doesnt match well with SFML documentation.
+>   `libgl1-mesa-dev` - it is for opengl, might depend on videocard driver
+>   `libopenal-dev` - openAL is not listed in SFML documentation, but it is requires for audio
+>   `libvorbis-dev`- contains not just vorbis, but also vorbisenc and vorbisfile
 
     `cd ./SFML_SRC`  
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
 >   `cmake -B <path to build> -D<additional paraments>`  
 
-    if not VisualStudio:  
+    if not visual studio (if build files go into `SFML_SRC/build/lib`):  
     `cmake --build build`  
 >   `cmake --build <path to build>`  
-    for Windows/MacOS if cmake is using visual studio, U might need so specify release or debug version:  
+    if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
     `cmake --build build --config=Release`  
->   `--config=Release` - visual studio requires this comand. it builds Debug by default. without Release the `--install` comand will fail  
+>   `--config=Release` - without Release the `--install` comand will fail and visual studio builds Debug by default  
 
     Then install the SFML:  
     ubuntu/linux:  
     `sudo cmake --install build --prefix ../SFML`  
     windows:  
     run cmd.exe as administrator, navigate to required path and run the comand:  
+    `cd <parent_path>/SFML`
     `cmake --install build --prefix ../SFML`  
-    for windows it is likely to fail if cmake used visual studio and u did not build release version.  
 
 >   `sudo` - linux analog to window's administrator access  
 >   `cmake --install <path to build> --prefix <path to install>`
@@ -124,11 +129,11 @@ the `<parent_path>` can be named anyway.
 
 # build
 ## Ubuntu
-- U require git, cmake, make, g++ installed also U require some SFML-specific modules, i dont know what. i just read errors, googled them and instlled required modules for SFML
-- start folder is folder of project (if U print "$ ls" it should list some likes, one of them is this "Readme.md")
-- U require to copy SFML's repository. read comments in CMakeLists.txt, ctrl+F "git clone"
-- the cloned repository should be in the same folder the project is located. if u print "$ ls ..", it should list the SFML's repository. the exact name and location can be changed in CMakeLists.txt.
-- than u create folder "build" and go into it: "$ mkdir build", "& cd build"
+- you require git, cmake, make, g++ installed also you require some SFML-specific modules, i dont know what. i just read errors, googled them and instlled required modules for SFML
+- start folder is folder of project (if you print "$ ls" it should list some likes, one of them is this "Readme.md")
+- you require to copy SFML's repository. read comments in CMakeLists.txt, ctrl+F "git clone"
+- the cloned repository should be in the same folder the project is located. if you print "$ ls ..", it should list the SFML's repository. the exact name and location can be changed in CMakeLists.txt.
+- than you create folder "build" and go into it: "$ mkdir build", "& cd build"
 - build the project via cmake and make: "$ cmake ..", "$ make"
 - run the executable. it is named "DWS"
 - resources used for the executable should be located in path relative to executable "../resrc"
