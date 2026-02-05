@@ -1,7 +1,6 @@
 # game with c++ and SFML
 
-first installation process is dscribed.  
-usage will be described (not yet) afrer installation  
+requirements and installation process are described below  
 
 # suggested file organisation:
 
@@ -86,6 +85,33 @@ the instruction is written for this file organisation:
 
     The exact name of the packages may vary from distribution to distribution. Once those packages are installed, don't forget to install their development headers as well.
     ```
+    .  
+
+-   TGUI
+    .  
+    the repository: https://github.com/texus/TGUI/  
+    exact version: not defined yet  (jan 2026)  
+    documentation: https://tgui.eu/tutorials/latest-stable/  
+    .  
+    download lib via git:  
+    `cd <parent_path>`  
+    `git clone https://github.com/texus/TGUI/ ./TGUI`  
+    (or just download it manually without git and locate it into `<parent path>`)  
+    .  
+
+-   Boost QVM  
+    .  
+    the repository: https://github.com/boostorg/qvm.git  
+    download lib via git:  
+    `cd <parent_path>`  
+    `git clone https://github.com/boostorg/qvm.git ./BoostQVM`  
+    .  
+
+# build the project
+-   linux dependencies:  
+    .  
+    exact exact name of the packages may vary.  
+    you can find link to documentation above.  
     for ubuntu this installations are recomended:  
     ```
     sudo apt update
@@ -110,27 +136,33 @@ the instruction is written for this file organisation:
     `libopenal-dev` is fir OpenAL, is not listed in SFML documentation but is required
     others fit pattern `lib<name>-dev`)  
     .  
-
--   TGUI
+-   download libs and project via git:  
     .  
-    the repository: https://github.com/texus/TGUI/  
-    exact version: not defined yet  (jan 2026)  
-    documentation: https://tgui.eu/tutorials/latest-stable/  
-    .  
-    download lib via git:  
     `cd <parent_path>`  
+    .  
+    `git clone https://github.com/SFML/SFML.git ./SFML`  
     `git clone https://github.com/texus/TGUI/ ./TGUI`  
-    (or just download it manually without git and locate it into `<parent path>`)  
+    `git clone https://github.com/boostorg/qvm.git ./BoostQVM`  
+    `git clone https://github.com/kapt0xa/DasWerdeSpiel ./DasWerdeSpiel`  
     .  
-
--   Boost QVM  
+-   Build project:  
     .  
-    to install it:  
-    `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
+    `cd DasWerdeSpiel`  
+    ```
+    cmake -B build && \
+    cmake --build build --config=Debug --parallel
+    ```
+    (you can replace `Debug` with `Release`.  
+    `--parallel` is optional, it makes building faster)  
     .  
-
-# build the project
-not described yet, first you need download and install depended libraries.
+-   Run the project:  
+    .  
+    `cd build` or `cd build/Debug` or `cd build/Release`  
+    .  
+    `./DWS.exe` or `./DWS` or `DWS`  
+    .  
+    as alternative, you can find the DWS executable and run it via fylesystem GUI  
+    .  
 
 # vscode setup:
 
@@ -145,9 +177,10 @@ not described yet, first you need download and install depended libraries.
                 "includePath": [
                     "${workspaceFolder}/**",
                     "${workspaceFolder}/build/_deps/sfml-src/include",
-                    "${workspaceFolder}/../BoostQVM/include"
+                    "${workspaceFolder}/build/_deps/tgui-src/include",
+                    "${workspaceFolder}/build/_deps/boostqvm-src/include"
                 ],
-                "compilerPath": "/usr/bin/g++",
+                "compilerPath": "g++",
                 "cStandard": "c17",
                 "cppStandard": "c++20",
                 "intelliSenseMode": "linux-gcc-x64" 
@@ -165,7 +198,8 @@ not described yet, first you need download and install depended libraries.
                 "includePath": [
                     "${workspaceFolder}/**",
                     "${workspaceFolder}/build/_deps/sfml-src/include",
-                    "${workspaceFolder}/../BoostQVM/include"
+                    "${workspaceFolder}/build/_deps/tgui-src/include",
+                    "${workspaceFolder}/build/_deps/boostqvm-src/include"
                 ],
                 "compilerPath": "clang++",
                 "cStandard": "c17",
