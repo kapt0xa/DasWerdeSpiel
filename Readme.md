@@ -47,8 +47,7 @@ the `<parent_path>` can be named anyway.
     download lib via git:  
     `cd <parent_path>`
 >   on windows if `<parent path>` is not located on main disk, you might need to use `<disk_name>:` to switch disk, like `D:`  
-    
-    `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
+    `git clone https://github.com/SFML/SFML.git ./SFML_SRC`
 >   `git clone <url or path from> <path to>`  
 >   paths are written with `/` but on windows you might need to use `\` instead of `/`
     or just download it manually without git and locate it in <parent path>  
