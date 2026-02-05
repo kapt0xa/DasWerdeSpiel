@@ -57,13 +57,13 @@ the instruction is written for this file organisation:
 -   SFML 3.0  
     .  
     the repository: https://github.com/SFML/SFML.git  
-    the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
+    the exact version: https://github.com/SFML/SFML/tree/e533db99c8a83a6b81c47105964e10cbab421a0d (january 2026)  
     ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
     .  
     download lib via git:  
     `cd <parent_path>`  
     `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
-    or just download it manually without git and locate it into `<parent path>`  
+    (or just download it manually without git and locate it into `<parent path>`)  
     .  
     for Linux might require additional installing.  
     from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
