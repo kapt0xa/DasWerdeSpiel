@@ -118,7 +118,7 @@ if not visual studio (if build files go into `SFML_SRC/build/lib`):
 
 if visual studio (if build files go into `SFML_SRC/build/lib/Debug`):  
 `cmake --build build --config=Release`  
-> `--config=Release` - without Release the `--install` comand will fail and visual studio builds Debug by default  
+> `--config=Release` - is required for `--install` comand. visual studio builds Debug by default  
 
 install SFML:  
 ubuntu/linux:  
