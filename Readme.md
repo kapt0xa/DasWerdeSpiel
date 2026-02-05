@@ -4,25 +4,21 @@ first installation process is dscribed.
 usage will be described (not yet) afrer installation  
 
 # suggested file organisation:
-the commands in this tutorial are runned from terminal (for ubuntu/linux) or from cmd.exe (for windows)
-if you are not familliar with terminal/cmd, google about them.  
-also google about cd (windows and linux), sudo (linux), apt (linux), path variables (windows and linux)
-if you install components correctly, usually you should worry about path variables.
 
 the instruction is written for this file organisation:
-the `<parent_path>` can be named anyway.
 ```
-<parent_path> (folder with libs and project. for me it is dev_cpp)
-├SFML_SRC (source cloned from github)
-├SFML (installed via cmake)
-│ ├bin
-│ ├include
-│ └lib
-├TGUI (cloned from github)
-├BoostQVM (cloned from github)
-│ └include (include path)
-│  └boost
-└DasWerdeSpiel (the folder with this project)
+<parent_path>
+  ├SFML_SRC (source cloned from github)
+  ├SFML (installed via cmake)
+  │ ├bin
+  │ ├include
+  │ └lib
+  ├SFML_DBG (installed via cmake, optional)
+  ├TGUI (cloned from github)
+  ├BoostQVM (cloned from github)
+  │ └include (include path)
+  │  └boost
+  └DasWerdeSpiel (the folder with this project)
     ├build (created with "sfml -B build" comand)
     └Readme.md (this readme file itself)
 ```
@@ -151,7 +147,7 @@ not described yet, first you need download and install depended libraries.
 
 # vscode setup:
 
--   for comfortable code editing.
+-   for comfortable code editing.  
     c_cpp_properties.json:  
     for Linux:
     ```
