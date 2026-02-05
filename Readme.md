@@ -46,6 +46,7 @@ TGUI (not described yet)
 BoostQVM (just download)  
 
 - SFML 3.0  
+.  
 the repository: https://github.com/SFML/SFML.git  
 the exact version: not defined yet, if modern last version does not work, try to use last version of january 2026  
 ofitial SFML building instruction: https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#building-sfml  
