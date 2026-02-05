@@ -123,15 +123,18 @@ the `<parent_path>` can be named anyway.
     .  
 
 -   Boost QVM  
+    .
     to install it:  
     `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
+    .
 
 # build the project
 not described yet, first you need download and install depended libraries.
 
 # vscode setup:
 
-- for comfortable code editing, c_cpp_properties.json:  
+-   for comfortable code editing.
+    c_cpp_properties.json:  
     for Linux:
     ```
     {
