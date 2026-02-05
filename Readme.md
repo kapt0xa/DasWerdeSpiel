@@ -63,6 +63,7 @@ the instruction is written for this file organisation:
     download lib via git:  
     `cd <parent_path>`  
     `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
+    `cd ./SFML_SRC` (navigate into the cloned repository arter downloading it)  
     (or just download it manually without git and locate it into `<parent path>`)  
     .  
     for Linux might require additional installing.  
@@ -116,7 +117,6 @@ the instruction is written for this file organisation:
     others fit pattern `lib<name>-dev`)  
     .  
     setup the build:  
-    `cd ./SFML_SRC`  
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
     .  
     run building:  
@@ -136,11 +136,23 @@ the instruction is written for this file organisation:
     `cmake --install build --prefix ../SFML_DBG --config=Debug`  
     .  
 
+-   TGUI
+    .  
+    the repository: https://github.com/texus/TGUI/  
+    exact version: not defined yet  (jan 2026)  
+    documentation: https://tgui.eu/tutorials/latest-stable/  
+    .  
+    download lib via git:  
+    `cd <parent_path>`  
+    `git clone https://github.com/texus/TGUI/ ./TGUI_SRC`  
+    (or just download it manually without git and locate it into `<parent path>`)  
+    .  
+
 -   Boost QVM  
     .  
     to install it:  
     `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
-    .
+    .  
 
 # build the project
 not described yet, first you need download and install depended libraries.
