@@ -29,7 +29,7 @@ the `<parent_path>` can be named anyway.
 
 # requirements
 
-- developer's tools:
+- developer's tools:  
 git  
 cmake  
 some compiler:  
@@ -38,6 +38,7 @@ some compiler:
 some build system:  
 &emsp;GNU make for linux/ubuntu  
 &emsp;Visual studio or Ninja for windows  
+(recomdnded but you might use any analog)  
 
 - SFML 3.0  
 the repository: https://github.com/SFML/SFML.git  
