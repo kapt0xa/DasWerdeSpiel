@@ -106,16 +106,20 @@ the `<parent_path>` can be named anyway.
     `cmake -B build -DBUILD_SHARED_LIBS=ON`  
     .  
     run building:  
-    `cmake --build build`  
+    `cmake --build build  --parallel` (`--parallel` is optional, it might make building faster)  
     if cmake uses visual studio, it would likely build Debug version by default  
     (build files go into `SFML_SRC/build/lib` in that case):  
-    in that case Release version is required to succeed on next step  
-    use this to build release  
-    `cmake --build build --config=Release`  
+    in that case you likely require both versions - debug and release  
+    use this to build:  
+    `cmake --build build --config=Release --parallel`  
+    `cmake --build build --config=Debug --parallel`  
     .  
     install SFML:  
     `cmake --install build --prefix ../SFML`  
     without `--prefix` it might require arministrator/sudo access  
+    if cmake is using visual studio, you would need to install both debug and release versions:  
+    `cmake --install build --prefix ../SFML --config=Release`  
+    `cmake --install build --prefix ../SFML_DBG --config=Debug`  
     .  
 
 -   Boost QVM  
