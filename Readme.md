@@ -29,21 +29,21 @@ the `<parent_path>` can be named anyway.
 
 # requirements
 
-- developer's tools:  
-git  
-cmake  
-some compiler:  
-&emsp;g++/clang for linux/ubuntu  
-&emsp;clang++/visual studio compiler for windows  
-some build system:  
-&emsp;GNU make for linux/ubuntu  
-&emsp;Visual studio or Ninja for windows  
-(recomdnded but you might use any analog of theese tools)  
+-   developer's tools:  
+    git  
+    cmake  
+    some compiler:  
+    &emsp;g++/clang for linux/ubuntu  
+    &emsp;clang++/visual studio compiler for windows  
+    some build system:  
+    &emsp;GNU make for linux/ubuntu  
+    &emsp;Visual studio or Ninja for windows  
+    (recomdnded but you might use any analog of theese tools)  
 
-- short list of libs:  
-SFML 3 (download and install)  
-TGUI (not described yet)  
-BoostQVM (just download)  
+-   short list of libs:  
+    SFML 3 (download and install)  
+    TGUI (not described yet)  
+    BoostQVM (just download)  
 
 -   SFML 3.0  
     .  
@@ -120,9 +120,9 @@ BoostQVM (just download)
     `cd <parent_path>/SFML`  
     `cmake --install build --prefix ../SFML`  
 
-- Boost QVM  
-to install it:  
-`git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
+-   Boost QVM  
+    to install it:  
+    `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
 
 # build the project
 not described yet, first you need download and install depended libraries.
