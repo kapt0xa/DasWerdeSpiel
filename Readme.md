@@ -123,7 +123,7 @@ the `<parent_path>` can be named anyway.
     .  
 
 -   Boost QVM  
-    .
+    .  
     to install it:  
     `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
     .
