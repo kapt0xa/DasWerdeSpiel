@@ -117,23 +117,19 @@ the instruction is written for this file organisation:
     others fit pattern `lib<name>-dev`)  
     .  
     setup the build:  
-    `cmake -B build -DBUILD_SHARED_LIBS=ON`  
+    ```
+    cmake -B build/RLS -DBUILD_SHARED_LIBS=ON && \
+    cmake -B build/DBG -DBUILD_SHARED_LIBS=ON
+    ```
+    (for visual studio use single `build` instead of 2 different `build/RLS` and `build/DBG`)
     .  
-    run building:  
-    `cmake --build build  --parallel` (`--parallel` is optional, it might make building faster)  
-    if cmake uses visual studio, it would likely build Debug version by default  
-    (build files go into `SFML_SRC/build/lib` in that case):  
-    in that case you likely require both versions - debug and release  
-    use this to build:  
-    `cmake --build build --config=Release --parallel`  
-    `cmake --build build --config=Debug --parallel`  
-    .  
-    install SFML:  
-    `cmake --install build --prefix ../SFML`  
-    without `--prefix` it might require arministrator/sudo access  
-    if cmake is using visual studio, you would need to install both debug and release versions:  
-    `cmake --install build --prefix ../SFML --config=Release`  
-    `cmake --install build --prefix ../SFML_DBG --config=Debug`  
+    build and install them:  
+    ```
+    cmake --build build/DBG --config=Debug --parallel && \
+    cmake --build build/RLS --config=Release --parallel && \
+    cmake --install build/DBG --prefix ../SFML_DBG --config=Debug && \
+    cmake --install build/RLS --prefix ../SFML_DBG --config=Release
+    ```
     .  
 
 -   TGUI
@@ -147,15 +143,16 @@ the instruction is written for this file organisation:
     `git clone https://github.com/texus/TGUI/ ./TGUI_SRC`  
     (or just download it manually without git and locate it into `<parent path>`)  
     .  
-    for release version:
-    `cd TGUI`
-    `cmake -B build -DTGUI_BACKEND=SFML_GRAPHICS -DSFML_DIR=<parent_path>/SFML_RLS/lib/cmake/SFML`
-    `cmake --build build --parallel`
+    for release version:  
+    `cd TGUI`  
+    `cmake -B build/RLS -DTGUI_BACKEND=SFML_GRAPHICS -DSFML_DIR=<parent_path>/SFML_RLS/lib/cmake/SFML`  
+    `cmake --build build/RLS --parallel`  
     .  
 
 -   Boost QVM  
     .  
     to install it:  
+    `cd <parent_path>`  
     `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
     .  
 
