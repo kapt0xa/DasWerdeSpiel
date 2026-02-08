@@ -1,13 +1,28 @@
 # 3.28 recomended by SFML tutorial
 cmake_minimum_required(VERSION 3.28)
 
-# uncomment one of blocks to use prefered c/c++ compiler
 
-# set(CMAKE_C_COMPILER "gcc")
-# set(CMAKE_CXX_COMPILER "g++")
+set(MY_LIB_PATH_MODE "Debug" CACHE STRING "Select which library build to link against")
+# Optional: Provide a dropdown menu in the GUI
+set_property(CACHE MY_LIB_PATH_MODE PROPERTY STRINGS "Debug" "Release")
 
-# set(CMAKE_C_COMPILER "clang")
-# set(CMAKE_CXX_COMPILER "clang++")
+if(MY_LIB_PATH_MODE STREQUAL "Debug")
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
+    set(SFML_DIR "${CMAKE_SOURCE_DIR}/../SFML_DBG/lib/cmake/SFML")
+    set(TGUI_DIR "${CMAKE_SOURCE_DIR}/../TGUI_DBG/lib/cmake/TGUI")
+else()
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+    set(SFML_DIR "${CMAKE_SOURCE_DIR}/../SFML_RLS/lib/cmake/SFML")
+    set(TGUI_DIR "${CMAKE_SOURCE_DIR}/../TGUI_RLS/lib/cmake/TGUI")
+endif()
+
+if(DEFINED GCC) # add -DGCC to use g++ compiler
+    set(CMAKE_C_COMPILER "gcc")
+    set(CMAKE_CXX_COMPILER "g++")
+elseif(DEFINED CLANG) # add -DCLANG to use clang++ compiler
+    set(CMAKE_C_COMPILER "clang")
+    set(CMAKE_CXX_COMPILER "clang++")
+endif()
 
 project(DasWerdeSpiel LANGUAGES CXX)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
@@ -15,20 +30,12 @@ set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 # Get all .cpp and .h files in the src directory
 file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/*.h")
 
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include(FetchContent)
-FetchContent_Declare(SFML
-#    GIT_REPOSITORY https://github.com/SFML/SFML.git # original command
-#    to let it work localy U need to clone the repository "git clone https://github.com/SFML/SFML.git ../../SFML" (if surrent folder is build folder)
-    GIT_REPOSITORY "${PROJECT_SOURCE_DIR}/../SFML" # local cloned lib that does not require internet connection
-    GIT_TAG 3.0.2
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
-FetchContent_MakeAvailable(SFML)
+find_package(SFML 3.0.2 COMPONENTS Graphics Audio System REQUIRED) # Graphics, Window, System, Audio, Network
+find_package(TGUI 1.12.0 REQUIRED)
 
-# boost QVM should be installed. watch Readme.md to see how to install the lib
+# boost::QVM
 include_directories(${PROJECT_SOURCE_DIR}/../BoostQVM/include)
 
 add_executable(DWS ${SOURCES})
@@ -45,4 +52,4 @@ else()  # For other compilers like GCC or Clang
     target_compile_options(DWS PRIVATE -Wall -Werror)  # Treat all warnings as errors
 endif()
 
-target_link_libraries(DWS PRIVATE SFML::Graphics SFML::Audio)
+target_link_libraries(DWS PRIVATE TGUI::TGUI SFML::Graphics SFML::Audio SFML::System)

@@ -62,9 +62,9 @@ the instruction is written for this file organisation:
     .  
     download lib via git:  
     `cd <parent_path>`  
-    `git clone https://github.com/SFML/SFML.git ./SFML_SRC`  
+    `git clone --branch --single-branch 3.0.2 https://github.com/SFML/SFML.git ./SFML_SRC`
     `cd ./SFML_SRC` (navigate into the cloned repository arter downloading it)  
-    (or just download it manually without git and locate it into `<parent path>`)  
+    (or just download it manually without git and locate it into `<parent_path>`)  
     .  
     for Linux might require additional installing.  
     from SFML documentation https://www.sfml-dev.org/tutorials/3.0/getting-started/build-from-source/#introduction :  
@@ -116,19 +116,18 @@ the instruction is written for this file organisation:
     `libopenal-dev` is fir OpenAL, is not listed in SFML documentation but is required
     others fit pattern `lib<name>-dev`)  
     .  
-    setup the build:  
+    build the lib:  
     ```
-    cmake -B build/RLS -DBUILD_SHARED_LIBS=ON && \
-    cmake -B build/DBG -DBUILD_SHARED_LIBS=ON
-    ```
-    (for visual studio use single `build` instead of 2 different `build/RLS` and `build/DBG`)
-    .  
-    build and install them:  
-    ```
+    cmake -B build/RLS \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON && \
+    cmake -B build/DBG \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_SHARED_LIBS=ON && \
     cmake --build build/DBG --config=Debug --parallel && \
     cmake --build build/RLS --config=Release --parallel && \
-    cmake --install build/DBG --prefix ../SFML_DBG --config=Debug && \
-    cmake --install build/RLS --prefix ../SFML_DBG --config=Release
+    cmake --install build/DBG --prefix ../SFML --config=Debug && \
+    cmake --install build/RLS --prefix ../SFML --config=Release
     ```
     .  
 
@@ -140,24 +139,59 @@ the instruction is written for this file organisation:
     .  
     download lib via git:  
     `cd <parent_path>`  
-    `git clone https://github.com/texus/TGUI/ ./TGUI_SRC`  
-    (or just download it manually without git and locate it into `<parent path>`)  
+    `git clone --branch v1.12.0 --single-branch https://github.com/texus/TGUI/ ./TGUI_SRC`  
+    (or just download it manually without git and locate it into `<parent_path>`)  
+    `cd TGUI_SRC`  
     .  
-    for release version:  
-    `cd TGUI`  
-    `cmake -B build/RLS -DTGUI_BACKEND=SFML_GRAPHICS -DSFML_DIR=<parent_path>/SFML_RLS/lib/cmake/SFML`  
-    `cmake --build build/RLS --parallel`  
+    build the lib:  
+    (before pasting it, change `<parent_path>` into actual path, twice)
+    ```
+    cmake -B build/RLS \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DTGUI_BACKEND=SFML_GRAPHICS \
+        -DSFML_DIR=<parent_path>/SFML/lib/cmake/SFML && \
+    cmake -B build/DBG \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_SHARED_LIBS=ON \
+        -DTGUI_BACKEND=SFML_GRAPHICS \
+        -DSFML_DIR=<parent_path>/SFML/lib/cmake/SFML && \
+    cmake --build build/DBG --config=Debug --parallel && \
+    cmake --build build/RLS --config=Release --parallel && \
+    cmake --install build/DBG --prefix ../TGUI --config=Debug && \
+    cmake --install build/RLS --prefix ../TGUI --config=Release
+    ```
     .  
 
 -   Boost QVM  
     .  
     to install it:  
     `cd <parent_path>`  
-    `git clone https://github.com/boostorg/qvm.git ./BoostQVM` (executed from parent folder, outside project)  
+    `git clone --branch  boost-1.90.0 --single-branch https://github.com/boostorg/qvm.git ./BoostQVM`  
     .  
 
 # build the project
-not described yet, first you need download and install depended libraries.
+-   make sure you covered requirements - installed dependencies for linux, downloaded and built libraries.  
+-   navigate into procect:  
+    `cd <parent_path>/DasWerdeSpiel`  
+-   prepare build:  
+    .  
+    `cmake -B build/DBG -DMY_LIB_PATH_MODE=Debug`  
+    `cmake -B build/RLS -DMY_LIB_PATH_MODE=Release`  
+    .  
+    build debug or release version:  
+    `cmake --build build/DBG --config=Debug --parallel`  
+    `cmake --build build/RLS --config=Release --parallel`  
+    .  
+    run debug or release version:  
+    `build/DBG/bin/WDS`  
+    `build/RLS/bin/WDS`  
+    (for windows might be other options:)
+    `build/DBG/bin/WDS.exe`  
+    `build/RLS/bin/WDS.exe`  
+    `build/DBG/bin/Debug/WDS.exe`  
+    `build/RLS/bin/Release/WDS.exe`  
+    .  
 
 # vscode setup:
 
