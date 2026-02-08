@@ -29,7 +29,6 @@ set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
 # Get all .cpp and .h files in the src directory
 file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/*.h")
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(SFML 3.0.2 COMPONENTS Graphics Audio System REQUIRED) # Graphics, Window, System, Audio, Network

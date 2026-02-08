@@ -197,41 +197,22 @@ the instruction is written for this file organisation:
 
 -   for comfortable code editing.  
     c_cpp_properties.json:  
-    for Linux:
+    (requires additional editing)
     ```
     {
         "configurations": [
             {
-                "name": "Linux",
+                "name": "Linux" or "Windows",
                 "includePath": [
                     "${workspaceFolder}/**",
-                    "${workspaceFolder}/build/_deps/sfml-src/include",
+                    "${workspaceFolder}/../SFML/include",
+                    "${workspaceFolder}/../TGUI/include",
                     "${workspaceFolder}/../BoostQVM/include"
                 ],
-                "compilerPath": "/usr/bin/g++",
+                "compilerPath": "g++" or "clang++",
                 "cStandard": "c17",
                 "cppStandard": "c++20",
-                "intelliSenseMode": "linux-gcc-x64" 
-            }
-        ],
-        "version": 4
-    }
-    ```
-    or for windows:
-    ```
-    {
-        "configurations": [
-            {
-                "name": "Windows",
-                "includePath": [
-                    "${workspaceFolder}/**",
-                    "${workspaceFolder}/build/_deps/sfml-src/include",
-                    "${workspaceFolder}/../BoostQVM/include"
-                ],
-                "compilerPath": "clang++",
-                "cStandard": "c17",
-                "cppStandard": "c++20",
-                "intelliSenseMode": "windows-clang-x64" 
+                "intelliSenseMode": "linux-gcc-x64" or "windows-clang-x64"
             }
         ],
         "version": 4
