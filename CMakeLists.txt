@@ -1,20 +1,8 @@
 # 3.28 recomended by SFML tutorial
 cmake_minimum_required(VERSION 3.28)
 
-
-set(MY_LIB_PATH_MODE "Debug" CACHE STRING "Select which library build to link against")
-# Optional: Provide a dropdown menu in the GUI
-set_property(CACHE MY_LIB_PATH_MODE PROPERTY STRINGS "Debug" "Release")
-
-if(MY_LIB_PATH_MODE STREQUAL "Debug")
-    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
-    set(SFML_DIR "${CMAKE_SOURCE_DIR}/../SFML_DBG/lib/cmake/SFML")
-    set(TGUI_DIR "${CMAKE_SOURCE_DIR}/../TGUI_DBG/lib/cmake/TGUI")
-else()
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
-    set(SFML_DIR "${CMAKE_SOURCE_DIR}/../SFML_RLS/lib/cmake/SFML")
-    set(TGUI_DIR "${CMAKE_SOURCE_DIR}/../TGUI_RLS/lib/cmake/TGUI")
-endif()
+set(SFML_DIR "${CMAKE_SOURCE_DIR}/../SFML/lib/cmake/SFML")
+set(TGUI_DIR "${CMAKE_SOURCE_DIR}/../TGUI/lib/cmake/TGUI")
 
 if(DEFINED GCC) # add -DGCC to use g++ compiler
     set(CMAKE_C_COMPILER "gcc")

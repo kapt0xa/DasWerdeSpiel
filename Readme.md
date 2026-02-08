@@ -174,23 +174,34 @@ the instruction is written for this file organisation:
 -   make sure you covered requirements - installed dependencies for linux, downloaded and built libraries.  
 -   navigate into procect:  
     `cd <parent_path>/DasWerdeSpiel`  
--   prepare build:  
+-   build and run debug:  
     .  
-    `cmake -B build/DBG -DMY_LIB_PATH_MODE=Debug`  
-    `cmake -B build/RLS -DMY_LIB_PATH_MODE=Release`  
+    ```
+    cmake -B build && \
+    cmake --build build --config=Debug --parallel && \
+    ./build/bin/DWS
+    ```
     .  
-    build debug or release version:  
-    `cmake --build build/DBG --config=Debug --parallel`  
-    `cmake --build build/RLS --config=Release --parallel`  
+    build and run release:  
+    ```
+    cmake -B build && \
+    cmake --build build --config=Release --parallel && \
+    ./build/bin/DWS
+    ```
+    or for visual studio:
     .  
-    run debug or release version:  
-    `build/DBG/bin/WDS`  
-    `build/RLS/bin/WDS`  
-    (for windows might be other options:)
-    `build/DBG/bin/WDS.exe`  
-    `build/RLS/bin/WDS.exe`  
-    `build/DBG/bin/Debug/WDS.exe`  
-    `build/RLS/bin/Release/WDS.exe`  
+    ```
+    cmake -B build && \
+    cmake --build build --config=Debug --parallel && \
+    ./build/bin/Debug/DWS
+    ```
+    .  
+    build and run release:  
+    ```
+    cmake -B build && \
+    cmake --build build --config=Release --parallel && \
+    ./build/bin/Release/DWS
+    ```
     .  
 
 # vscode setup:
