@@ -134,7 +134,7 @@ the instruction is written for this file organisation:
 -   TGUI
     .  
     the repository: https://github.com/texus/TGUI/  
-    exact version: not defined yet  (jan 2026)  
+    exact version: v1.12.0  (jan 2026)  
     documentation: https://tgui.eu/tutorials/latest-stable/  
     .  
     download lib via git:  
