@@ -15,15 +15,14 @@ endif()
 project(DasWerdeSpiel LANGUAGES CXX)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
-# Get all .cpp and .h files in the src directory
 file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/*.h")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(SFML 3.0.2 COMPONENTS Graphics Audio System REQUIRED) # Graphics, Window, System, Audio, Network
 find_package(TGUI 1.12.0 REQUIRED)
 
-# boost::QVM
 include_directories(${PROJECT_SOURCE_DIR}/../BoostQVM/include)
+include_directories(${PROJECT_SOURCE_DIR}/../BoostJSON/include)
 
 add_executable(DWS ${SOURCES})
 
