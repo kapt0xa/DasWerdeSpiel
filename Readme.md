@@ -53,6 +53,7 @@ the instruction is written for this file organisation:
     SFML 3 (download and install)  
     TGUI (not described yet)  
     BoostQVM (just download)  
+    BoostJSON (just download)
 
 -   SFML 3.0  
     .  
@@ -129,6 +130,9 @@ the instruction is written for this file organisation:
     cmake --install build/DBG --prefix ../SFML --config=Debug && \
     cmake --install build/RLS --prefix ../SFML --config=Release
     ```
+    (if that doesnt work, try:  
+    do it in single line without `\`  
+    break it into smaller commands, `&&` is actually combining several comands into one)  
     .  
 
 -   TGUI
@@ -161,6 +165,9 @@ the instruction is written for this file organisation:
     cmake --install build/DBG --prefix ../TGUI --config=Debug && \
     cmake --install build/RLS --prefix ../TGUI --config=Release
     ```
+    (if that doesnt work, try:  
+    do it in single line without `\`  
+    break it into smaller commands, `&&` is actually combining several comands into one)  
     .  
 
 -   Boost QVM  
@@ -168,6 +175,13 @@ the instruction is written for this file organisation:
     to install it:  
     `cd <parent_path>`  
     `git clone --branch  boost-1.90.0 --single-branch https://github.com/boostorg/qvm.git ./BoostQVM`  
+    .  
+
+-   Boost JSON  
+    .  
+    to install it:  
+    `cd <parent_path>`  
+    `git clone --branch boost-1.90.0 --single-branch https://github.com/boostorg/json ./BoostJSON`  
     .  
 
 # build the project
