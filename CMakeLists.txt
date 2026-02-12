@@ -22,7 +22,6 @@ find_package(SFML 3.0.2 COMPONENTS Graphics Audio System REQUIRED) # Graphics, W
 find_package(TGUI 1.12.0 REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR}/../BoostQVM/include)
-include_directories(${PROJECT_SOURCE_DIR}/../BoostJSON/include)
 
 add_executable(DWS ${SOURCES})
 
