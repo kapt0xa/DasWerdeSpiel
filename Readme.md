@@ -129,9 +129,7 @@ the instruction is written for this file organisation:
     cmake --install build/DBG --prefix ../SFML --config=Debug && \
     cmake --install build/RLS --prefix ../SFML --config=Release
     ```
-    (if that doesnt work, try:  
-    do it in single line without `\`  
-    break it into smaller commands, `&&` is actually combining several comands into one)  
+    (for windows replace `\` with `^`)  
     .  
 
 -   TGUI
@@ -164,9 +162,7 @@ the instruction is written for this file organisation:
     cmake --install build/DBG --prefix ../TGUI --config=Debug && \
     cmake --install build/RLS --prefix ../TGUI --config=Release
     ```
-    (if that doesnt work, try:  
-    do it in single line without `\`  
-    break it into smaller commands, `&&` is actually combining several comands into one)  
+    (for windows replace `\` with `^`)  
     .  
 
 -   Boost QVM  
