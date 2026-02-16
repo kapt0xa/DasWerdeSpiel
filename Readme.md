@@ -52,7 +52,7 @@ the instruction is written for this file organisation:
 -   short list of libs:  
     SFML 3 (download and install)  
     TGUI (not described yet)  
-    BoostQVM (just download)  
+    Boost: QVM, JSON, JSON's modules (just download)  
 
 -   SFML 3.0  
     .  
@@ -165,11 +165,25 @@ the instruction is written for this file organisation:
     (for windows replace `\` with `^`)  
     .  
 
--   Boost QVM  
+-   Boost  
     .  
     to install it:  
     `cd <parent_path>`  
-    `git clone --branch  boost-1.90.0 --single-branch https://github.com/boostorg/qvm.git ./BoostQVM`  
+    ```
+    git clone \
+        --branch boost-1.90.0 \
+        --single-branch \
+        https://github.com/boostorg/boost.git \
+        ./Boost && \
+    git -C ./Boost \
+        submodule update \
+        --init \
+        --recursive \
+        --depth 1 \
+        libs/json \
+        libs/qvm \
+        tools/boostdep
+    ```
     .  
 
 # build the project
