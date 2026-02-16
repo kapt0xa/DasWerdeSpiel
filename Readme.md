@@ -220,8 +220,7 @@ the instruction is written for this file organisation:
                     "${workspaceFolder}/**",
                     "${workspaceFolder}/../SFML/include",
                     "${workspaceFolder}/../TGUI/include",
-                    "${workspaceFolder}/../BoostQVM/include",
-                    "${workspaceFolder}/../BoostJSON/include"
+                    "${workspaceFolder}/../BoostQVM/include"
                 ],
                 "compilerPath": "g++" or "clang++",
                 "cStandard": "c17",

@@ -1,0 +1,1 @@
+#include "VisualCharacter.h"
