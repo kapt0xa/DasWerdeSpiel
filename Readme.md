@@ -62,7 +62,7 @@ the instruction is written for this file organisation:
     .  
     download lib via git:  
     `cd <parent_path>`  
-    `git clone --branch --single-branch 3.0.2 https://github.com/SFML/SFML.git ./SFML_SRC`
+    `git clone --branch 3.0.2 --single-branch https://github.com/SFML/SFML.git ./SFML_SRC`  
     `cd ./SFML_SRC` (navigate into the cloned repository arter downloading it)  
     (or just download it manually without git and locate it into `<parent_path>`)  
     .  
@@ -163,6 +163,7 @@ the instruction is written for this file organisation:
     cmake --install build/RLS --prefix ../TGUI --config=Release
     ```
     (for windows replace `\` with `^`)  
+    ! if U get error, did U replace `<parent_path>` with actial psth?  
     .  
 
 -   Boost QVM  

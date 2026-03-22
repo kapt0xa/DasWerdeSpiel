@@ -5,5 +5,6 @@ namespace spiel
 {
     class CharacterEditor
     {
+        
     };
 }
