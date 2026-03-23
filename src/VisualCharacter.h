@@ -25,6 +25,7 @@ namespace spiel
         sf::ConvexShape getDrawable() const;
         json::Node toJson() const;
 
+        Shape& byJson(const json::Node& node);
         Shape& setColor(const sf::Color& color);
         Shape& reserve(size_t size);
         Shape& setPointCount(size_t size);
@@ -34,6 +35,7 @@ namespace spiel
         Shape& scale(float scale);
         Shape& rotate(float radians);
         Shape& rotate(const Vec2f& complex);
+        Shape& translate(const Vec2f& translation);
 
     private:
         sf::Color color;
