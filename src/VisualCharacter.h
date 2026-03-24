@@ -67,6 +67,6 @@ namespace spiel
     {
     public:
     private:
-        std::vector<std::variant<VisualShape, VisualCharacter>> content; problem here, recursive compilation, read about boost::recursive_wrapper
+        std::variant<VisualShape, std::vector<VisualCharacter>> data;
     };
 }
