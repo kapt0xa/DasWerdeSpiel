@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <variant>
 
 #include "Vectors.h"
 #include "JSON/json.h"
@@ -12,33 +13,60 @@
 
 namespace spiel
 {
-    class Shape
+    class VisualShape
     {
     public:
-        Shape() = default;
-        ~Shape() = default;
-        Shape(const Shape& other) = default;
-        Shape(Shape&& other) noexcept = default;
-        Shape& operator=(const Shape& other) = default;
-        Shape& operator=(Shape&& other) noexcept = default;
+        VisualShape() = default;
+        ~VisualShape() = default;
+        VisualShape(const VisualShape& other) = default;
+        VisualShape(VisualShape&& other) noexcept = default;
+        VisualShape& operator=(const VisualShape& other) = default;
+        VisualShape& operator=(VisualShape&& other) noexcept = default;
 
         sf::ConvexShape getDrawable() const;
         json::Node toJson() const;
 
-        Shape& byJson(const json::Node& node);
-        Shape& setColor(const sf::Color& color);
-        Shape& reserve(size_t size);
-        Shape& setPointCount(size_t size);
-        Shape& pushBack(const Vec2f& point);
+        VisualShape& byJson(const json::Node& node);
+        VisualShape& setColor(const sf::Color& color);
+        VisualShape& reserve(size_t size);
+        VisualShape& setPointCount(size_t size);
+        VisualShape& pushBack(const Vec2f& point);
 
-        Shape& scale(const Vec2f& scale);
-        Shape& scale(float scale);
-        Shape& rotate(float radians);
-        Shape& rotate(const Vec2f& complex);
-        Shape& translate(const Vec2f& translation);
+        VisualShape& scale(const Vec2f& scale);
+        VisualShape& scale(float scale);
+        VisualShape& rotate(float radians);
+        VisualShape& rotate(const Vec2f& complex);
+        VisualShape& translate(const Vec2f& translation);
+
+        VisualShape scaled(const Vec2f& scale) const;
+        VisualShape scaled(float scale) const;
+        VisualShape rotated(float radians) const;
+        VisualShape rotated(const Vec2f& complex) const;
+        VisualShape translated(const Vec2f& translation) const;
+
+        const sf::Color& getColor() const;
+        sf::Color& getColor();
+        const Vec2f& getVertex(size_t index) const;
+        Vec2f& getVertex(size_t index);
+        size_t getVertexCount() const;
+        VisualShape& setVertex(size_t index, const Vec2f& vertex);
+
+        class Factory
+        {
+        public:
+            virtual VisualShape create(const json::Node& node) = 0;
+            virtual ~Factory() = default;
+        };
 
     private:
         sf::Color color;
         std::vector<Vec2f> vertices;
+    };
+
+    class VisualCharacter
+    {
+    public:
+    private:
+        std::vector<std::variant<VisualShape, VisualCharacter>> content; problem here, recursive compilation
     };
 }
