@@ -61,7 +61,7 @@ namespace spiel
         const auto& dict = node.AsDict();
         color = colorByJson(dict.at("color"));
         const auto& verticesArr = dict.at("vertices").AsArray();
-        setPointCount(0);
+        resizePointArr(0);
         reserve(verticesArr.size());
         for (const auto& vertexNode : verticesArr)
         {
@@ -79,7 +79,7 @@ namespace spiel
         vertices.reserve(size);
         return *this;
     }
-    VisualShape& VisualShape::setPointCount(size_t size)
+    VisualShape& VisualShape::resizePointArr(size_t size)
     {
         vertices.resize(size);
         return *this;
@@ -177,4 +177,306 @@ namespace spiel
         vertices.at(index) = vertex;
         return *this;
     }
-}
+
+    json::Node VisualCharacter::toJson() const
+    {
+        if (std::holds_alternative<std::monostate>(data))
+        {
+            return nullptr;
+        }
+        else if (std::holds_alternative<VisualShape>(data))
+        {
+            return std::get<VisualShape>(data).toJson();
+        }
+        else
+        {
+            const auto& children = std::get<std::vector<VisualCharacter>>(data);
+            json::Array childrenArr;
+            for (const auto& child : children)
+            {
+                childrenArr.push_back(child.toJson());
+            }
+            return childrenArr;
+        }
+    }
+
+    VisualCharacter& VisualCharacter::byJson(const json::Node& node)
+    {
+        if (node.IsNull())
+        {
+            data = std::monostate{};
+        }
+        else if (node.IsDict())
+        {
+            data = VisualShape().byJson(node);
+        }
+        else if (node.IsArray())
+        {
+            const auto& childrenArr = node.AsArray();
+            std::vector<VisualCharacter> children;
+            children.reserve(childrenArr.size());
+            for (const auto& childNode : childrenArr)
+            {
+                children.emplace_back().byJson(childNode);
+            }
+            data = std::move(children);
+        }
+        else
+        {
+            throw std::runtime_error("Invalid JSON for VisualCharacter");
+        }
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::setShape(const VisualShape& shape)
+    {
+        data = shape;
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::setShape(VisualShape&& shape)
+    {
+        data = std::move(shape);
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::setChildren(const std::vector<VisualCharacter>& children)
+    {
+        data = children;
+        return *this;
+    }
+
+    VisualCharacter& VisualCharacter::setName(const std::string& name)
+    {
+        this->name = name;
+        return *this;
+    }
+    const std::string& VisualCharacter::getName() const
+    {
+        return name;
+    }
+
+    VisualCharacter::operator bool()
+    {
+        return !
+        (
+            isNull() ||
+            (
+                isGroup() &&
+                getChildCount() == 0
+            )
+        );
+    }
+    bool VisualCharacter::isNull() const
+    {
+        return std::holds_alternative<std::monostate>(data);
+    }
+    bool VisualCharacter::isShape() const
+    {
+        return std::holds_alternative<VisualShape>(data);
+    }
+    bool VisualCharacter::isGroup() const
+    {
+        return std::holds_alternative<std::vector<VisualCharacter>>(data);
+    }
+    const VisualShape& VisualCharacter::getShape() const
+    {
+        if (isShape())
+        {
+            return std::get<VisualShape>(data);
+        }
+        else if (isGroup() && getChildCount() == 1)
+        {
+            return std::get<std::vector<VisualCharacter>>(data).front().getShape();
+        }
+        throw std::runtime_error("VisualCharacter does not hold a shape");
+    }
+    VisualShape& VisualCharacter::getShape()
+    {
+        return const_cast<VisualShape&>(
+        const_cast<const VisualCharacter&>(*this).getShape());
+    }
+    const VisualCharacter& VisualCharacter::getChild(size_t index) const
+    {
+        if(isShape() && index == 0)
+        {
+            return *this;
+        }
+        if(!isGroup())
+        {
+            throw std::runtime_error("VisualCharacter does not hold children");
+        }
+        return std::get<std::vector<VisualCharacter>>(data).at(index);
+    }
+    VisualCharacter& VisualCharacter::getChild(size_t index)
+    {
+        return const_cast<VisualCharacter&>(
+        const_cast<const VisualCharacter&>(*this).getChild(index));
+    }
+
+    VisualCharacter& VisualCharacter::setChild(size_t index, const VisualCharacter& value)
+    {
+        if(isShape() && index == 0)
+        {
+            *this = value;
+            return *this;
+        }
+        if(!isGroup())
+        {
+            throw std::runtime_error("VisualCharacter does not hold children");
+        }
+        std::get<std::vector<VisualCharacter>>(data).at(index) = value;
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::setChild(size_t index, VisualCharacter&& value)
+    {
+        if(isShape() && index == 0)
+        {
+            *this = std::move(value);
+            return *this;
+        }
+        if(!isGroup())
+        {
+            throw std::runtime_error("VisualCharacter does not hold children");
+        }
+        std::get<std::vector<VisualCharacter>>(data).at(index) = std::move(value);
+        return *this;
+    }
+    size_t VisualCharacter::getChildCount() const
+    {
+        if(isNull())
+        {
+            return 0;
+        }
+        if(isShape())
+        {
+            return 1;
+        }
+        return std::get<std::vector<VisualCharacter>>(data).size();
+    }
+    VisualCharacter& VisualCharacter::resizeChildren(size_t size)
+    {
+        if(!isGroup())
+        {
+            if(isNull())
+            {
+                data = std::vector<VisualCharacter>();
+            }
+            else if(isShape())
+            {
+                data = std::vector<VisualCharacter>{*this};
+            }
+            else
+            {
+                throw std::runtime_error("VisualCharacter does not hold children");
+            }
+        }
+        std::get<std::vector<VisualCharacter>>(data).resize(size);
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::pushBackChild(const VisualCharacter& child)
+    {
+        if(!isGroup())
+        {
+            resizeChildren(getChildCount());
+        }
+        std::get<std::vector<VisualCharacter>>(data).push_back(child);
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::reserveChildren(size_t size)
+    {
+        if(!isGroup())
+        {
+            resizeChildren(getChildCount());
+        }
+        std::get<std::vector<VisualCharacter>>(data).reserve(size);
+        return *this;
+    }
+
+    VisualCharacter& VisualCharacter::setColor(const sf::Color& color)
+    {
+        if(isShape())
+        {
+            getShape().setColor(color);
+        }
+        else if(isGroup())
+        {
+            for(size_t i = 0; i < getChildCount(); ++i)
+            {
+                getChild(i).setColor(color);
+            }
+        }
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::scale(const Vec2f& scale)
+    {
+        if(isShape())
+        {
+            getShape().scale(scale);
+        }
+        else if(isGroup())
+        {
+            for(size_t i = 0; i < getChildCount(); ++i)
+            {
+                getChild(i).scale(scale);
+            }
+        }
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::scale(float scale)
+    {
+        if(isShape())
+        {
+            getShape().scale(scale);
+        }
+        else if(isGroup())
+        {
+            for(size_t i = 0; i < getChildCount(); ++i)
+            {
+                getChild(i).scale(scale);
+            }
+        }
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::rotate(float radians)
+    {
+        if(isShape())
+        {
+            getShape().rotate(radians);
+        }
+        else if(isGroup())
+        {
+            for(size_t i = 0; i < getChildCount(); ++i)
+            {
+                getChild(i).rotate(radians);
+            }
+        }
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::rotate(const Vec2f& complex)
+    {
+        if(isShape())
+        {
+            getShape().rotate(complex);
+        }
+        else if(isGroup())
+        {
+            for(size_t i = 0; i < getChildCount(); ++i)
+            {
+                getChild(i).rotate(complex);
+            }
+        }
+        return *this;
+    }
+    VisualCharacter& VisualCharacter::translate(const Vec2f& translation)
+    {
+        if(isShape())
+        {
+            getShape().translate(translation);
+        }
+        else if(isGroup())
+        {
+            for(size_t i = 0; i < getChildCount(); ++i)
+            {
+                getChild(i).translate(translation);
+            }
+        }
+        return *this;
+    }
