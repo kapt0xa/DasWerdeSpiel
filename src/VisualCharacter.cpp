@@ -182,11 +182,18 @@ namespace spiel
     {
         if (std::holds_alternative<std::monostate>(data))
         {
-            return nullptr;
+            return json::Builder().StartDict()
+                .Key("name").Value(name)
+                .Key("type").Value("null")
+                .EndDict().Build();
         }
         else if (std::holds_alternative<VisualShape>(data))
         {
-            return std::get<VisualShape>(data).toJson();
+            return json::Builder().StartDict()
+                .Key("name").Value(name)
+                .Key("type").Value("shape")
+                .Key("data").Value(std::get<VisualShape>(data).toJson())
+                .EndDict().Build();
         }
         else
         {
@@ -196,23 +203,30 @@ namespace spiel
             {
                 childrenArr.push_back(child.toJson());
             }
-            return childrenArr;
+            return json::Builder().StartDict()
+                .Key("name").Value(name)
+                .Key("type").Value("group")
+                .Key("data").Value(childrenArr)
+                .EndDict().Build();
         }
     }
 
     VisualCharacter& VisualCharacter::byJson(const json::Node& node)
     {
-        if (node.IsNull())
+        auto& dict = node.AsDict();
+        name = dict.at("name").AsString();
+        const auto& type = dict.at("type").AsString();
+        if (type == "null")
         {
             data = std::monostate{};
         }
-        else if (node.IsDict())
+        else if (type == "shape")
         {
-            data = VisualShape().byJson(node);
+            data = VisualShape().byJson(dict.at("data"));
         }
-        else if (node.IsArray())
+        else if (type == "group")
         {
-            const auto& childrenArr = node.AsArray();
+            const auto& childrenArr = dict.at("data").AsArray();
             std::vector<VisualCharacter> children;
             children.reserve(childrenArr.size());
             for (const auto& childNode : childrenArr)
